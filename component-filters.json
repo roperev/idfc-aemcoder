@@ -15,23 +15,25 @@
       "hero",
       "cards",
       "columns",
-      "fragment",
-      "swipper-card",
-      "rte-block",
-      "git-block",
-      "personal-loan-block",
-      "mid-banner",
-      "pl-swipper-blogs",
-      "pl-blogs",
-      "faq-accordion",
-      "overview-rte",
-      "cf-fragment"
+      "fragment"
+    ]
+  },
+  {
+    "id": "accordion",
+    "components": [
+      "accordion-item"
     ]
   },
   {
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "cf-fragment",
+    "components": [
+      "cf-fragment-item"
     ]
   },
   {
@@ -50,9 +52,57 @@
     ]
   },
   {
+    "id": "git-block",
+    "components": [
+      "git-item"
+    ]
+  },
+  {
+    "id": "mid-banner",
+    "components": [
+      "mid-banner-item"
+    ]
+  },
+  {
     "id": "nav-list",
     "components": [
       "nav-item"
+    ]
+  },
+  {
+    "id": "overview-rte",
+    "components": [
+      "overview-rte-item"
+    ]
+  },
+  {
+    "id": "personal-loan-block",
+    "components": [
+      "personal-loan-item"
+    ]
+  },
+  {
+    "id": "pl-blogs",
+    "components": [
+      "pl-blogs-item"
+    ]
+  },
+  {
+    "id": "rte-block",
+    "components": [
+      "rte-item"
+    ]
+  },
+  {
+    "id": "secondary-nav",
+    "components": [
+      "secondary-nav-item"
+    ]
+  },
+  {
+    "id": "pl-swipper-blogs",
+    "components": [
+      "pl-swipper-blogs-item"
     ]
   }
 ]
