@@ -23,7 +23,7 @@
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name":  "Overview RTE Item",
+              "name": "Overview RTE Item",
               "model": "overview-rte-item"
             }
           }
