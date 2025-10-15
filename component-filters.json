@@ -25,7 +25,8 @@
       "pl-blogs",
       "faq-accordion",
       "overview-rte",
-      "cf-fragment"
+      "cf-fragment",
+      "library-metadata"
     ]
   },
   {
@@ -72,6 +73,10 @@
     "components": [
       "git-item"
     ]
+  },
+  {
+    "id": "library-metadata",
+    "components": []
   },
   {
     "id": "mid-banner",
