@@ -115,155 +115,170 @@ export default async function decorate(block) {
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
+  // Get the default-content-wrapper from fragment
+  const contentWrapper = fragment.querySelector('.default-content-wrapper');
+  if (!contentWrapper) return;
+
+  // Create the three main sections
+  const navBrand = document.createElement('div');
+  navBrand.classList.add('nav-brand', 'section');
+
+  const navSections = document.createElement('div');
+  navSections.classList.add('nav-sections', 'section');
+
+  const navTools = document.createElement('div');
+  navTools.classList.add('nav-tools', 'section');
+
+  // Extract logo from fragment (if exists) or use default
+  let logoImgSrc = './media_104481e8050954141720a87a3e4a576a65e2e8774.png';
+  let logoImgAlt = 'IDFC FIRST Bank';
+  
+  // Look for the last image in the fragment (logo should be at the bottom)
+  const allImages = fragment.querySelectorAll('img');
+  if (allImages.length > 0) {
+    const lastImg = allImages[allImages.length - 1];
+    const srcFromFragment = lastImg.getAttribute('src');
+    logoImgAlt = lastImg.getAttribute('alt') || logoImgAlt;
+    
+    // Use the image from fragment if it exists and looks valid
+    if (srcFromFragment) {
+      logoImgSrc = srcFromFragment;
+    }
+  }
+
+  // Build nav-brand
+  navBrand.innerHTML = `<a href="https://www.idfcfirstbank.com" aria-label="IDFC FIRST Bank Home">
+    <img src="${logoImgSrc}" alt="${logoImgAlt}">
+  </a>`;
+
+  // Parse the content and build nav-sections
+  const navSectionsWrapper = document.createElement('div');
+  navSectionsWrapper.classList.add('default-content-wrapper');
+  const navSectionsUl = document.createElement('ul');
+
+  // Get all children from contentWrapper
+  const children = Array.from(contentWrapper.children);
+  let currentLi = null;
+
+  for (let i = 0; i < children.length; i += 1) {
+    const child = children[i];
+
+    // Personal section (first p + ul)
+    if (i === 0 && child.tagName === 'P' && child.textContent.trim() === 'Personal') {
+      currentLi = document.createElement('li');
+      currentLi.innerHTML = `<p><a href="https://www.idfcfirstbank.com">${child.textContent}</a></p>`;
+      const nextChild = children[i + 1];
+      if (nextChild && nextChild.tagName === 'UL') {
+        currentLi.appendChild(nextChild.cloneNode(true));
+        i += 1; // Skip the next element since we've already processed it
+      }
+      navSectionsUl.appendChild(currentLi);
+    } else if (child.classList.contains('button-container') && child.textContent.includes('Explore Personal Banking')) {
+      // Explore Personal Banking button - will be added separately later
+      // Skip this element as we'll add it programmatically
+    } else if (child.classList.contains('button-container')) {
+      // About Us, Careers, IDFC FIRST Academy, ESG
+      const link = child.querySelector('a');
+      if (link) {
+        currentLi = document.createElement('li');
+        const text = link.textContent.trim();
+        currentLi.innerHTML = `<p><a href="${link.href}">${text}</a></p>`;
+
+        // Check if next element is a ul (submenu)
+        const nextChild = children[i + 1];
+        if (nextChild && nextChild.tagName === 'UL') {
+          currentLi.appendChild(nextChild.cloneNode(true));
+          i += 1; // Skip the next element
+        }
+        navSectionsUl.appendChild(currentLi);
+      }
+    } else if (child.tagName === 'P' && child.textContent.trim() === 'Investors' && !child.classList.contains('button-container')) {
+      // Investors section (p followed by ul)
+      currentLi = document.createElement('li');
+      currentLi.innerHTML = `<p><a href="https://www.idfcfirstbank.com/investors">${child.textContent}</a></p>`;
+      const nextChild = children[i + 1];
+      if (nextChild && nextChild.tagName === 'UL') {
+        currentLi.appendChild(nextChild.cloneNode(true));
+        i += 1; // Skip the next element
+      }
+      navSectionsUl.appendChild(currentLi);
+    }
+  }
+
+  navSectionsWrapper.appendChild(navSectionsUl);
+  navSections.appendChild(navSectionsWrapper);
+
+  // Insert 'Explore Personal Banking' as second li in nav-sections
+  const newLi = document.createElement('li');
+  newLi.innerHTML = '<div class="main-link"><a href="https://www.idfcfirstbank.com">Explore Personal Banking</a></div>';
+  if (navSectionsUl.children.length > 0) {
+    navSectionsUl.insertBefore(newLi, navSectionsUl.children[1] || null);
+  } else {
+    navSectionsUl.appendChild(newLi);
+  }
+
+  // Build nav-tools section from contentWrapper
+  const navToolsWrapper = document.createElement('div');
+  navToolsWrapper.classList.add('default-content-wrapper');
+
+  // Find the search bar and other tools
+  const searchP = Array.from(contentWrapper.querySelectorAll('p')).find((p) => {
+    const strong = p.querySelector('strong');
+    return strong && strong.textContent.includes('what are you looking for');
   });
 
-  const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+  const specialP = Array.from(contentWrapper.querySelectorAll('p')).find((p) => p.textContent.trim() === "What's special about us" && !p.querySelector('strong'));
+
+  const toolsUl = Array.from(contentWrapper.querySelectorAll('ul')).find((ul) => {
+    const firstLi = ul.querySelector('li');
+    return firstLi && (firstLi.textContent.includes('Customer service') || firstLi.textContent.includes('Login'));
+  });
+
+  if (searchP) {
+    navToolsWrapper.innerHTML = `<p><span class="icon icon-search"></span><strong>${searchP.querySelector('strong').textContent}</strong></p>`;
   }
 
-  // Get logo image src and alt from nav-brand
-  let logoImgSrc = '/content/dam/idfcfirstbank/images/n1/IDFC-logo-website.svg';
-  let logoImgAlt = 'Logo';
-  const navBrandImg = navBrand ? navBrand.querySelector('img') : null;
-  if (navBrandImg) {
-    logoImgSrc = navBrandImg.getAttribute('src') || logoImgSrc;
-    logoImgAlt = navBrandImg.getAttribute('alt') || logoImgAlt;
+  if (specialP) {
+    const specialPClone = specialP.cloneNode(true);
+    specialPClone.innerHTML = `<span class="icon icon-special"></span>${specialP.textContent}`;
+    navToolsWrapper.appendChild(specialPClone);
   }
 
-  const navSections = nav.querySelector('.nav-sections');
-  if (navSections) {
-    // Inject custom mobile HTML if not desktop and not already present
-    if (!isDesktop.matches && !navSections.querySelector('.container.mm-top-in')) {
-      const mobileContainer = document.createElement('div');
-      mobileContainer.className = 'container';
-      mobileContainer.innerHTML = `
-        <div class="mm-top-in">
-          <div class="logo"> <a href="//www.idfcfirstbank.com" aria-label="Menu"> <img src="${logoImgSrc}" alt="${logoImgAlt}"> </a> </div>
-          <a href="javascript:void(0)" class="cls-mm" aria-label="Close Icon"> <span id="icon-close-mobile" class="icon-close"></span>
-          </a>
-        </div>
-      `;
-      navSections.insertBefore(mobileContainer, navSections.firstChild);
-      // Add close event for mobile close button
-      const closeBtn = mobileContainer.querySelector('.cls-mm');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          // Find the nav element and navSections
-          const nav = mobileContainer.closest('nav');
-          const navSections = nav ? nav.querySelector('.nav-sections') : null;
-          if (nav && navSections) {
-            toggleMenu(nav, navSections, false);
-          }
-        });
+  if (toolsUl) {
+    const toolsUlClone = toolsUl.cloneNode(true);
+    navToolsWrapper.appendChild(toolsUlClone);
+  }
+
+  navTools.appendChild(navToolsWrapper);
+
+  // Assemble the navigation
+  nav.appendChild(navBrand);
+  nav.appendChild(navSections);
+  nav.appendChild(navTools);
+
+  // Add dropdown behavior to nav sections
+  navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+    if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+    navSection.addEventListener('click', () => {
+      if (isDesktop.matches) {
+        const expanded = navSection.getAttribute('aria-expanded') === 'true';
+        toggleAllNavSections(navSections);
+        navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
       }
 
-      // Find .sectionlast element and move it to new li after first li in mobile navigation
-      const sectionLast = nav.querySelector('.sectionlast');
-      if (sectionLast) {
-        // Add event listener to .drop-down elements inside .sectionlast
-        const dropDowns = sectionLast.querySelectorAll('.drop-down');
-        dropDowns.forEach((dropDown) => {
-          dropDown.addEventListener('click', function () {
-            const dropdownContent = dropDown.querySelector('.dropdown-content');
-            if (dropdownContent) {
-              const isExpanded = dropDown.getAttribute('expanded') === 'true';
-              // Collapse all other drop-downs
-              const allDropDowns = sectionLast.querySelectorAll('.drop-down');
-              allDropDowns.forEach(dd => {
-                dd.setAttribute('expanded', 'false');
-                dd.style.setProperty('--scroll-height', '0px');
-              });
-              if (!isExpanded) {
-                // Measure the height of the .drop-down itself
-                const scrollHeight = dropDown.scrollHeight;
-                dropDown.style.setProperty('--scroll-height', `${scrollHeight}px`);
-                dropDown.setAttribute('expanded', 'true');
-              } else {
-                dropDown.setAttribute('expanded', 'false');
-                dropDown.style.setProperty('--scroll-height', '0px');
-              }
-            }
-          });
-        });
-        const firstLi = navSections.querySelector('.default-content-wrapper > ul:first-child > li:first-child');
-        if (firstLi) {
-          // Create new li element
-          const newLi = document.createElement('li');
-          // Remove the 'section' class from the original element
-          sectionLast.classList.remove('section');
-          // Move the sectionlast element to the new li (cut and paste)
-          newLi.appendChild(sectionLast);
-          // Insert the new li after the first li
-          firstLi.parentNode.insertBefore(newLi, firstLi.nextSibling);
-
-          // Add click event listeners to li elements inside the moved .sectionlast
-          const movedLiElements = sectionLast.querySelectorAll('li');
-          movedLiElements.forEach((li) => {
-            li.addEventListener('click', () => {
-              // Get the scrollHeight value and set it as CSS custom property
-              const scrollHeightValue = li.scrollHeight;
-              li.style.setProperty('--scroll-height', scrollHeightValue + 'px');
-            });
-          });
-        }
-      }
-    }
-
-    // Prevent clicks inside nav-sections from closing the mobile menu
-    if (!isDesktop.matches) {
-      navSections.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-
-      // Prevent focusout events from closing the menu when clicking inside nav-sections
-      navSections.addEventListener('focusout', (e) => {
-        if (navSections.contains(e.relatedTarget)) {
-          e.stopPropagation();
-        }
-      });
-    }
-
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        if (isDesktop.matches) {
+      if (!isDesktop.matches) {
+        const subUl = navSection.querySelector('ul');
+        if (subUl) {
+          const { scrollHeight } = subUl;
+          navSection.style.setProperty('--scroll-height', `${scrollHeight}px`);
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
           toggleAllNavSections(navSections);
           navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
         }
-
-        if (!isDesktop.matches) {
-            const scrollHeight = navSection.querySelector('ul').scrollHeight;
-            navSection.style.setProperty('--scroll-height', `${scrollHeight}px`);
-            const expanded = navSection.getAttribute('aria-expanded') === 'true';
-            toggleAllNavSections(navSections);
-            navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        }
-      });
+      }
     });
-  }
-
-  // Insert 'Explore Personal Banking' as second li in nav-sections
-  const navSectionsUl = nav.querySelector('#nav > div.section.nav-sections > div.default-content-wrapper > ul');
-  if (navSectionsUl) {
-    const newLi = document.createElement('li');
-    newLi.innerHTML = '<div class="main-link"><a href="//www.idfcfirstbank.com">Explore Personal Banking</a></div>';
-    if (navSectionsUl.children.length > 0) {
-      navSectionsUl.insertBefore(newLi, navSectionsUl.children[1] || null);
-    } else {
-      navSectionsUl.appendChild(newLi);
-    }
-  }
+  });
 
   // hamburger for mobile
   const hamburger = document.createElement('div');
@@ -272,47 +287,13 @@ export default async function decorate(block) {
       <span class="nav-hamburger-icon"></span>
     </button>`;
 
-  // Move nav-tools li:nth-child(1) into hamburger in mobile view
-  if (!isDesktop.matches) {
-    const navToolsLi1 = nav.querySelector('#nav > div.section.nav-tools > div > ul > li:nth-child(1)');
-    if (navToolsLi1) {
-      // Convert li to button
-      const button = document.createElement('button');
-      
-      button.textContent = navToolsLi1.textContent;
-      // Copy classes (optional, or set your own)
-      button.id = 'cust-service';
-
-      // Append as first child
-      nav.insertBefore(button, nav.firstChild);
-    }
-  }
   hamburger.addEventListener('click', () => {
     toggleMenu(nav, navSections);
-    // Add click event listeners to .drop-down elements inside .sectionlast, only once
-    const sectionLast = nav.querySelector('.sectionlast');
-    if (sectionLast) {
-      const dropDowns = sectionLast.querySelectorAll('.drop-down');
-      dropDowns.forEach((dropDown) => {
-        if (!dropDown.dataset.listenerAdded) {
-          dropDown.addEventListener('click', function () {
-            const isExpanded = dropDown.getAttribute('aria-expanded') === 'true';
-            if (!isExpanded) {
-              const scrollHeight = dropDown.scrollHeight;
-              dropDown.style.setProperty('--scroll-height', `${scrollHeight}px`);
-              dropDown.setAttribute('aria-expanded', 'true');
-            } else {
-              dropDown.style.setProperty('--scroll-height', '0px');
-              dropDown.setAttribute('aria-expanded', 'false');
-            }
-          });
-          dropDown.dataset.listenerAdded = 'true';
-        }
-      });
-    }
   });
+
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
+
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
@@ -321,9 +302,4 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
-
-  const menuItems = document.querySelectorAll('.sectionlast .default-content-wrapper ul li');
-  menuItems.forEach((li, index) => {
-    li.id = `fragment-item-${index + 1}`;
-  });
 }
