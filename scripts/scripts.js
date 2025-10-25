@@ -513,6 +513,49 @@ async function loadEager(doc) {
 }
 
 /**
+ * Auto-inject secondary navbar if mid-banner section exists
+ * @param {Element} main The main element
+ */
+async function loadSecondaryNav(main) {
+  const midBannerSection = document.querySelector('.section.mid-banner');
+  if (!midBannerSection) return;
+
+  // Create secondary-navbar block
+  const secondaryNavBlock = document.createElement('div');
+  secondaryNavBlock.classList.add('secondary-navbar-wrapper');
+
+  const secondaryNav = document.createElement('div');
+  secondaryNav.classList.add('secondary-navbar', 'block');
+  secondaryNav.setAttribute('data-block-name', 'secondary-navbar');
+  secondaryNav.setAttribute('data-block-status', 'initialized');
+
+  secondaryNavBlock.appendChild(secondaryNav);
+
+  // Insert at the top of main
+  main.insertBefore(secondaryNavBlock, main.firstChild);
+
+  // Load and decorate the block
+  const blockName = 'secondary-navbar';
+  const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
+  const decorationComplete = new Promise((resolve) => {
+    (async () => {
+      try {
+        const mod = await import(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`);
+        if (mod.default) {
+          await mod.default(secondaryNav);
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(`failed to load module for ${blockName}`, error);
+      }
+      resolve();
+    })();
+  });
+  await Promise.all([cssLoaded, decorationComplete]);
+  secondaryNav.setAttribute('data-block-status', 'loaded');
+}
+
+/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
@@ -520,6 +563,9 @@ async function loadLazy(doc) {
   autolinkModals(doc);
   const main = doc.querySelector('main');
   await loadSections(main);
+
+  // Auto-inject secondary navbar if mid-banner section exists
+  await loadSecondaryNav(main);
 
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;

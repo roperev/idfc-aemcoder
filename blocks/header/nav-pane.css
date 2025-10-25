@@ -1268,7 +1268,9 @@ header.d-lg-none .top-nav-right ul li:last-child {
 }
 
 .top-nav.bg-light-white {
-    padding: 0 70px
+    padding: 0 70px;
+    background-color: #F5F5F5;
+
 }
 
 @media(max-width: 1024px) {

@@ -203,7 +203,7 @@ header nav .nav-brand img {
 
 @media (width >=900px) {
   header .nav-brand {
-    flex-basis: auto;
+    flex: 0 0 auto;
     order: 1;
   }
 
@@ -294,6 +294,17 @@ header nav .nav-sections ul>li>ul>li {
     gap: 16px;
     margin: 0;
     align-items: center;
+    width: 100%;
+  }
+
+  /* First nav item (Personal) stays on left */
+  header nav .nav-sections .default-content-wrapper>ul>li:first-child {
+    margin-right: auto;
+  }
+
+  /* Second nav item starts the right-aligned group */
+  header nav .nav-sections .default-content-wrapper>ul>li:nth-child(2) {
+    margin-left: auto;
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li {
