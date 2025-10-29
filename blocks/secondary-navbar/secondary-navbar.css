@@ -4,7 +4,6 @@
 .secondary-navbar-wrapper {
   width: 100%;
   position: relative;
-  z-index: 99;
   background: #f7f7f7;
   border-top: 1px solid #e5e5e5;
 }
