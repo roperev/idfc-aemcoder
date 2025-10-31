@@ -564,14 +564,17 @@ async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadSections(main);
 
-  // Auto-inject secondary navbar if mid-banner section exists
-  await loadSecondaryNav(main);
-
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
+  // Load header first so nav-wrapper is available for secondary navbar
+  await loadHeader(doc.querySelector('header'));
+
+  // Auto-inject secondary navbar if mid-banner section exists
+  // Must load after header so it can move itself into the header structure
+  await loadSecondaryNav(main);
+
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);

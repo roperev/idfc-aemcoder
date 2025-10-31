@@ -18,8 +18,8 @@
 /* Inner container - matches header nav exactly */
 .tabs-pane-js {
   max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 32px;
+  position: relative;
+  left: 70px;
   box-sizing: border-box;
 }
 
@@ -73,9 +73,10 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
+
+  /* transform: translateX(-50%); */
   margin-top: 8px;
-  border-radius: 8px;
+  border-radius: 0 8px 8px;
   box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
   background: #fff;
   border: 1px solid #e0e0e0;

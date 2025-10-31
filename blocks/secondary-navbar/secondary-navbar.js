@@ -202,6 +202,19 @@ export default function decorate(block) {
   block.innerHTML = '';
   block.appendChild(topNav);
 
+  // Move the secondary navbar to the header section
+  // Note: Header is guaranteed to be loaded first (see loadLazy in scripts.js)
+  const secondaryNavbarWrapper = block.closest('.secondary-navbar-wrapper');
+  const navWrapper = document.querySelector('header.header-wrapper .nav-wrapper');
+
+  if (secondaryNavbarWrapper && navWrapper) {
+    // Move the wrapper from main to inside nav-wrapper (as sibling of <nav>)
+    navWrapper.appendChild(secondaryNavbarWrapper);
+
+    // Add a class to identify it as part of the header
+    secondaryNavbarWrapper.classList.add('header-secondary-nav');
+  }
+
   // Optionally hide the mid-banner section since we've extracted its content
   // midBannerSection.style.display = 'none';
 }
