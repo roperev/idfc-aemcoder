@@ -24,7 +24,7 @@ export default function decorate(block) {
     }
   });
   // Optional: Only one open at a time
-  const footerAccordion = document.querySelector('.footer-accordion');
+  const footerAccordion = document.querySelector('footer .section.accordion-container:first-of-type');
   if (footerAccordion) {
     block.querySelectorAll('details').forEach((detail) => {
       detail.addEventListener('toggle', () => {
