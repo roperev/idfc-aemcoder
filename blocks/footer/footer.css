@@ -280,11 +280,11 @@ footer .footer>div .section:nth-child(4)>div p a {
   height: 100%;
 }
 
-.section.accordion-container:first-of-type .accordion details summary {
+.footer .section.accordion-container:first-of-type .accordion details summary {
   pointer-events: none;
 }
 
-.section.accordion-container:first-of-type .accordion details summary::after,
+.footer .section.accordion-container:first-of-type .accordion details summary::after,
 .footer .section.accordion-container:first-of-type .accordion-wrapper .accordion .accordion-item[open] .accordion-item-label::after {
   display: none;
 }
@@ -296,11 +296,11 @@ footer .footer>div .section:nth-child(4)>div p a {
     padding-top: 14px;
   }
 
-  .section.accordion-container:first-of-type .accordion details summary {
+  .footer .section.accordion-container:first-of-type .accordion details summary {
     pointer-events: all;
   }
 
-  .section.accordion-container:first-of-type .accordion details summary::after,
+  .footer .section.accordion-container:first-of-type .accordion details summary::after,
   .footer .section.accordion-container:first-of-type .accordion-wrapper .accordion .accordion-item[open] .accordion-item-label::after {
     display: block;
   }
