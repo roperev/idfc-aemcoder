@@ -1,4 +1,4 @@
-import "../accordion/accordion.js"
+import '../accordion/accordion.js';
 
 export default function decorate(block) {
   block.id = 'faqs';
@@ -72,9 +72,10 @@ export default function decorate(block) {
         item.classList.add('open');
         answer.style.maxHeight = 'none'; // temporarily unset
         // const height = answer.scrollHeight + 'px';
-        answer.style.maxHeight = '0';     // reset before transition
-        void answer.offsetHeight;         // force reflow
-        answer.style.maxHeight = "fit-content";  // animate to actual height
+        answer.style.maxHeight = '0'; // reset before transition
+        // eslint-disable-next-line no-void
+        void answer.offsetHeight; // force reflow
+        answer.style.maxHeight = 'fit-content'; // animate to actual height
       }
     });
   });

@@ -91,7 +91,7 @@ footer .footer ul {
   border: unset;
 }
 
-.footer .footer-accordion .accordion-wrapper .accordion .accordion-item-label {
+.footer .section.accordion-container:first-of-type .accordion-wrapper .accordion .accordion-item-label {
   border-bottom: 1px solid rgba(255, 255, 255, 0.21);
 }
 
@@ -280,12 +280,12 @@ footer .footer>div .section:nth-child(4)>div p a {
   height: 100%;
 }
 
-.footer-accordion .accordion details summary {
+.footer .section.accordion-container:first-of-type .accordion details summary {
   pointer-events: none;
 }
 
-.footer-accordion .accordion details summary::after,
-.footer .footer-accordion .accordion-wrapper .accordion .accordion-item[open] .accordion-item-label::after {
+.footer .section.accordion-container:first-of-type .accordion details summary::after,
+.footer .section.accordion-container:first-of-type .accordion-wrapper .accordion .accordion-item[open] .accordion-item-label::after {
   display: none;
 }
 
@@ -296,12 +296,12 @@ footer .footer>div .section:nth-child(4)>div p a {
     padding-top: 14px;
   }
 
-  .footer-accordion .accordion details summary {
+  .footer .section.accordion-container:first-of-type .accordion details summary {
     pointer-events: all;
   }
 
-  .footer-accordion .accordion details summary::after,
-  .footer .footer-accordion .accordion-wrapper .accordion .accordion-item[open] .accordion-item-label::after {
+  .footer .section.accordion-container:first-of-type .accordion details summary::after,
+  .footer .section.accordion-container:first-of-type .accordion-wrapper .accordion .accordion-item[open] .accordion-item-label::after {
     display: block;
   }
 
@@ -469,7 +469,7 @@ footer .footer>div .section:nth-child(4)>div p a {
     display: none;
   }
 
-  .footer .footer-accordion .accordion-wrapper .accordion .accordion-item-label {
+  .footer .section.accordion-container:first-of-type .accordion-wrapper .accordion .accordion-item-label {
     border-bottom: unset;
   }
 
