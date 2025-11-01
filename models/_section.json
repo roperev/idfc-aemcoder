@@ -65,6 +65,10 @@
             {
               "name": "Banner Breadcrumb",
               "value": "banner-breadcrumb"
+            },
+            {
+              "name": "Top Nav Menu (special section)",
+              "value": "top-nav"
             }
           ]
         }

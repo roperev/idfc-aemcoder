@@ -1263,12 +1263,15 @@ header.d-lg-none .top-nav-right ul li:last-child {
     display: flex;
     -ms-flex-align: center;
     align-items: center;
-    padding: 9px 65px;
+    
+    /* padding: 9px 65px; */
     background: #fff
 }
 
 .top-nav.bg-light-white {
-    padding: 0 70px
+    /* padding: 0 70px; */
+    background-color: #F5F5F5;
+
 }
 
 @media(max-width: 1024px) {
@@ -1362,7 +1365,7 @@ header.d-lg-none .top-nav-right ul li:last-child {
 
 .top-nav .top-nav-left .dropdown-content {
     left: 0;
-    top: 45px
+    top: 51px
 }
 
 .top-nav .top-nav-left .dropdown-content.menu-cardList-cnt {
