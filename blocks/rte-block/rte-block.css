@@ -21,7 +21,7 @@
 }
 
 .rte-block ol li{
-    color: #25243b;
+    color: var(--text-color);
     margin-bottom: 1rem;
 }
 

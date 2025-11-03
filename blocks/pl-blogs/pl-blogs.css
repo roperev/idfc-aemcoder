@@ -2,10 +2,6 @@
   display: flex;
 }
 
-/* .pl-blogs div:nth-child(1) div{
-  padding: 0 15px;
-} */
-/*  */
 .pl-blogs > div:first-child {
   display: flex;
   align-items: stretch;
@@ -66,7 +62,7 @@
 .pl-blogs div:nth-child(2) .button-container .button{
   padding: 0;
   margin: 0;
-  color: #9B1E26;
+  color: var(--dark-red-color);
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
@@ -141,14 +137,14 @@
 }
 
 .pl-blogs .swiper-blog .swiper-slide div div:nth-child(1) img{
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 8px 8px 0 0;
   object-fit: cover;
   width: 130px;
   height: 130px;
 }
 
 .pl-blogs .swiper-blog .swiper-slide div div:nth-child(2) p{
-  color: #25243B;
+  color: var(--text-color);
   font-size: 14px;
   font-weight: 600;
   line-height: normal;

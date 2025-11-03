@@ -1,10 +1,5 @@
-/* stylelint-disable */
-/* .overview-rte{
-    padding: 42px 0 23px 0;
-    background-color:#F5F5F5;
-} */
 .overview-rte .overview-rte-title {
-    color: #25243B;
+    color: var(--text-color);
     font-size: 21px;
     font-style: normal;
     font-weight: 600;
@@ -13,7 +8,7 @@
     margin-bottom: 12px;
 }
 .overview-rte .overview-rte-para,.overview-rte .overview-rte-hiddenPara  {
-    color: #25243B;
+    color: var(--text-color);
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
@@ -29,6 +24,6 @@
   color: #54565B;
   cursor: pointer;
   background-color: transparent!important;
-  padding: 0px;
+  padding: 0;
   width: max-content;
 }

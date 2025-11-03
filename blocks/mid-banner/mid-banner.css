@@ -25,7 +25,7 @@
 }
 
 .mid-banner .mb-card .mb-text .button-container a {
-    color: #9B1E26;
+    color: var(--dark-red-color);
     font-size: 16px;
     font-style: normal;
     font-weight: 600;

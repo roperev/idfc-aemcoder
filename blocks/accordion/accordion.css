@@ -16,18 +16,8 @@
   cursor: pointer;
   list-style: none;
   font-weight: 600;
-  /* background-color: #f9f9f9; */
   transition: background-color 0.2s ease;
 }
-
-/* .accordion details[open] summary {
-  background-color: var(--light-color, #eee);
-} */
-
-/* .accordion details summary:focus,
-.accordion details summary:hover {
-  background-color: var(--light-color, #eee);
-} */
 
 .accordion details summary::-webkit-details-marker {
   display: none;

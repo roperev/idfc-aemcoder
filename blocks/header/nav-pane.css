@@ -400,7 +400,7 @@ body {
 
 body {
   font: 14px 'Inter', sans-serif;
-  color: #25243B;
+  color: var(--text-color);
 }
 
 h1,
@@ -689,7 +689,7 @@ header.sticky .login a {
   }
 
   .top-nav .menu-mob .icon-menu:before {
-    color: #9b1e26
+    color: var(--dark-red-color)
   }
 }
 
@@ -881,7 +881,7 @@ header.sticky .login a {
 }
 
 .top-nav-right .right-nav>li .phone:hover .f10 {
-  color: #25243b
+  color: var(--text-color)
 }
 
 .top-nav-right .right-nav>li .phone .f10 {
@@ -1008,15 +1008,15 @@ header.sticky .login a {
   }
 
   .mob-menu .mob-smenu .flist li.viewAll a {
-    color: #9b1e26
+    color: var(--dark-red-color)
   }
 
   .mob-menu .mob-smenu .flist li a {
-    color: #25243b
+    color: var(--text-color)
   }
 
   .mob-menu .mob-smenu .flist li a.f16br {
-    color: #9b1e26
+    color: var(--dark-red-color)
   }
 
   .mob-menu .mob-smenu .flist li hr {
@@ -1354,7 +1354,7 @@ header.d-lg-none .top-nav-right ul li:last-child {
     }
 
     .top-nav .menu-mob .icon-menu::before {
-        color: #9b1e26
+        color: var(--dark-red-color)
     }
 }
 
