@@ -596,10 +596,6 @@ section.faq-accordion-container h4 {
     height: 160px;
   }
 
-    /* Add padding to main content to account for fixed header + secondary nav */
-    main {
-      padding-top: 210px; /* Approximate: 160px header + 50px secondary nav */
-    }
 }
 
 /* ANIMATIONS */

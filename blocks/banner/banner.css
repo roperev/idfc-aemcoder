@@ -1,1 +1,265 @@
-/* will be added wih issue 20 banner block */
+/* Banner Block Styles - Mobile First */
+
+/* Base styles for Mobile */
+
+.banner-container {
+  background-color: #000;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.banner-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.banner.block {
+  background-color: #000;
+  color: var(--background-color);
+  font-family: var(--body-font-family);
+  position: relative;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+/* Main content container */
+.banner-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  position: relative;
+  min-height: 600px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  z-index: 2;
+}
+
+/* Banner Heading */
+.banner-heading {
+  grid-row: 1;
+  margin-bottom: 20px;
+}
+
+.banner-heading-text {
+  font-size: 28px;
+  font-family: var(--heading-font-family);
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--background-color);
+  max-width: 100%;
+}
+
+/* CTA Containers */
+.banner-cta {
+  grid-row: 2;
+  margin-bottom: 15px;
+}
+
+/* Hide hr separators from composite multi-field */
+.cta-separator {
+  display: none;
+}
+
+/* CTA Headings */
+.cta-heading {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0 0 10px;
+  color: var(--background-color);
+}
+
+/* CTA Buttons - Base styles */
+.cta-button {
+  display: block;
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+  padding: 12px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  border: 2px solid var(--background-color);
+  margin-bottom: 15px;
+}
+
+/* CTA Button - Outlined style */
+.cta-button-outlined {
+  background-color: transparent;
+  color: var(--background-color);
+  border-color: var(--background-color);
+}
+
+.cta-button-outlined:hover {
+  background-color: var(--background-color);
+  color: #000;
+}
+
+/* CTA Button - Filled style (red/accent) */
+.cta-button-filled {
+  background-color: var(--red-color);
+  color: var(--background-color);
+  border-color: var(--red-color);
+}
+
+.cta-button-filled:hover {
+  background-color: var(--dark-red-color);
+  border-color: var(--dark-red-color);
+}
+
+/* Bottom Text - Sticks to bottom */
+.banner-bottom-text {
+  grid-row: 4;
+  align-self: end;
+  margin-top: 20px;
+}
+
+.banner-bottom-text-content {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--background-color);
+  max-width: 100%;
+}
+
+/* Desktop Image - Hidden on mobile */
+.banner-image-desktop {
+  display: none;
+}
+
+/* Mobile Image - Shows as background on mobile */
+.banner-image-mobile {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.banner-image-mobile .banner-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-image-mobile .banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.4;
+}
+
+/* Ensure content is above background image */
+.banner-heading,
+.banner-cta,
+.banner-bottom-text {
+  position: relative;
+  z-index: 3;
+}
+
+/* Tablet Styles */
+@media (width >= 601px) {
+  .banner.block {
+    min-height: 400px;
+  }
+
+  .banner-content {
+    padding: 40px 30px;
+    min-height: 400px;
+  }
+
+  .banner-heading {
+    margin-bottom: 30px;
+  }
+
+  .banner-heading-text {
+    font-size: 32px;
+    max-width: 500px;
+  }
+
+  .banner-cta {
+    margin-bottom: 20px;
+  }
+
+  .banner-bottom-text-content {
+    font-size: 14px;
+    max-width: 600px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    text-align: left;
+    width: auto;
+    max-width: none;
+  }
+
+  /* Show desktop image on tablet with reduced opacity */
+  .banner-image-desktop {
+    display: flex;
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 45%;
+    z-index: 1;
+    align-items: center;
+    justify-content: flex-end;
+    opacity: 0.8;
+  }
+
+  .banner-image-desktop .banner-picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .banner-image-desktop .banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Hide mobile image on tablet */
+  .banner-image-mobile {
+    display: none;
+  }
+
+  /* Content can be static on tablet/desktop */
+  .banner-heading,
+  .banner-cta,
+  .banner-bottom-text {
+    position: static;
+    z-index: auto;
+  }
+}
+
+/* Desktop Styles */
+@media (width >= 901px) {
+  .section.banner-container:has(.banner) {
+    margin-top: 32px;
+  }
+  
+  .banner.block {
+    min-height: 500px;
+  }
+
+  .banner-content {
+    padding: 60px 40px;
+    min-height: 500px;
+  }
+
+  .banner-heading-text {
+    font-size: 42px;
+    max-width: 600px;
+  }
+
+  /* Desktop image takes full 50% width with full opacity */
+  .banner-image-desktop {
+    width: 50%;
+    opacity: 1;
+  }
+}
