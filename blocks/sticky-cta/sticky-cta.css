@@ -1,0 +1,155 @@
+/* Sticky CTA Block Styles - Mobile First */
+
+/* Base styles for Mobile */
+
+.sticky-cta-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.sticky-cta-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.sticky-cta.block {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--background-color);
+  box-shadow: 0 -2px 10px rgba(0 0 0 / 10%);
+  z-index: 1000;
+  font-family: var(--body-font-family);
+}
+
+/* Main content container */
+.sticky-cta-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px 20px;
+  gap: 15px;
+}
+
+/* CTA Link Button */
+.sticky-cta-link {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: var(--red-color);
+  color: var(--background-color);
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+  border: 2px solid var(--red-color);
+}
+
+.sticky-cta-link:hover {
+  background-color: var(--dark-red-color);
+  border-color: var(--dark-red-color);
+}
+
+/* CTA Text */
+.sticky-cta-text {
+  flex: 1;
+  display: none; /* Hidden on mobile by default */
+}
+
+.sticky-cta-text-content {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* CTA Mobile Text - Shows on mobile */
+.sticky-cta-mobile-text {
+  flex: 1;
+}
+
+.sticky-cta-mobile-text-content {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* CTA Subtitle */
+.sticky-cta-subtitle {
+  display: none; /* Hidden on mobile */
+}
+
+.sticky-cta-subtitle-content {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+/* Tablet Styles */
+@media (width >= 601px) {
+  .sticky-cta-content {
+    padding: 15px 30px;
+    gap: 20px;
+  }
+
+  .sticky-cta-link {
+    padding: 14px 40px;
+    font-size: 16px;
+  }
+
+  .sticky-cta-text-content {
+    font-size: 16px;
+  }
+
+  .sticky-cta-mobile-text-content {
+    font-size: 16px;
+  }
+
+  .sticky-cta-subtitle {
+    display: block;
+  }
+
+  .sticky-cta-subtitle-content {
+    font-size: 13px;
+  }
+}
+
+/* Desktop Styles */
+@media (width >= 901px) {
+  .sticky-cta-content {
+    padding: 20px 40px;
+    gap: 30px;
+  }
+
+  /* Hide mobile text on desktop */
+  .sticky-cta-mobile-text {
+    display: none;
+  }
+
+  /* Show desktop text on desktop */
+  .sticky-cta-text {
+    display: block;
+  }
+
+  .sticky-cta-link {
+    padding: 15px 50px;
+    font-size: 16px;
+  }
+
+  .sticky-cta-text-content {
+    font-size: 18px;
+  }
+
+  .sticky-cta-subtitle-content {
+    font-size: 14px;
+  }
+}
+
