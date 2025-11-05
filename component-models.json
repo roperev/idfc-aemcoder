@@ -593,6 +593,43 @@
     "fields": []
   },
   {
+    "id": "sticky-cta",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "ctaUrl",
+        "label": "CTA URL",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaText",
+        "label": "CTA Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaId",
+        "label": "CTA ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaMobileText",
+        "label": "CTA Mobile Text"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "ctaSubtitle",
+        "label": "CTA Subtitle",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "swipper-card-item",
     "fields": [
       {
