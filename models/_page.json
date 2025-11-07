@@ -1,11 +1,12 @@
 {
   "models": [
     {
-      "id": "page",
+      "id": "page-metadata",
       "fields": [
         {
           "component": "text",
-          "name": "title",
+          "name": "jcr:title",
+          "valueType": "string",
           "label": "Title",
           "description": "Title of the page."
         },
