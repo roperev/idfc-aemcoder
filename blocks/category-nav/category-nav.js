@@ -6,6 +6,16 @@
 let unifiedNavBuilt = false;
 
 /**
+ * Reset the unified nav flag - used by editor-support.js when reloading
+ * @returns {void}
+ */
+export function resetUnifiedNavFlag() {
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav Block] Resetting unified nav flag for rebuild');
+  unifiedNavBuilt = false;
+}
+
+/**
  * Build a card from a category nav item row
  */
 function buildCardFromRow(row) {
@@ -86,8 +96,9 @@ function parseCategoryNavBlock(block) {
   const section = block.closest('.section');
   const textElements = section?.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
   let categoryName = 'Category';
-  
+
   // Find the first text element that's not inside the category-nav block
+  // eslint-disable-next-line no-restricted-syntax
   for (const el of textElements || []) {
     if (!block.contains(el)) {
       categoryName = el.textContent.trim();
@@ -109,7 +120,7 @@ function parseCategoryNavBlock(block) {
   return {
     title: categoryName,
     id: categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[&]/g, ''),
-    items
+    items,
   };
 }
 
@@ -199,51 +210,90 @@ function buildUnifiedNavigation(categoriesData) {
 export default function decorate(block) {
   // Only build the unified nav once, from the first block that loads
   if (unifiedNavBuilt) {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Block] Skipping - unified nav already built');
     // Hide subsequent blocks
     block.style.display = 'none';
     return;
   }
 
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav Block] Starting decoration - first block loading');
   unifiedNavBuilt = true;
 
   // Find ALL category-nav blocks on the page
   const allCategoryNavBlocks = document.querySelectorAll('.category-nav.block');
-  
-  console.log('Found category-nav blocks:', allCategoryNavBlocks.length);
+
+  // eslint-disable-next-line no-console
+  console.log(`[Category Nav Block] Found ${allCategoryNavBlocks.length} block(s) on page`);
 
   if (allCategoryNavBlocks.length === 0) {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Block] No blocks found, aborting');
     block.style.display = 'none';
     return;
   }
 
   // Parse data from all blocks
   const categoriesData = [];
-  allCategoryNavBlocks.forEach((navBlock) => {
+  allCategoryNavBlocks.forEach((navBlock, index) => {
     const categoryData = parseCategoryNavBlock(navBlock);
-    console.log('Parsed category:', categoryData);
+    // eslint-disable-next-line no-console
+    console.log(`[Category Nav Block] Block ${index + 1}: "${categoryData.title}" with ${categoryData.items.length} items`);
     if (categoryData.items.length > 0) {
       categoriesData.push(categoryData);
     }
   });
 
   if (categoriesData.length === 0) {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Block] No valid categories with items found');
     block.style.display = 'none';
     return;
   }
 
+  // eslint-disable-next-line no-console
+  console.log(`[Category Nav Block] Building unified navigation with ${categoriesData.length} categories`);
+
   // Build the unified navigation
   const unifiedNav = buildUnifiedNavigation(categoriesData);
 
-  // Create wrapper for the navigation
-  const categoryNavWrapper = document.createElement('div');
-  categoryNavWrapper.classList.add('category-nav-wrapper');
-  categoryNavWrapper.appendChild(unifiedNav);
+  // Find the wrapper that was created by scripts.js
+  let categoryNavWrapper = document.querySelector('.category-nav-wrapper[data-nav-placeholder="true"]');
 
-  // Insert into header
+  if (!categoryNavWrapper) {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Block] No placeholder wrapper found, creating one');
+    // If no placeholder wrapper exists, create one
+    categoryNavWrapper = document.createElement('div');
+    categoryNavWrapper.classList.add('category-nav-wrapper');
+    const main = document.querySelector('main');
+    if (main) {
+      main.insertBefore(categoryNavWrapper, main.firstChild);
+    } else {
+      // eslint-disable-next-line no-console
+      console.error('[Category Nav Block] Could not find main element to insert wrapper');
+    }
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Block] Found placeholder wrapper, populating it');
+  }
+
+  // Populate the wrapper with the unified navigation
+  categoryNavWrapper.innerHTML = '';
+  categoryNavWrapper.appendChild(unifiedNav);
+  categoryNavWrapper.removeAttribute('data-nav-placeholder');
+
+  // Move to header
   const navWrapper = document.querySelector('header.header-wrapper .nav-wrapper');
-  if (navWrapper) {
+  if (navWrapper && !navWrapper.contains(categoryNavWrapper)) {
     navWrapper.appendChild(categoryNavWrapper);
     categoryNavWrapper.classList.add('header-category-nav');
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Block] Moved navigation to header');
+  } else if (!navWrapper) {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Block] Header nav-wrapper not found, keeping navigation in main');
   }
 
   // Hide all the individual category-nav blocks in the main content
@@ -253,11 +303,14 @@ export default function decorate(block) {
     const section = navBlock.closest('.section');
     if (section) {
       const visibleContent = Array.from(section.children).filter(
-        (child) => child !== navBlock && !child.classList.contains('section-metadata') && child.textContent.trim() !== ''
+        (child) => child !== navBlock && !child.classList.contains('section-metadata') && child.textContent.trim() !== '',
       );
       if (visibleContent.length === 0) {
         section.style.display = 'none';
       }
     }
   });
+
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav Block] Decoration complete - navigation is ready');
 }

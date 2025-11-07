@@ -1,0 +1,24 @@
+{
+  "models": [
+    {
+      "id": "page",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Title",
+          "description": "Title of the page."
+        },
+        {
+          "component": "aem-content",
+          "name": "category-nav",
+          "label": "Category Nav",
+          "valueType": "string",
+          "validation": {
+            "rootPath": "/content/idfc-edge/framework"
+          }
+        }
+      ]
+    }
+  ]
+}

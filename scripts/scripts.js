@@ -513,46 +513,50 @@ async function loadEager(doc) {
 }
 
 /**
- * Auto-inject category navbar if mid-banner section exists
+ * Create category navbar wrapper at top of page
+ * The actual navigation will be built by category-nav.js which collects all category-nav blocks
+ *
+ * Category nav content can come from:
+ * 1. Page-level aem-content field (defined in _page.json) that references a fragment
+ *    - The fragment is injected as sections/blocks directly into main
+ * 2. Directly authored category-nav blocks on the page
+ *
  * @param {Element} main The main element
  */
 async function loadCategoryNav(main) {
-  const midBannerSection = document.querySelector('.section.mid-banner');
-  if (!midBannerSection) return;
+  // Check if there are any category-nav blocks on the page
+  // These could be from:
+  // - A fragment referenced by the page-level "category-nav" aem-content field
+  // - Direct authoring of category-nav blocks on the page
+  const categoryNavBlocks = main.querySelectorAll('.category-nav');
 
-  // Create category-nav block
-  const categoryNavBlock = document.createElement('div');
-  categoryNavBlock.classList.add('category-nav-wrapper');
+  if (categoryNavBlocks.length === 0) {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav] No category-nav blocks found on page');
+    return;
+  }
 
-  const categoryNav = document.createElement('div');
-  categoryNav.classList.add('category-nav', 'block');
-  categoryNav.setAttribute('data-block-name', 'category-nav');
-  categoryNav.setAttribute('data-block-status', 'initialized');
+  // eslint-disable-next-line no-console
+  console.log(`[Category Nav] Found ${categoryNavBlocks.length} block(s), initializing wrapper`);
 
-  categoryNavBlock.appendChild(categoryNav);
+  // Create category-nav wrapper at the top of main
+  const categoryNavWrapper = document.createElement('div');
+  categoryNavWrapper.classList.add('category-nav-wrapper');
+  categoryNavWrapper.setAttribute('data-nav-placeholder', 'true');
 
   // Insert at the top of main
-  main.insertBefore(categoryNavBlock, main.firstChild);
+  main.insertBefore(categoryNavWrapper, main.firstChild);
 
-  // Load and decorate the block
+  // Load CSS for the category nav
   const blockName = 'category-nav';
-  const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
-  const decorationComplete = new Promise((resolve) => {
-    (async () => {
-      try {
-        const mod = await import(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.js`);
-        if (mod.default) {
-          await mod.default(categoryNav);
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(`failed to load module for ${blockName}`, error);
-      }
-      resolve();
-    })();
-  });
-  await Promise.all([cssLoaded, decorationComplete]);
-  categoryNav.setAttribute('data-block-status', 'loaded');
+  try {
+    await loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav] CSS loaded, wrapper ready for population by category-nav.js');
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('[Category Nav] Failed to load CSS:', error);
+  }
 }
 
 /**
@@ -570,6 +574,9 @@ async function loadLazy(doc) {
 
   // Load header first so nav-wrapper is available for category navbar
   await loadHeader(doc.querySelector('header'));
+
+  // Create category navbar wrapper (populated later by category-nav.js)
+  await loadCategoryNav(main);
 
   loadFooter(doc.querySelector('footer'));
 
