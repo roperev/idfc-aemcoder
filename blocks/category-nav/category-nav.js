@@ -120,29 +120,60 @@ function parseCategoryNavBlock(block) {
     }
   }
 
-  // Extract eyebrow-title and link from the first row (category-nav level fields)
+  // Extract eyebrow-title, link, and linkText from block structure
   const rows = Array.from(block.children);
   let eyebrowTitle = '';
   let linkText = '';
   let linkUrl = '';
 
-  // First row contains eyebrow-title and link
-  if (rows.length > 0) {
-    const firstRowCells = Array.from(rows[0].children);
-    eyebrowTitle = firstRowCells[0]?.textContent?.trim() || '';
-    const linkCell = firstRowCells[1];
-    linkUrl = linkCell?.querySelector('a')?.href || linkCell?.textContent?.trim() || '';
-    linkText = linkCell?.querySelector('a')?.textContent?.trim() || linkCell?.textContent?.trim() || '';
+  // Debug: log first few rows to understand structure
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav] Block rows:', rows.length);
+  rows.slice(0, 4).forEach((row, idx) => {
+    const cells = Array.from(row.children);
+    // eslint-disable-next-line no-console
+    console.log(`[Category Nav] Row ${idx} cells:`, cells.length, cells.map((c) => c.textContent?.trim()));
+  });
+
+  // Category-level fields are in separate rows with 1 cell each at the top
+  // Row 0: eyebrow-title (1 cell)
+  // Row 1: link URL (1 cell)
+  // Row 2: linkText (1 cell) - optional
+  // Remaining rows: card items (9 cells each)
+  let metadataRowCount = 0;
+
+  if (rows.length > 0 && rows[0].children.length === 1) {
+    eyebrowTitle = rows[0].children[0]?.textContent?.trim() || '';
+    metadataRowCount = 1;
   }
 
-  // Get all the category nav items (rows in the block table, starting from row 1)
-  // Skip the first row as it contains the category-level fields
+  if (rows.length > 1 && rows[1].children.length === 1) {
+    const linkCell = rows[1].children[0];
+    linkUrl = linkCell?.querySelector('a')?.href || linkCell?.textContent?.trim() || '';
+    metadataRowCount = 2;
+  }
+
+  if (rows.length > 2 && rows[2].children.length === 1) {
+    linkText = rows[2].children[0]?.textContent?.trim() || '';
+    metadataRowCount = 3;
+  }
+
+  // Get all the category nav items (rows in the block table)
+  // Skip metadata rows and start from the first card item (9-cell rows)
   const items = [];
-  rows.slice(1).forEach((row) => {
+  rows.slice(metadataRowCount).forEach((row) => {
     const card = buildCardFromRow(row);
     if (card) {
       items.push(card);
     }
+  });
+
+  // eslint-disable-next-line no-console
+  console.log(`[Category Nav] Parsed category "${categoryName}":`, {
+    eyebrowTitle,
+    linkText,
+    linkUrl,
+    itemCount: items.length,
   });
 
   return {
