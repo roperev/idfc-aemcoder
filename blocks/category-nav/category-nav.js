@@ -26,25 +26,32 @@ function buildCardFromRow(row) {
   card.classList.add('gradientCard', 'category-nav-card');
 
   // Extract data from cells
+  // Order matches _category-nav.json model:
+  // title, link, card-bg, tag1, tag1-bg, tag2, tag2-bg, tag3, tag3-bg
   const title = cells[0]?.textContent?.trim() || '';
   const link = cells[1]?.querySelector('a')?.href || cells[1]?.textContent?.trim() || '#';
-  const tag1 = cells[2]?.textContent?.trim() || '';
-  const tag1BgColor = cells[3]?.textContent?.trim() || '';
-  const tag2 = cells[4]?.textContent?.trim() || '';
-  const tag2BgColor = cells[5]?.textContent?.trim() || '';
-  const tag3 = cells[6]?.textContent?.trim() || '';
-  const tag3BgColor = cells[7]?.textContent?.trim() || '';
-  const cardBgColor = cells[8]?.textContent?.trim() || '';
+  const cardBgColor = cells[2]?.textContent?.trim() || '';
+  const tag1 = cells[3]?.textContent?.trim() || '';
+  const tag1BgColor = cells[4]?.textContent?.trim() || '';
+  const tag2 = cells[5]?.textContent?.trim() || '';
+  const tag2BgColor = cells[6]?.textContent?.trim() || '';
+  const tag3 = cells[7]?.textContent?.trim() || '';
+  const tag3BgColor = cells[8]?.textContent?.trim() || '';
+
+  // Skip rows without a title - they're likely headers or empty rows
+  if (!title) {
+    return null;
+  }
 
   // Add data attributes for easier targeting
-  if (title) card.setAttribute('data-card-title', title);
+  card.setAttribute('data-card-title', title);
   if (cardBgColor) card.setAttribute('data-card-gradient', cardBgColor);
 
   // Add card background color
   if (cardBgColor) {
     card.classList.add(cardBgColor);
   } else {
-    card.classList.add('gradient-p1');
+    card.classList.add('default-tan-gradient');
   }
 
   const cardLink = document.createElement('a');
@@ -113,11 +120,25 @@ function parseCategoryNavBlock(block) {
     }
   }
 
-  // Get all the category nav items (rows in the block table)
-  const items = [];
+  // Extract eyebrow-title and link from the first row (category-nav level fields)
   const rows = Array.from(block.children);
+  let eyebrowTitle = '';
+  let linkText = '';
+  let linkUrl = '';
 
-  rows.forEach((row) => {
+  // First row contains eyebrow-title and link
+  if (rows.length > 0) {
+    const firstRowCells = Array.from(rows[0].children);
+    eyebrowTitle = firstRowCells[0]?.textContent?.trim() || '';
+    const linkCell = firstRowCells[1];
+    linkUrl = linkCell?.querySelector('a')?.href || linkCell?.textContent?.trim() || '';
+    linkText = linkCell?.querySelector('a')?.textContent?.trim() || linkCell?.textContent?.trim() || '';
+  }
+
+  // Get all the category nav items (rows in the block table, starting from row 1)
+  // Skip the first row as it contains the category-level fields
+  const items = [];
+  rows.slice(1).forEach((row) => {
     const card = buildCardFromRow(row);
     if (card) {
       items.push(card);
@@ -127,6 +148,9 @@ function parseCategoryNavBlock(block) {
   return {
     title: categoryName,
     id: categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[&]/g, ''),
+    eyebrowTitle,
+    linkText,
+    linkUrl,
     items,
   };
 }
@@ -145,10 +169,22 @@ function buildDropdown(categoryData) {
   const hdBx = document.createElement('div');
   hdBx.classList.add('hd-bx', 'category-nav-dropdown-header');
 
-  const h4 = document.createElement('p');
-  h4.classList.add('hd-bx-h4', 'category-nav-dropdown-title');
-  h4.textContent = categoryData.title;
-  hdBx.appendChild(h4);
+  // Left side: Eyebrow title
+  if (categoryData.eyebrowTitle) {
+    const eyebrowText = document.createElement('p');
+    eyebrowText.classList.add('hd-bx-eyebrow', 'category-nav-eyebrow-title');
+    eyebrowText.textContent = categoryData.eyebrowTitle;
+    hdBx.appendChild(eyebrowText);
+  }
+
+  // Right side: Link
+  if (categoryData.linkText && categoryData.linkUrl) {
+    const linkElement = document.createElement('a');
+    linkElement.classList.add('hd-bx-link', 'category-nav-explore-link');
+    linkElement.href = categoryData.linkUrl;
+    linkElement.textContent = categoryData.linkText;
+    hdBx.appendChild(linkElement);
+  }
 
   dropdown.appendChild(hdBx);
 

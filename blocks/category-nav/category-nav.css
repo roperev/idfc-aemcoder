@@ -74,15 +74,14 @@
   position: absolute;
   top: 100%;
   left: 50%;
-
-  /* transform: translateX(-50%); */
   margin-top: 8px;
   border-radius: 0 8px 8px;
   box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
   background: #fff;
   border: 1px solid #e0e0e0;
-  min-width: 720px;
-  max-height: 320px;
+  min-width: 860px;
+  max-width: 860px;
+  max-height: 600px;
   overflow-y: auto;
   z-index: 1000;
 }
@@ -101,6 +100,46 @@
   background: #fafafa;
 }
 
+/* Eyebrow title - left side of header */
+.category-nav-eyebrow-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Explore link - right side of header */
+.category-nav-explore-link {
+  color: var(--dark-red-color);
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.category-nav-explore-link:hover {
+  text-decoration: underline;
+}
+
+/* Add arrow to the explore link */
+.category-nav-explore-link::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--dark-red-color);
+  border-bottom: 2px solid var(--dark-red-color);
+  transform: rotate(-45deg);
+  transition: transform 0.2s ease;
+}
+
+.category-nav-explore-link:hover::after {
+  transform: rotate(-45deg) translateX(2px);
+}
+
+/* Legacy support for old header styles */
 .hd-bx-h4 {
   margin: 0;
   font-size: 15px;
@@ -121,9 +160,9 @@
 
 /* Menu Card List */
 .menu-cardList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
   padding: 20px 24px;
 }
 
@@ -133,76 +172,105 @@
 
 /* Gradient Cards */
 .gradientCard {
-  flex: 0 0 calc(50% - 5px);
   min-width: 0;
 }
 
 .gradientCard a {
   display: block;
-  padding: 14px 16px;
-  border-radius: 6px;
-  background: #fff;
-  border: 1px solid #e8e8e8;
+  position: relative;
+  min-height: 100px;
+  padding: 12px 14px 14px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  border: 1px solid #e0e0e0;
   text-decoration: none;
   transition: all 0.2s ease;
+  overflow: hidden;
 }
 
 .gradientCard a:hover {
   border-color: var(--dark-red-color);
-  box-shadow: 0 2px 8px rgb(157 29 39 / 10%);
-  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(157 29 39 / 15%);
+  transform: translateY(-2px);
 }
 
 /* Card Tags */
-.tags {
+.category-nav-card .category-nav-tags {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 5px;
   flex-wrap: wrap;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+  align-items: center;
 }
 
-.tag {
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 500;
+/* Hide empty tags containers */
+.category-nav-card .category-nav-tags:empty,
+.category-nav-card .category-nav-tags[style*="display: none"] {
+  margin-bottom: 10px;
+}
+
+.category-nav-card .category-nav-tag {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 9px;
+  font-weight: 700;
   color: #fff;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 15%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 18px;
+}
+
+/* Remove the red arrow pseudo-element from tags (override nav-pane.css) */
+.category-nav-card a .category-nav-tag::before,
+.category-nav-card a .category-nav-tag::after {
+  content: none;
+  display: none;
 }
 
 /* Tag Background Colors */
-.tag.tg-clr-dark-red { background-color: var(--dark-red-color); } /* Dark Red (brand color) */
-.tag.tg-clr-green { background-color: #4caf50; } /* Green */
-.tag.tg-clr-orange { background-color: #ff9800; } /* Orange */
-.tag.tg-clr-blue { background-color: #2196f3; } /* Blue */
-.tag.tg-clr-purple { background-color: #9c27b0; } /* Purple */
-.tag.tg-clr-cyan { background-color: #00bcd4; } /* Cyan */
-.tag.tg-clr-light-green { background-color: #8bc34a; } /* Light Green */
-.tag.tg-clr-deep-orange { background-color: #ff5722; } /* Deep Orange */
+.category-nav-card .category-nav-tag.tg-clr-dark-red { background-color: #d32f2f; }
+.category-nav-card .category-nav-tag.tg-clr-green { background-color: #43a047; }
+.category-nav-card .category-nav-tag.tg-clr-orange { background-color: #fb8c00; }
+.category-nav-card .category-nav-tag.tg-clr-blue { background-color: #1e88e5; }
+.category-nav-card .category-nav-tag.tg-clr-purple { background-color: #8e24aa; }
+.category-nav-card .category-nav-tag.tg-clr-cyan { background-color: #00acc1; }
+.category-nav-card .category-nav-tag.tg-clr-light-green { background-color: #7cb342; }
+.category-nav-card .category-nav-tag.tg-clr-deep-orange { background-color: #f4511e; }
 
 /* Card Title */
-.gradientCard .title {
+.category-nav-card .category-nav-card-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #333;
   font-size: 13px;
-  font-weight: 400;
-  line-height: 1.5;
+  font-weight: 500;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+  padding-top: 4px;
 }
 
-.gradientCard a:hover .title {
+.category-nav-card a:hover .category-nav-card-title {
   color: var(--dark-red-color);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* Icon Right Arrow */
-.icon-Right {
-  width: 16px;
-  height: 16px;
+.category-nav-card .category-nav-card-icon {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: var(--light-color);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
+  background: #fff;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,27 +278,48 @@
   transition: all 0.2s ease;
 }
 
-.gradientCard a:hover .icon-Right {
+.category-nav-card a:hover .category-nav-card-icon {
   background: var(--dark-red-color);
-  box-shadow: 0 2px 4px rgb(157 29 39 / 20%);
+  box-shadow: 0 2px 6px rgb(157 29 39 / 25%);
 }
 
-.icon-Right::after {
+.category-nav-card .category-nav-card-icon::after {
   content: '';
   display: block;
-  width: 5px;
-  height: 5px;
-  border-right: 1.5px solid #666;
-  border-bottom: 1.5px solid #666;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid #666;
+  border-bottom: 2px solid #666;
   transform: rotate(-45deg);
   transition: border-color 0.2s ease;
 }
 
-.gradientCard a:hover .icon-Right::after {
+.category-nav-card a:hover .category-nav-card-icon::after {
   border-color: #fff;
 }
 
-/* Gradient Card Variants - subtle backgrounds */
+/* Gradient Card Variants - Card background gradients */
+.gradientCard.default-tan-gradient a {
+  background: linear-gradient(135deg, #f9f7f3 0%, #ede8df 100%);
+}
+
+.gradientCard.gradient-red a {
+  background: linear-gradient(135deg, #ffe5e7 0%, #ffd1d4 100%);
+}
+
+.gradientCard.gradient-blue a {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+}
+
+.gradientCard.gradient-pewter a {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+}
+
+.gradientCard.gradient-silver a {
+  background: linear-gradient(135deg, #fafafa 0%, #e8e8e8 100%);
+}
+
+/* Legacy gradient support */
 .gradientCard.gradient-p1 a,
 .gradientCard.gradient-p2 a,
 .gradientCard.gradient-p3 a,
@@ -238,7 +327,7 @@
 .gradientCard.gradient-select a,
 .gradientCard.gradient-wealth a,
 .gradientCard.gradient-private a {
-  background: #fff;
+  background: linear-gradient(135deg, #f9f7f3 0%, #ede8df 100%);
 }
 
 /* Mobile Responsiveness */
@@ -250,7 +339,12 @@
 
 @media (width >= 900px) and (width < 1200px) {
   .dropdown-content {
-    min-width: 600px;
+    min-width: 720px;
+    max-width: 720px;
+  }
+
+  .menu-cardList {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .category-nav-left {
@@ -259,6 +353,13 @@
 
   .tabs-pane-js {
     padding: 0 24px;
+  }
+}
+
+@media (width >= 1200px) and (width < 1440px) {
+  .dropdown-content {
+    min-width: 800px;
+    max-width: 800px;
   }
 }
 
