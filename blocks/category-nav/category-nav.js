@@ -218,39 +218,27 @@ function buildUnifiedNavigation(categoriesData) {
 }
 
 /**
- * Check if we're editing a framework page in Universal Editor
- * @returns {boolean} True if editing a framework page
+ * Check if we're viewing a framework page (either in Universal Editor or directly)
+ * Framework pages are template/fragment pages and should display their raw content
+ * @returns {boolean} True if viewing a framework page
  */
 function isEditingFrameworkPage() {
-  // Check if we're in Universal Editor (page is in an iframe)
-  const inEditor = window.location !== window.parent.location;
-  
-  // Log all URL information for debugging
-  // eslint-disable-next-line no-console
-  console.log('[Category Nav - Framework Check] Full URL:', window.location.href);
-  // eslint-disable-next-line no-console
-  console.log('[Category Nav - Framework Check] Pathname:', window.location.pathname);
-  // eslint-disable-next-line no-console
-  console.log('[Category Nav - Framework Check] In Editor (iframe):', inEditor);
-  
   // Check if current path is in the framework folder
   // The path could be /framework/* or /content/idfc-edge/framework/*
   const isFrameworkPath = window.location.pathname.includes('/framework/');
-  
-  // eslint-disable-next-line no-console
-  console.log('[Category Nav - Framework Check] Is Framework Path:', isFrameworkPath);
-  // eslint-disable-next-line no-console
-  console.log('[Category Nav - Framework Check] Should Skip:', inEditor && isFrameworkPath);
-  
-  return inEditor && isFrameworkPath;
+
+  if (isFrameworkPath) {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav] Skipping framework page:', window.location.pathname);
+  }
+
+  return isFrameworkPath;
 }
 
 export default function decorate(block) {
-  // Skip decoration when editing framework pages in Universal Editor
-  // This allows content authors to see and edit individual blocks
+  // Skip decoration when viewing framework pages
+  // Framework pages are templates/fragments and should display their raw content
   if (isEditingFrameworkPage()) {
-    // eslint-disable-next-line no-console
-    console.log('[Category Nav Block] Skipping decoration - editing framework page in Universal Editor');
     return;
   }
 
