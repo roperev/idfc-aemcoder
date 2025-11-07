@@ -40,19 +40,19 @@
           "component": "text",
           "name": "eyebrow-title",
           "label": "Eyebrow Title",
-          "description": "Eyebrow title of the category navigation."
-        },
-        {
-          "component": "text",
-          "name": "link-description-display-text",
-          "label": "Link Description Display Text",
-          "description": "Link description display text of the category navigation."
+          "description": "Eyebrow title of the category navigation drop-down panel"
         },
         {
           "component": "text",
           "name": "link",
           "label": "Link",
-          "description": "Link of the category navigation panel (top-right corner)"
+          "description": "Link of the category navigation drop-down panel (top-right corner)"
+        },
+        {
+          "component": "text",
+          "name": "linkText",
+          "label": "Link Description Display Text",
+          "description": "Link description display text of the category navigation drop-down panel (top-right corner)"
         }
       ]
     },
