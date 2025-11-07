@@ -571,10 +571,6 @@ async function loadLazy(doc) {
   // Load header first so nav-wrapper is available for category navbar
   await loadHeader(doc.querySelector('header'));
 
-  // Auto-inject category navbar if mid-banner section exists
-  // Must load after header so it can move itself into the header structure
-  await loadCategoryNav(main);
-
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
