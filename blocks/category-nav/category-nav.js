@@ -224,9 +224,24 @@ function buildUnifiedNavigation(categoriesData) {
 function isEditingFrameworkPage() {
   // Check if we're in Universal Editor (page is in an iframe)
   const inEditor = window.location !== window.parent.location;
+  
+  // Log all URL information for debugging
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav - Framework Check] Full URL:', window.location.href);
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav - Framework Check] Pathname:', window.location.pathname);
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav - Framework Check] In Editor (iframe):', inEditor);
+  
   // Check if current path is in the framework folder
-  const isFrameworkPath = window.location.pathname.startsWith('/framework');
-
+  // The path could be /framework/* or /content/idfc-edge/framework/*
+  const isFrameworkPath = window.location.pathname.includes('/framework/');
+  
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav - Framework Check] Is Framework Path:', isFrameworkPath);
+  // eslint-disable-next-line no-console
+  console.log('[Category Nav - Framework Check] Should Skip:', inEditor && isFrameworkPath);
+  
   return inEditor && isFrameworkPath;
 }
 
