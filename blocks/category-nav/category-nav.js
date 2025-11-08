@@ -23,7 +23,7 @@ function buildCardFromRow(row) {
   if (cells.length === 0) return null;
 
   const card = document.createElement('div');
-  card.classList.add('gradientCard', 'category-nav-card');
+  card.classList.add('category-nav-card');
 
   // Extract data from cells
   // Order matches _category-nav.json model:
@@ -61,7 +61,7 @@ function buildCardFromRow(row) {
 
   // Tags container
   const tagsContainer = document.createElement('div');
-  tagsContainer.classList.add('tags', 'category-nav-tags');
+  tagsContainer.classList.add('category-nav-tags');
 
   // Add tags if they exist
   const tags = [];
@@ -72,7 +72,7 @@ function buildCardFromRow(row) {
   if (tags.length > 0) {
     tags.forEach((tag, index) => {
       const tagSpan = document.createElement('span');
-      tagSpan.classList.add('tag', 'category-nav-tag');
+      tagSpan.classList.add('category-nav-tag');
       // Only add color class if it exists and doesn't contain spaces
       if (tag.colorClass && tag.colorClass.trim() && !tag.colorClass.includes(' ')) {
         tagSpan.classList.add(tag.colorClass);
@@ -89,11 +89,11 @@ function buildCardFromRow(row) {
 
   // Card title
   const titleDiv = document.createElement('div');
-  titleDiv.classList.add('title', 'category-nav-card-title');
+  titleDiv.classList.add('category-nav-card-title');
   titleDiv.textContent = title;
 
   const iconSpan = document.createElement('span');
-  iconSpan.classList.add('icon-Right', 'category-nav-card-icon');
+  iconSpan.classList.add('category-nav-card-icon');
   titleDiv.appendChild(iconSpan);
 
   cardLink.appendChild(titleDiv);
@@ -179,9 +179,10 @@ function parseCategoryNavBlock(block) {
   // eslint-disable-next-line no-console
   console.log(`[Category Nav] Parsed category "${categoryName}":`, {
     eyebrowTitle,
-    linkText,
     linkUrl,
+    linkText,
     itemCount: items.length,
+    metadataRowCount,
   });
 
   return {
@@ -201,17 +202,17 @@ function buildDropdown(categoryData) {
   if (!categoryData.items || categoryData.items.length === 0) return null;
 
   const dropdown = document.createElement('div');
-  dropdown.classList.add('dropdown-content', 'animated', 'fadeIn', 'menu-cardList-cnt', 'category-nav-dropdown');
+  dropdown.classList.add('category-nav-dropdown');
   dropdown.setAttribute('data-category', categoryData.id);
 
   // Header box
   const hdBx = document.createElement('div');
-  hdBx.classList.add('hd-bx', 'category-nav-dropdown-header');
+  hdBx.classList.add('category-nav-dropdown-header');
 
   // Left side: Eyebrow title
   if (categoryData.eyebrowTitle) {
     const eyebrowText = document.createElement('p');
-    eyebrowText.classList.add('hd-bx-eyebrow', 'category-nav-eyebrow-title');
+    eyebrowText.classList.add('category-nav-eyebrow-title');
     eyebrowText.textContent = categoryData.eyebrowTitle;
     hdBx.appendChild(eyebrowText);
   }
@@ -219,7 +220,7 @@ function buildDropdown(categoryData) {
   // Right side: Link
   if (categoryData.linkText && categoryData.linkUrl) {
     const linkElement = document.createElement('a');
-    linkElement.classList.add('hd-bx-link', 'category-nav-explore-link');
+    linkElement.classList.add('category-nav-explore-link');
     linkElement.href = categoryData.linkUrl;
     linkElement.textContent = categoryData.linkText;
     hdBx.appendChild(linkElement);
@@ -229,7 +230,7 @@ function buildDropdown(categoryData) {
 
   // Build card list
   const menuCardList = document.createElement('div');
-  menuCardList.classList.add('menu-cardList', 'MT15', 'category-nav-cards-container');
+  menuCardList.classList.add('category-nav-cards-container');
 
   categoryData.items.forEach((card) => {
     menuCardList.appendChild(card);
@@ -257,7 +258,7 @@ function buildUnifiedNavigation(categoriesData) {
 
   categoriesData.forEach((category) => {
     const li = document.createElement('li');
-    li.classList.add('drop-down', 'all-drop-down', 'category-nav-item');
+    li.classList.add('category-nav-item');
     li.setAttribute('data-header-gtm', category.title);
     li.setAttribute('data-category', category.id);
 
