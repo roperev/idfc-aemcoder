@@ -44,16 +44,16 @@
         },
         {
           "component": "text",
-          "name": "link",
+          "name": "explore-link",
           "label": "Explore Link",
           "description": "Link for exploring the category collection (top-right corner)",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "link_text",
-          "label": "Link Description Display Text",
-          "description": "Link description display text for the explore link (top-right corner)",
+          "name": "explore-link-description",
+          "label": "Explore Link Description",
+          "description": "Link description text for the explore link (top-right corner)",
           "valueType": "string"
         }
       ]
