@@ -136,9 +136,8 @@ function parseCategoryNavBlock(block) {
   });
 
   // Category-level fields are in separate rows with 1 cell each at the top
-  // Row 0: eyebrow-title (1 cell)
-  // Row 1: link URL (1 cell)
-  // Row 2: linkText (1 cell) - optional
+  // Row 0: eyebrow-title (1 cell, plain text)
+  // Row 1: link (1 cell, contains <a> with href and text)
   // Remaining rows: card items (9 cells each)
   let metadataRowCount = 0;
 
@@ -149,13 +148,15 @@ function parseCategoryNavBlock(block) {
 
   if (rows.length > 1 && rows[1].children.length === 1) {
     const linkCell = rows[1].children[0];
-    linkUrl = linkCell?.querySelector('a')?.href || linkCell?.textContent?.trim() || '';
+    const linkAnchor = linkCell?.querySelector('a');
+    if (linkAnchor) {
+      linkUrl = linkAnchor.href || '';
+      linkText = linkAnchor.textContent?.trim() || '';
+    } else {
+      // Fallback if no anchor tag
+      linkUrl = linkCell?.textContent?.trim() || '';
+    }
     metadataRowCount = 2;
-  }
-
-  if (rows.length > 2 && rows[2].children.length === 1) {
-    linkText = rows[2].children[0]?.textContent?.trim() || '';
-    metadataRowCount = 3;
   }
 
   // Get all the category nav items (rows in the block table)

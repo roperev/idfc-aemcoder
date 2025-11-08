@@ -323,16 +323,21 @@
         "description": "Eyebrow title of the category navigation drop-down panel"
       },
       {
-        "component": "text",
+        "component": "reference",
         "name": "link",
-        "label": "Link",
-        "description": "Link of the category navigation drop-down panel (top-right corner)"
+        "label": "Explore Link",
+        "description": "Link for exploring the category collection (top-right corner)",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/idfc-edge"
+        }
       },
       {
         "component": "text",
-        "name": "linkText",
+        "name": "link_text",
         "label": "Link Description Display Text",
-        "description": "Link description display text of the category navigation drop-down panel (top-right corner)"
+        "description": "Link description display text for the explore link (top-right corner)",
+        "valueType": "string"
       }
     ]
   },
