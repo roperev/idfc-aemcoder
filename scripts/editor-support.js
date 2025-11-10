@@ -7,9 +7,10 @@ import {
   loadBlock,
   loadSections,
   loadCSS,
+  getMetadata,
 } from './aem.js';
 import { decorateRichtext } from './editor-support-rte.js';
-import { decorateMain } from './scripts.js';
+import { decorateMain, loadFragment } from './scripts.js';
 
 /**
  * Reload category navigation after main content updates
@@ -72,6 +73,19 @@ async function reloadCategoryNav(main) {
   }
   // eslint-disable-next-line no-console
   console.log('[Category Nav Editor] Category navigation reload complete');
+
+  // Clean up: Remove the fragment sections from main
+  // These were injected from the fragment but are no longer needed
+  const categoryNavSections = main.querySelectorAll('.category-nav-container');
+  if (categoryNavSections.length > 0) {
+    // eslint-disable-next-line no-console
+    console.log(`[Category Nav Editor] Removing ${categoryNavSections.length} fragment section(s) from main`);
+    categoryNavSections.forEach((section) => {
+      section.remove();
+    });
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Editor] Fragment sections cleaned up');
+  }
 }
 
 async function applyChanges(event) {
@@ -95,6 +109,65 @@ async function applyChanges(event) {
       const newMain = parsedUpdate.querySelector(`[data-aue-resource="${resource}"]`);
       newMain.style.display = 'none';
       element.insertAdjacentElement('afterend', newMain);
+
+      // Load category-nav fragment from page metadata BEFORE decorating
+      // This handles when content authors change the category-nav page property
+      const categoryNavPath = getMetadata('category-nav', parsedUpdate);
+      if (categoryNavPath) {
+        // eslint-disable-next-line no-console
+        console.log(`[Category Nav Editor] Loading fragment from metadata: ${categoryNavPath}`);
+        try {
+          const fragment = await loadFragment(categoryNavPath);
+          if (fragment) {
+            const fragmentSections = fragment.querySelectorAll(':scope > .section');
+            // eslint-disable-next-line no-console
+            console.log(`[Category Nav Editor] Injecting ${fragmentSections.length} section(s) from fragment`);
+            const { firstChild } = newMain;
+            fragmentSections.forEach((section) => {
+              const sectionClone = section.cloneNode(true);
+
+              // Add semantic classes to sections containing category-nav blocks
+              const categoryNavBlock = sectionClone.querySelector('.category-nav');
+              if (categoryNavBlock) {
+                // Remove the fragment-block marker so it can be loaded on the page
+                categoryNavBlock.removeAttribute('data-fragment-block');
+                // Reset block status so it can be loaded explicitly later
+                categoryNavBlock.dataset.blockStatus = '';
+
+                sectionClone.classList.add('category-nav-section');
+
+                const titleWrapper = sectionClone.querySelector('.default-content-wrapper');
+                if (titleWrapper) {
+                  titleWrapper.classList.add('category-title-wrapper');
+                  const titleElement = titleWrapper.querySelector('p, h1, h2, h3, h4, h5, h6');
+                  if (titleElement) {
+                    titleElement.classList.add('category-title');
+                    const categoryName = titleElement.textContent.trim();
+                    sectionClone.setAttribute('data-category-name', categoryName);
+                    // eslint-disable-next-line no-console
+                    console.log(`[Category Nav Editor] Tagged section with category: ${categoryName}`);
+                  }
+                }
+
+                const blockWrapper = sectionClone.querySelector('.category-nav-wrapper');
+                if (blockWrapper) {
+                  blockWrapper.classList.add('category-nav-block-wrapper');
+                }
+              }
+
+              if (firstChild) {
+                newMain.insertBefore(sectionClone, firstChild);
+              } else {
+                newMain.appendChild(sectionClone);
+              }
+            });
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error('[Category Nav Editor] Error loading fragment:', error);
+        }
+      }
+
       decorateMain(newMain);
       decorateRichtext(newMain);
       await loadSections(newMain);

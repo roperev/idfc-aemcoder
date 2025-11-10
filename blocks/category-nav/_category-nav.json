@@ -40,13 +40,19 @@
           "component": "text",
           "name": "eyebrow-title",
           "label": "Eyebrow Title",
-          "description": "Eyebrow title of the category navigation."
+          "description": "Eyebrow title of the category navigation drop-down panel"
         },
         {
           "component": "text",
-          "name": "link",
-          "label": "Link",
-          "description": "Link of the category navigation panel (top-right corner)"
+          "name": "explore-link",
+          "label": "Explore Link",
+          "description": "Link for exploring the category collection (top-right corner)"
+        },
+        {
+          "component": "text",
+          "name": "explore-link-description",
+          "label": "Explore Link Description",
+          "description": "Link description text for the explore link (top-right corner)"
         }
       ]
     },
@@ -106,36 +112,36 @@
           "description": "Background color of the 1st tag of the category navigation card item.",
           "options": [
             {
-              "name": "Dark Red (Brand)",
-              "value": "tg-clr-dark-red"
+              "name": "Pale Yellow",
+              "value": "tg-clr-pale-yellow"
             },
             {
-              "name": "Green",
-              "value": "tg-clr-green"
+              "name": "Pale Cyan",
+              "value": "tg-clr-pale-cyan"
             },
             {
-              "name": "Orange",
-              "value": "tg-clr-orange"
+              "name": "Pale Lavender",
+              "value": "tg-clr-pale-lavender"
             },
             {
-              "name": "Blue",
-              "value": "tg-clr-blue"
+              "name": "Pale Rose",
+              "value": "tg-clr-pale-rose"
             },
             {
-              "name": "Purple",
-              "value": "tg-clr-purple"
+              "name": "Pale Pink",
+              "value": "tg-clr-pale-pink"
             },
             {
-              "name": "Cyan",
-              "value": "tg-clr-cyan"
+              "name": "Pale Purple",
+              "value": "tg-clr-pale-purple"
             },
             {
-              "name": "Light Green",
-              "value": "tg-clr-light-green"
+              "name": "Pale Mint",
+              "value": "tg-clr-pale-mint"
             },
             {
-              "name": "Deep Orange",
-              "value": "tg-clr-deep-orange"
+              "name": "Pale White",
+              "value": "tg-clr-pale-white"
             }
           ]
         },
@@ -152,36 +158,36 @@
           "description": "Background color of the 2nd tag of the category navigation card item.",
           "options": [
             {
-              "name": "Dark Red (Brand)",
-              "value": "tg-clr-dark-red"
+              "name": "Pale Yellow",
+              "value": "tg-clr-pale-yellow"
             },
             {
-              "name": "Green",
-              "value": "tg-clr-green"
+              "name": "Pale Cyan",
+              "value": "tg-clr-pale-cyan"
             },
             {
-              "name": "Orange",
-              "value": "tg-clr-orange"
+              "name": "Pale Lavender",
+              "value": "tg-clr-pale-lavender"
             },
             {
-              "name": "Blue",
-              "value": "tg-clr-blue"
+              "name": "Pale Rose",
+              "value": "tg-clr-pale-rose"
             },
             {
-              "name": "Purple",
-              "value": "tg-clr-purple"
+              "name": "Pale Pink",
+              "value": "tg-clr-pale-pink"
             },
             {
-              "name": "Cyan",
-              "value": "tg-clr-cyan"
+              "name": "Pale Purple",
+              "value": "tg-clr-pale-purple"
             },
             {
-              "name": "Light Green",
-              "value": "tg-clr-light-green"
+              "name": "Pale Mint",
+              "value": "tg-clr-pale-mint"
             },
             {
-              "name": "Deep Orange",
-              "value": "tg-clr-deep-orange"
+              "name": "Pale White",
+              "value": "tg-clr-pale-white"
             }
           ]
         },
@@ -198,36 +204,36 @@
           "description": "Background color of the 3rd tag of the category navigation card item.",
           "options": [
             {
-              "name": "Dark Red (Brand)",
-              "value": "tg-clr-dark-red"
+              "name": "Pale Yellow",
+              "value": "tg-clr-pale-yellow"
             },
             {
-              "name": "Green",
-              "value": "tg-clr-green"
+              "name": "Pale Cyan",
+              "value": "tg-clr-pale-cyan"
             },
             {
-              "name": "Orange",
-              "value": "tg-clr-orange"
+              "name": "Pale Lavender",
+              "value": "tg-clr-pale-lavender"
             },
             {
-              "name": "Blue",
-              "value": "tg-clr-blue"
+              "name": "Pale Rose",
+              "value": "tg-clr-pale-rose"
             },
             {
-              "name": "Purple",
-              "value": "tg-clr-purple"
+              "name": "Pale Pink",
+              "value": "tg-clr-pale-pink"
             },
             {
-              "name": "Cyan",
-              "value": "tg-clr-cyan"
+              "name": "Pale Purple",
+              "value": "tg-clr-pale-purple"
             },
             {
-              "name": "Light Green",
-              "value": "tg-clr-light-green"
+              "name": "Pale Mint",
+              "value": "tg-clr-pale-mint"
             },
             {
-              "name": "Deep Orange",
-              "value": "tg-clr-deep-orange"
+              "name": "Pale White",
+              "value": "tg-clr-pale-white"
             }
           ]
         }
