@@ -656,12 +656,12 @@ section.faq-accordion-container h4 {
   }
 
   header {
-    height: 160px;
+    height: 140px;
   }
 
   /* Increase header height when category navigation is present */
   header:has(.category-nav-wrapper) {
-    height: 224px; /* 160px base + 64px for category nav */
+    height: 204px; /* 140px base + 64px for category nav */
   }
 
 }
