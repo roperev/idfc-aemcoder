@@ -740,6 +740,20 @@ async function loadCategoryNav(main) {
 
   // eslint-disable-next-line no-console
   console.log('[Category Nav] All category-nav blocks loaded');
+
+  // Clean up: Remove the fragment sections from main
+  // These were injected from the fragment but are no longer needed
+  // since the navigation has been built and moved to the header
+  const categoryNavSections = main.querySelectorAll('.category-nav-container');
+  if (categoryNavSections.length > 0) {
+    // eslint-disable-next-line no-console
+    console.log(`[Category Nav] Removing ${categoryNavSections.length} fragment section(s) from main`);
+    categoryNavSections.forEach((section) => {
+      section.remove();
+    });
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav] Fragment sections cleaned up');
+  }
 }
 
 /**

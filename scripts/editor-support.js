@@ -73,6 +73,19 @@ async function reloadCategoryNav(main) {
   }
   // eslint-disable-next-line no-console
   console.log('[Category Nav Editor] Category navigation reload complete');
+
+  // Clean up: Remove the fragment sections from main
+  // These were injected from the fragment but are no longer needed
+  const categoryNavSections = main.querySelectorAll('.category-nav-container');
+  if (categoryNavSections.length > 0) {
+    // eslint-disable-next-line no-console
+    console.log(`[Category Nav Editor] Removing ${categoryNavSections.length} fragment section(s) from main`);
+    categoryNavSections.forEach((section) => {
+      section.remove();
+    });
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Editor] Fragment sections cleaned up');
+  }
 }
 
 async function applyChanges(event) {
