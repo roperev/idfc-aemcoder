@@ -1,204 +1,139 @@
 /**
- * Top Navigation (L2 Nav) - Third row navigation with dropdowns
- * Extracts content from page section with class "mid-banner"
+ * Anchor Navigation - Desktop-only sticky navigation bar
+ * Links to sections on the same page
  */
 
 /**
- * Build a card from a list item
+ * Build navigation from block content
  */
-function buildCard(item) {
-  const card = document.createElement('div');
-  card.classList.add('grdiantCard', 'grdP1');
+function buildNavigation(navItems) {
+  const nav = document.createElement('nav');
+  nav.classList.add('anchor-nav-container');
 
-  const link = item.querySelector('a');
-  if (!link) {
-    // Handle items without links (plain text)
-    const cardText = document.createElement('div');
-    cardText.classList.add('title');
-    cardText.textContent = item.textContent.trim();
-    card.appendChild(cardText);
-    return card;
-  }
+  const navList = document.createElement('ul');
+  navList.classList.add('anchor-nav-list');
 
-  const cardLink = document.createElement('a');
-  cardLink.href = link.getAttribute('href') || '#';
-  cardLink.setAttribute('data-gtm-desk-l3cards-click', '');
+  navItems.forEach((item) => {
+    const li = document.createElement('li');
+    li.classList.add('anchor-nav-item');
 
-  // Tags container (hidden by default for this structure)
-  const tagsContainer = document.createElement('div');
-  tagsContainer.classList.add('tags');
-  tagsContainer.style.display = 'none';
-  cardLink.appendChild(tagsContainer);
+    const link = document.createElement('a');
+    link.textContent = item.title;
+    link.href = item.href;
+    link.classList.add('anchor-nav-link');
+    link.setAttribute('data-text', item.title);
 
-  // Card title
-  const title = document.createElement('div');
-  title.classList.add('title');
-  title.textContent = link.textContent.trim();
-
-  const iconSpan = document.createElement('span');
-  iconSpan.classList.add('icon-Right');
-  title.appendChild(iconSpan);
-
-  cardLink.appendChild(title);
-  card.appendChild(cardLink);
-
-  return card;
-}
-
-/**
- * Build dropdown content from heading and following elements
- */
-function buildDropdownContent(headerText, elements) {
-  const dropdown = document.createElement('div');
-  dropdown.classList.add('dropdown-content', 'animated', 'fadeIn', 'menu-cardList-cnt');
-
-  // Header box
-  const hdBx = document.createElement('div');
-  hdBx.classList.add('hd-bx');
-
-  const h4 = document.createElement('p');
-  h4.classList.add('hd-bx-h4');
-  h4.textContent = headerText;
-  hdBx.appendChild(h4);
-
-  dropdown.appendChild(hdBx);
-
-  // Build card list from all ul elements
-  const menuCardList = document.createElement('div');
-  menuCardList.classList.add('menu-cardList', 'MT15');
-
-  elements.forEach((element) => {
-    if (element.tagName === 'UL') {
-      const listItems = element.querySelectorAll(':scope > li');
-      listItems.forEach((item) => {
-        const card = buildCard(item);
-        if (card) {
-          menuCardList.appendChild(card);
+    // Handle anchor link scrolling with offset for fixed header
+    link.addEventListener('click', (e) => {
+      if (item.href.startsWith('#')) {
+        e.preventDefault();
+        const targetId = item.href.substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          const yOffset = -200; // Offset for fixed header
+          const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
         }
-      });
-    }
+      }
+    });
+
+    li.appendChild(link);
+    navList.appendChild(li);
   });
 
-  dropdown.appendChild(menuCardList);
-  return dropdown;
+  nav.appendChild(navList);
+  return nav;
 }
 
 /**
- * Parse mid-banner section content
+ * Parse block content to extract navigation items
  */
-function parseMidBannerContent(midBannerSection) {
+function parseBlockContent(block) {
   const navItems = [];
-  const contentWrapper = midBannerSection.querySelector('.default-content-wrapper');
+  const rows = block.querySelectorAll(':scope > div');
 
-  if (!contentWrapper) return navItems;
+  rows.forEach((row) => {
+    const cells = row.querySelectorAll(':scope > div');
+    if (cells.length >= 2) {
+      const title = cells[0].textContent.trim();
+      const link = cells[1].querySelector('a');
+      const href = link ? link.getAttribute('href') : '#';
 
-  const children = Array.from(contentWrapper.children);
-  let currentGroup = null;
-
-  children.forEach((child) => {
-    if (child.tagName === 'H1') {
-      // Start a new group
-      if (currentGroup) {
-        navItems.push(currentGroup);
+      if (title) {
+        navItems.push({ title, href });
       }
-
-      currentGroup = {
-        title: child.textContent.trim().replace(/^&nbsp;/, ''),
-        id: child.id || child.textContent.trim().toLowerCase().replace(/\s+/g, '-'),
-        elements: [],
-      };
-    } else if (currentGroup) {
-      // Add element to current group
-      currentGroup.elements.push(child);
     }
   });
-
-  // Add last group
-  if (currentGroup) {
-    navItems.push(currentGroup);
-  }
 
   return navItems;
 }
 
 /**
- * Build navigation from parsed content
+ * Setup sticky behavior - switch to fixed positioning when scrolled to top
  */
-function buildNavigation(navItems) {
-  const topNav = document.createElement('div');
-  topNav.classList.add('top-nav', 'bg-light-white');
+function setupStickyBehavior(wrapper) {
+  const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) || 64;
 
-  const tabsPane = document.createElement('div');
-  tabsPane.classList.add('tabs-pane-js');
+  // Calculate the original offset position (when NOT stuck)
+  const getOriginalOffset = () => wrapper.getBoundingClientRect().top + window.scrollY;
+  let originalOffsetTop = getOriginalOffset();
 
-  const tabPane = document.createElement('div');
-  tabPane.classList.add('tab-pane', 'top-second-nav-js', 'active');
+  const updateSticky = () => {
+    const { scrollY } = window;
 
-  const navList = document.createElement('ul');
-  navList.classList.add('top-nav-left');
-
-  navItems.forEach((item) => {
-    const li = document.createElement('li');
-    li.classList.add('drop-down', 'all-drop-down');
-    li.setAttribute('data-header-gtm', item.title);
-
-    const link = document.createElement('a');
-    link.textContent = item.title;
-    link.href = `#${item.id}`;
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.getElementById(item.id);
-      if (target) {
-        const yOffset = -200;
-        const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    });
-    li.appendChild(link);
-
-    // Find header text from first p element
-    const firstP = item.elements.find((el) => el.tagName === 'P' && !el.classList.contains('button-container'));
-    const headerText = firstP ? firstP.textContent.trim() : item.title;
-
-    // Build dropdown
-    const dropdown = buildDropdownContent(headerText, item.elements);
-    if (dropdown) {
-      li.appendChild(dropdown);
+    // If currently stuck, use the stored original position
+    // Otherwise, recalculate it (in case page layout changed)
+    if (!wrapper.classList.contains('stuck')) {
+      originalOffsetTop = getOriginalOffset();
     }
 
-    navList.appendChild(li);
-  });
+    // Should stick when the wrapper would naturally reach the header position
+    const shouldStick = scrollY > (originalOffsetTop - headerHeight);
 
-  tabPane.appendChild(navList);
-  tabsPane.appendChild(tabPane);
-  topNav.appendChild(tabsPane);
+    if (shouldStick) {
+      wrapper.classList.add('stuck');
+    } else {
+      wrapper.classList.remove('stuck');
+    }
+  };
 
-  return topNav;
+  // Use requestAnimationFrame for smooth performance
+  let ticking = false;
+  const onScroll = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateSticky();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Don't run initial check - let it stay in natural position until user scrolls
 }
 
 export default function decorate(block) {
-  // Find the mid-banner section on the page
-  const midBannerSection = document.querySelector('.section.mid-banner');
-
-  if (!midBannerSection) {
-    // No mid-banner section found, hide the block
-    block.style.display = 'none';
-    return;
-  }
-
-  // Parse content from mid-banner section
-  const navItems = parseMidBannerContent(midBannerSection);
+  // Parse navigation items from block content
+  const navItems = parseBlockContent(block);
 
   if (navItems.length === 0) {
-    // No navigation items found
+    // No navigation items found, hide the block
     block.style.display = 'none';
     return;
   }
 
   // Build navigation
-  const topNav = buildNavigation(navItems);
+  const nav = buildNavigation(navItems);
 
-  // Replace block content
+  // Replace block content with navigation
   block.innerHTML = '';
-  block.appendChild(topNav);
+  block.appendChild(nav);
+
+  // Setup sticky behavior
+  const wrapper = block.closest('.anchor-nav-wrapper');
+  if (wrapper) {
+    setupStickyBehavior(wrapper);
+  }
 }
