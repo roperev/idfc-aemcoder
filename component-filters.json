@@ -89,6 +89,12 @@
     ]
   },
   {
+    "id": "faq-accordion",
+    "components": [
+      "faq-accordion-item"
+    ]
+  },
+  {
     "id": "git-block",
     "components": [
       "git-item"
