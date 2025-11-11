@@ -13,10 +13,29 @@ import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain, loadFragment } from './scripts.js';
 
 /**
+ * Check if we're editing a framework page (should skip nav building)
+ * @returns {boolean} true if we should skip navigation building
+ */
+function isEditingFrameworkPage() {
+  const isFrameworkPath = window.location.pathname.includes('/framework/');
+  const shouldSkip = isFrameworkPath;
+  if (shouldSkip) {
+    // eslint-disable-next-line no-console
+    console.log('[Category Nav Editor] Skipping framework page:', window.location.pathname);
+  }
+  return shouldSkip;
+}
+
+/**
  * Reload category navigation after main content updates
  * This handles changes to page-level category-nav aem-content field
  */
 async function reloadCategoryNav(main) {
+  // Skip if editing framework pages - let authors see the uncollapsed content
+  if (isEditingFrameworkPage()) {
+    return;
+  }
+
   const categoryNavBlocks = main.querySelectorAll('.category-nav');
   if (categoryNavBlocks.length === 0) {
     // eslint-disable-next-line no-console
