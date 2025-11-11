@@ -21,6 +21,19 @@ function buildNavigation(navItems, headerHeight) {
 
     const link = item.link.cloneNode(true);
     link.classList.add('anchor-nav-link');
+
+    // Ensure button class is present
+    if (!link.classList.contains('button')) {
+      link.classList.add('button');
+    }
+
+    // Apply button type based on parent element from parsing
+    if (item.parentTag === 'EM') {
+      link.classList.add('secondary');
+    } else if (item.parentTag === 'STRONG') {
+      link.classList.add('primary');
+    }
+
     link.setAttribute('data-text', link.textContent.trim());
 
     link.addEventListener('click', (e) => {
@@ -54,10 +67,33 @@ function parseBlockContent(block) {
   const rows = block.querySelectorAll(':scope > div');
 
   rows.forEach((row) => {
-    // New structure: div > div > p.button-container > a.button
-    const link = row.querySelector('a.button');
+    // Look for buttons in various formats:
+    // - a.button (primary/default with classes already applied)
+    // - strong > a (primary button from markdown)
+    // - em > a (secondary button from markdown)
+    let link = row.querySelector('a.button');
+    let parentTag = null;
+
+    if (!link) {
+      // Check for em > a (secondary button)
+      const emLink = row.querySelector('em > a');
+      if (emLink) {
+        link = emLink;
+        parentTag = 'EM';
+      }
+    }
+
+    if (!link) {
+      // Check for strong > a (primary button)
+      const strongLink = row.querySelector('strong > a');
+      if (strongLink) {
+        link = strongLink;
+        parentTag = 'STRONG';
+      }
+    }
+
     if (link) {
-      navItems.push({ link });
+      navItems.push({ link, parentTag });
     }
   });
 
