@@ -19,8 +19,8 @@
     ],
     "models": [
       {
-        "id": "anchor-nav",
-        "title": "Link"
+        "id": "button",
+        "title": "Button"
       }
     ],
     "filters": [
