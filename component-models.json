@@ -208,25 +208,26 @@
     ]
   },
   {
+    "id": "anchor-nav",
+    "fields": []
+  },
+  {
     "id": "anchor-nav-link",
     "fields": [
       {
-        "component": "text",
+        "component": "aem-content",
         "name": "link",
-        "valueType": "string",
         "label": "Link"
       },
       {
         "component": "text",
         "name": "description-text",
-        "valueType": "string",
         "label": "Text"
       },
       {
         "component": "select",
-        "name": "button-style-text",
+        "name": "button-style-type",
         "label": "Type",
-        "valueType": "string",
         "options": [
           {
             "name": "default",
@@ -912,6 +913,69 @@
         "name": "text",
         "value": "",
         "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "steps",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "name": "componentId",
+        "label": "Component ID"
+      },
+      {
+        "component": "select",
+        "name": "animated",
+        "label": "Animate Steps?",
+        "options": [
+          {
+            "name": "Yes",
+            "value": "yes"
+          },
+          {
+            "name": "No",
+            "value": "no"
+          }
+        ]
+      },
+      {
+        "component": "number",
+        "name": "animationDuration",
+        "label": "Animation Duration per step (in seconds)",
+        "value": "0.5",
+        "valueType": "number",
+        "placeholder": "0.5"
+      }
+    ]
+  },
+  {
+    "id": "steps-item",
+    "component": "container",
+    "multi": true,
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image"
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Step Text",
         "valueType": "string"
       }
     ]
