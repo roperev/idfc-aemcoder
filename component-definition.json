@@ -138,7 +138,7 @@
         },
         {
           "title": "Anchor Nav Link",
-          "id": "button",
+          "id": "anchor-nav-link",
           "plugins": {
             "xwalk": {
               "page": {
