@@ -51,11 +51,11 @@
           "label": "Animate Steps?",
           "options": [
             {
-              "name": "Yes",
+              "name": "Animated",
               "value": "yes"
             },
             {
-              "name": "No",
+              "name": "Static",
               "value": "no"
             }
           ]
@@ -72,8 +72,6 @@
     },
     {
       "id": "steps-item",
-      "component": "container",
-      "multi": true,
       "fields": [
         {
           "component": "reference",
