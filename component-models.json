@@ -209,21 +209,44 @@
   },
   {
     "id": "anchor-nav",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title"
-      }
-    ]
+    "fields": []
   },
   {
     "id": "anchor-nav-link",
     "fields": [
       {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
         "component": "text",
-        "name": "title",
+        "name": "linkText",
+        "label": "Text"
+      },
+      {
+        "component": "text",
+        "name": "linkTitle",
         "label": "Title"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Type",
+        "options": [
+          {
+            "name": "default",
+            "value": ""
+          },
+          {
+            "name": "primary",
+            "value": "primary"
+          },
+          {
+            "name": "secondary",
+            "value": "secondary"
+          }
+        ]
       }
     ]
   },
