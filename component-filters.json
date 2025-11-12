@@ -34,7 +34,8 @@
       "library-metadata",
       "banner",
       "sticky-cta",
-      "anchor-nav"
+      "anchor-nav",
+      "steps"
     ]
   },
   {
@@ -144,6 +145,12 @@
     "id": "rte-block",
     "components": [
       "rte-item"
+    ]
+  },
+  {
+    "id": "steps",
+    "components": [
+      "steps-item"
     ]
   },
   {

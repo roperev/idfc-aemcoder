@@ -105,7 +105,8 @@
         "library-metadata",
         "banner",
         "sticky-cta",
-        "anchor-nav"
+        "anchor-nav",
+        "steps"
       ]
     }
   ]
