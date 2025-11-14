@@ -571,6 +571,45 @@ function loadAutoBlock(doc) {
   });
 }
 /**
+ * Apply dynamic background colors to sections based on backgroundColor metadata
+ * @param {Element} main The main element containing sections
+ */
+export function applySectionBackgroundColors(main) {
+  // Debug: Check all sections
+  const allSections = main.querySelectorAll('.section');
+  // eslint-disable-next-line no-console
+  console.log('[BG Color Debug] Total sections found:', allSections.length);
+  
+  allSections.forEach((section, index) => {
+    // eslint-disable-next-line no-console
+    console.log(`[BG Color Debug] Section ${index}:`, {
+      classes: section.className,
+      hasDataBgColor: 'backgroundColor' in section.dataset,
+      dataBgColorValue: section.dataset.backgroundColor,
+      allDatasetKeys: Object.keys(section.dataset),
+    });
+  });
+  
+  main.querySelectorAll('.section[data-background-color]').forEach((section) => {
+    let bgValue = section.dataset.backgroundColor.trim();
+    // eslint-disable-next-line no-console
+    console.log('[BG Color Debug] Applying background:', bgValue, 'to section:', section.className);
+    
+    // If it looks like a hex color (3 or 6 characters, alphanumeric), prepend with #
+    if (bgValue && /^[0-9A-Fa-f]{3}$|^[0-9A-Fa-f]{6}$/.test(bgValue)) {
+      bgValue = `#${bgValue}`;
+    }
+    
+    // Set as inline style
+    if (bgValue) {
+      section.style.backgroundColor = bgValue;
+      // eslint-disable-next-line no-console
+      console.log('[BG Color Debug] Applied backgroundColor:', bgValue);
+    }
+  });
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -595,6 +634,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  applySectionBackgroundColors(main);
   decorateBlocks(main);
 }
 

@@ -27,18 +27,18 @@
         },
         {
           "component": "text",
-          "name": "backgroundColor",
+          "name": "background-color",
           "label": "Background Color",
-          "value": "000000",
+          "value": "",
           "valueType": "string",
-          "description": "The background color of the section in hex color notation (e.g. 000000)"
+          "description": "Use hex color notation (e.g. 000000 for black, fff for white) or CSS color values (e.g. var(--red-color), transparent)"
         },
         {
           "component": "reference",
           "valueType": "string",
           "name": "sectionBackgroundImage",
           "label": "Background Image",
-          "description": "The background image of the section, displayed on top of the background color if specified",
+          "description": "Displayed on top of the background color if specified",
           "multi": false          
         },
         {
