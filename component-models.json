@@ -928,33 +928,31 @@
       },
       {
         "component": "select",
-        "name": "animated",
-        "label": "Animate Steps?",
+        "name": "animation",
+        "label": "Animation",
+        "valueType": "boolean",
         "options": [
           {
-            "name": "Yes",
-            "value": "yes"
+            "name": "Animated",
+            "value": "true"
           },
           {
-            "name": "No",
-            "value": "no"
+            "name": "Static",
+            "value": "false"
           }
         ]
       },
       {
-        "component": "number",
+        "component": "text",
         "name": "animationDuration",
         "label": "Animation Duration per step (in seconds)",
         "value": "0.5",
-        "valueType": "number",
-        "placeholder": "0.5"
+        "valueType": "number"
       }
     ]
   },
   {
     "id": "steps-item",
-    "component": "container",
-    "multi": true,
     "fields": [
       {
         "component": "reference",

@@ -1,17 +1,64 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // Build UL structure
+  const rows = Array.from(block.children);
+
+  // Extract block-level metadata fields from single-cell rows at the top
+  // Block model fields (from "steps" model) are rendered as rows with 1 cell each
+  // Block item fields (from "steps-item" model) are rendered as rows with multiple cells
+  let metadataRowCount = 0;
+  let title = '';
+  let componentId = '';
+  let animation = '';
+  let animationDuration = '';
+
+  // Row 0: title (1 cell, plain text)
+  if (rows.length > 0 && rows[0].children.length === 1) {
+    title = rows[0].children[0]?.textContent?.trim() || '';
+    metadataRowCount = 1;
+  }
+
+  // Row 1: componentId (1 cell, plain text)
+  if (rows.length > 1 && rows[1].children.length === 1) {
+    componentId = rows[1].children[0]?.textContent?.trim() || '';
+    metadataRowCount = 2;
+  }
+
+  // Row 2: animation (1 cell, boolean/select value)
+  if (rows.length > 2 && rows[2].children.length === 1) {
+    animation = rows[2].children[0]?.textContent?.trim() || '';
+    metadataRowCount = 3;
+  }
+
+  // Row 3: animationDuration (1 cell, number)
+  if (rows.length > 3 && rows[3].children.length === 1) {
+    animationDuration = rows[3].children[0]?.textContent?.trim() || '';
+    metadataRowCount = 4;
+  }
+
+  // Store config as data attributes on the block for CSS/JS use
+  if (componentId) block.dataset.componentId = componentId;
+  if (animation) block.dataset.animation = animation;
+  if (animationDuration) block.dataset.animationDuration = animationDuration;
+
+  // Build UL structure - only process rows that are actual step items
+  // Skip the metadata rows and process only the item rows (which have multiple cells)
   const ul = document.createElement('ul');
-  [...block.children].forEach((row) => {
+  rows.slice(metadataRowCount).forEach((row) => {
+    // Skip empty rows
+    if (row.children.length === 0) {
+      return;
+    }
+
+    // Process actual step item rows
     const li = document.createElement('li');
     moveInstrumentation(row, li);
     while (row.firstElementChild) li.append(row.firstElementChild);
     [...li.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) {
-        div.className = 'steps-steps-item-image';
+        div.className = 'steps-item-image';
       } else {
-        div.className = 'steps-steps-item-body';
+        div.className = 'steps-item-body';
       }
     });
     ul.append(li);
@@ -19,54 +66,12 @@ export default function decorate(block) {
 
   // Append UL to block
   block.textContent = '';
+  if (title) {
+    const titleEl = document.createElement('h2');
+    titleEl.className = 'steps-title';
+    titleEl.textContent = title;
+    block.append(titleEl);
+  }
   ul.classList.add('grid-steps');
-  ul.querySelectorAll('li').forEach((li) => li.classList.add('benefit-steps'));
   block.append(ul);
-
-  // === View All / View Less Toggle (Mobile Only) ===
-  const steps = ul.querySelectorAll('li');
-  const maxVisible = 3;
-
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
-
-  function toggleView(btn, expand) {
-    steps.forEach((stepsItem, index) => {
-      if (index >= maxVisible) {
-        stepsItem.style.display = expand ? 'flex' : 'none';
-      }
-    });
-    btn.textContent = expand ? 'View Less' : 'View All';
-  }
-
-  function setupToggleButton() {
-    if (steps.length > maxVisible && isMobile()) {
-      // Hide extra steps
-      steps.forEach((stepsItem, index) => {
-        stepsItem.style.display = index >= maxVisible ? 'none' : 'flex';
-      });
-
-      const toggleBtn = document.createElement('button');
-      toggleBtn.textContent = 'View All';
-      toggleBtn.className = 'view-toggle';
-      block.appendChild(toggleBtn);
-
-      toggleBtn.addEventListener('click', () => {
-        const isExpanded = toggleBtn.textContent === 'View Less';
-        toggleView(toggleBtn, !isExpanded);
-      });
-    }
-  }
-
-  // Initial setup
-  setupToggleButton();
-
-  // Reapply toggle if screen resizes
-  window.addEventListener('resize', () => {
-    const existingBtn = block.querySelector('.view-toggle');
-    if (existingBtn) existingBtn.remove();
-    steps.forEach((stepsItem) => { stepsItem.style.display = 'flex'; });
-    setupToggleButton();
-  });
 }
