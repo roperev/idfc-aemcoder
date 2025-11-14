@@ -54,31 +54,32 @@ export default function decorate(block) {
     10,
   ) || 64;
 
-  // Find all links in the block
-  const links = block.querySelectorAll('a');
+  // Find all direct child divs (rows) created by Universal Editor
+  const rows = Array.from(block.children).filter((child) => child.tagName === 'DIV');
 
-  links.forEach((link) => {
+  rows.forEach((row) => {
+    // Find the link in this row
+    const link = row.querySelector('a');
+    if (!link) return;
+
     // Skip if already processed
     if (link.classList.contains('anchor-nav-link')) return;
 
-    // Add base classes
+    // Add base classes to link
     link.classList.add('anchor-nav-link', 'button');
 
     // Detect button type from parent elements (decorateButtons runs first)
-    if (link.closest('strong')) {
+    if (link.closest('strong') || link.classList.contains('primary')) {
       link.classList.add('primary');
-    } else if (link.closest('em')) {
+    } else if (link.closest('em') || link.classList.contains('secondary')) {
       link.classList.add('secondary');
     }
 
     // Add data-text for hover prevention
     link.setAttribute('data-text', link.textContent.trim());
 
-    // Add class to row container for CSS styling
-    const row = link.closest('div:not(.anchor-nav-container):not(.anchor-nav-wrapper)');
-    if (row) {
-      row.classList.add('anchor-nav-item');
-    }
+    // Add class to the row (direct child of block) for CSS styling
+    row.classList.add('anchor-nav-item');
 
     // Add click handler for anchor links
     link.addEventListener('click', (e) => {
