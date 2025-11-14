@@ -499,11 +499,7 @@ function decorateSections(main) {
     const sectionMeta = section.querySelector('div.section-metadata');
     if (sectionMeta) {
       const meta = readBlockConfig(sectionMeta);
-      // eslint-disable-next-line no-console
-      console.log('[Section Metadata Debug] Parsed metadata:', meta);
       Object.keys(meta).forEach((key) => {
-        // eslint-disable-next-line no-console
-        console.log(`[Section Metadata Debug] Processing key: "${key}", value:`, meta[key]);
         if (key === 'style') {
           const styles = meta.style
             .split(',')
@@ -512,11 +508,28 @@ function decorateSections(main) {
           styles.forEach((style) => section.classList.add(style));
         } else {
           section.dataset[toCamelCase(key)] = meta[key];
-          // eslint-disable-next-line no-console
-          console.log(`[Section Metadata Debug] Set dataset.${toCamelCase(key)} = "${meta[key]}"`);
         }
       });
       sectionMeta.parentNode.remove();
+    }
+
+    // Process section properties from data attributes (if present)
+    // This handles properties that might be serialized directly on the section element
+    const sectionDataAttrs = section.dataset;
+    if (sectionDataAttrs) {
+      // Check for specific section properties we want to handle
+      const propertyMappings = {
+        backgroundColor: 'background-color',
+        backgroundcolor: 'background-color',  // lowercase variant
+        'background-color': 'background-color', // kebab-case variant
+      };
+
+      Object.keys(sectionDataAttrs).forEach((key) => {
+        if (propertyMappings[key]) {
+          // Map to the canonical data attribute name
+          section.dataset.backgroundColor = sectionDataAttrs[key];
+        }
+      });
     }
   });
 }

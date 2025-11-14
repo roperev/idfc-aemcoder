@@ -571,40 +571,53 @@ function loadAutoBlock(doc) {
   });
 }
 /**
+ * Extract section properties from Universal Editor data attributes
+ * @param {Element} section The section element
+ * @returns {Object} Object containing extracted properties
+ */
+function extractSectionPropertiesFromEditor(section) {
+  const props = {};
+  
+  // Check for data-aue-prop attributes that might contain section properties
+  const aueProps = Array.from(section.attributes).filter((attr) => attr.name.startsWith('data-aue-prop-'));
+  aueProps.forEach((attr) => {
+    const propName = attr.name.replace('data-aue-prop-', '');
+    props[propName] = attr.value;
+  });
+  
+  return props;
+}
+
+/**
  * Apply dynamic background colors to sections based on backgroundColor metadata
  * @param {Element} main The main element containing sections
  */
 export function applySectionBackgroundColors(main) {
-  // Debug: Check all sections
-  const allSections = main.querySelectorAll('.section');
-  // eslint-disable-next-line no-console
-  console.log('[BG Color Debug] Total sections found:', allSections.length);
-  
-  allSections.forEach((section, index) => {
-    // eslint-disable-next-line no-console
-    console.log(`[BG Color Debug] Section ${index}:`, {
-      classes: section.className,
-      hasDataBgColor: 'backgroundColor' in section.dataset,
-      dataBgColorValue: section.dataset.backgroundColor,
-      allDatasetKeys: Object.keys(section.dataset),
-    });
-  });
-  
-  main.querySelectorAll('.section[data-background-color]').forEach((section) => {
-    let bgValue = section.dataset.backgroundColor.trim();
-    // eslint-disable-next-line no-console
-    console.log('[BG Color Debug] Applying background:', bgValue, 'to section:', section.className);
+  main.querySelectorAll('.section').forEach((section) => {
+    let bgValue = null;
     
-    // If it looks like a hex color (3 or 6 characters, alphanumeric), prepend with #
-    if (bgValue && /^[0-9A-Fa-f]{3}$|^[0-9A-Fa-f]{6}$/.test(bgValue)) {
-      bgValue = `#${bgValue}`;
+    // First, check if background-color is in dataset (from section-metadata block)
+    if (section.dataset.backgroundColor) {
+      bgValue = section.dataset.backgroundColor.trim();
     }
     
-    // Set as inline style
+    // If not found, try to extract from Universal Editor properties (editor mode only)
+    if (!bgValue && section.hasAttribute('data-aue-resource')) {
+      const editorProps = extractSectionPropertiesFromEditor(section);
+      if (editorProps['background-color'] || editorProps.backgroundColor) {
+        bgValue = (editorProps['background-color'] || editorProps.backgroundColor).trim();
+      }
+    }
+    
+    // If we found a value, process and apply it
     if (bgValue) {
+      // If it looks like a hex color (3 or 6 characters, alphanumeric), prepend with #
+      if (/^[0-9A-Fa-f]{3}$|^[0-9A-Fa-f]{6}$/.test(bgValue)) {
+        bgValue = `#${bgValue}`;
+      }
+      
+      // Set as inline style
       section.style.backgroundColor = bgValue;
-      // eslint-disable-next-line no-console
-      console.log('[BG Color Debug] Applied backgroundColor:', bgValue);
     }
   });
 }
