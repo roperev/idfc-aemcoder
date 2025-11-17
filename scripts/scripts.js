@@ -594,6 +594,16 @@ function extractSectionPropertiesFromEditor(section) {
  */
 export function applySectionBackgroundColors(main) {
   main.querySelectorAll('.section').forEach((section) => {
+    // Normalize backgroundColor data attribute variations
+    // The HTML may serialize as data-backgroundcolor, data-background-color,
+    // or data-backgroundColor. Ensure section.dataset.backgroundColor is set.
+    const bgColorVariants = ['backgroundcolor', 'background-color'];
+    bgColorVariants.forEach((variant) => {
+      if (section.dataset[variant] && !section.dataset.backgroundColor) {
+        section.dataset.backgroundColor = section.dataset[variant];
+      }
+    });
+
     // Normalize sectionBackgroundImage data attribute variations
     // The HTML may serialize as data-sectionbackgroundimage, data-section-background-image, etc.
     // Ensure we always have section.dataset.sectionBackgroundImage set for the JavaScript to use
