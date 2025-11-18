@@ -28,53 +28,61 @@ export default function decorate(block) {
   // Append UL to block
   block.textContent = '';
   ul.classList.add('grid-cards');
-  ul.querySelectorAll('li').forEach((li) => li.classList.add('benefit-cards'));
+
+  // Only add benefit-cards class if NOT testimonial-card variant
+  const isTestimonial = block.classList.contains('testimonial-card');
+  ul.querySelectorAll('li').forEach((li) => {
+    if (!isTestimonial) {
+      li.classList.add('benefit-cards');
+    }
+  });
+
   block.append(ul);
 
-  // === View All / View Less Toggle (Mobile Only) ===
-  const cards = ul.querySelectorAll('li');
-  const maxVisible = 3;
+  // === View All / View Less Toggle (Mobile Only) - Only for benefit cards ===
+  if (!isTestimonial) {
+    const cards = ul.querySelectorAll('li');
+    const maxVisible = 3;
 
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
+    const isMobile = () => window.innerWidth <= 768;
 
-  function toggleView(btn, expand) {
-    cards.forEach((card, index) => {
-      if (index >= maxVisible) {
-        card.style.display = expand ? 'flex' : 'none';
-      }
-    });
-    btn.textContent = expand ? 'View Less' : 'View All';
-  }
-
-  function setupToggleButton() {
-    if (cards.length > maxVisible && isMobile()) {
-      // Hide extra cards
+    const toggleView = (btn, expand) => {
       cards.forEach((card, index) => {
-        card.style.display = index >= maxVisible ? 'none' : 'flex';
+        if (index >= maxVisible) {
+          card.style.display = expand ? 'flex' : 'none';
+        }
       });
+      btn.textContent = expand ? 'View Less' : 'View All';
+    };
 
-      const toggleBtn = document.createElement('button');
-      toggleBtn.textContent = 'View All';
-      toggleBtn.className = 'view-toggle';
-      block.appendChild(toggleBtn);
+    const setupToggleButton = () => {
+      if (cards.length > maxVisible && isMobile()) {
+        // Hide extra cards
+        cards.forEach((card, index) => {
+          card.style.display = index >= maxVisible ? 'none' : 'flex';
+        });
 
-      toggleBtn.addEventListener('click', () => {
-        const isExpanded = toggleBtn.textContent === 'View Less';
-        toggleView(toggleBtn, !isExpanded);
-      });
-    }
-  }
+        const toggleBtn = document.createElement('button');
+        toggleBtn.textContent = 'View All';
+        toggleBtn.className = 'view-toggle';
+        block.appendChild(toggleBtn);
 
-  // Initial setup
-  setupToggleButton();
+        toggleBtn.addEventListener('click', () => {
+          const isExpanded = toggleBtn.textContent === 'View Less';
+          toggleView(toggleBtn, !isExpanded);
+        });
+      }
+    };
 
-  // Reapply toggle if screen resizes
-  window.addEventListener('resize', () => {
-    const existingBtn = block.querySelector('.view-toggle');
-    if (existingBtn) existingBtn.remove();
-    cards.forEach((card) => { card.style.display = 'flex'; });
+    // Initial setup
     setupToggleButton();
-  });
+
+    // Reapply toggle if screen resizes
+    window.addEventListener('resize', () => {
+      const existingBtn = block.querySelector('.view-toggle');
+      if (existingBtn) existingBtn.remove();
+      cards.forEach((card) => { card.style.display = 'flex'; });
+      setupToggleButton();
+    });
+  }
 }

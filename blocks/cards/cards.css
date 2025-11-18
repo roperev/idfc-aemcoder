@@ -11,6 +11,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+
   /* justify-content: center; */
 }
 
@@ -40,7 +41,7 @@
   gap: 16px;
   border-radius: 8px;
   background: #FFF;
-  box-shadow: 0 4px 8px 2px rgba(37, 36, 59, 0.15);
+  box-shadow: 0 4px 8px 2px rgb(37 36 59 / 15%);
   width: calc(50% - 1rem); /* desktop: 2 per row */
   box-sizing: border-box;
   transition: all 0.3s ease;
@@ -77,7 +78,8 @@
   letter-spacing: -0.262px;
   margin: 0;
 }
-.cards .benefit-cards .cards-card-body p u{
+
+.cards .benefit-cards .cards-card-body p u {
   color: #1c1c1c;
 }
 
@@ -100,19 +102,116 @@
   text-decoration: underline;
 }
 
-/* MOBILE VIEW: SINGLE COLUMN + toggleable */
-@media (max-width: 768px) {
+/* TESTIMONIAL CARD STYLING */
+.cards.testimonial-card .grid-cards {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cards.testimonial-card .grid-cards > li {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+  background: #FFF;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 2px rgb(37 36 59 / 15%);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 0;
+}
+
+.cards.testimonial-card .grid-cards > li:not(:last-child) {
+  margin-right: 16px;
+}
+
+/* Person name (h5) */
+.cards.testimonial-card .cards-card-body h5 {
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  margin: 0 0 4px;
+}
+
+/* Card title paragraph */
+.cards.testimonial-card .cards-card-body h5 + p {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: normal;
+  margin: 0 0 16px;
+}
+
+/* Star ratings */
+.cards.testimonial-card .cards-card-body p:has(.icon-star) {
+  display: flex;
+  gap: 4px;
+  margin: 0 0 12px;
+  padding: 0;
+}
+
+/* Inverted commas icon */
+.cards.testimonial-card .cards-card-body p:has(.icon-inverted-commas) {
+  margin: 0 0 16px;
+  line-height: 0;
+}
+
+.cards.testimonial-card .icon-inverted-commas img {
+  width: 20px;
+  height: 16.75px;
+}
+
+/* Testimonial text paragraph */
+.cards.testimonial-card .cards-card-body p:not(:has(.icon-inverted-commas), :has(.icon-star)) {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 24px;
+  letter-spacing: -0.262px;
+  margin: 0 0 16px;
+}
+
+.cards.testimonial-card .icon-star {
+  display: inline-block;
+  width: 13px;
+  height: 12px;
+}
+
+.cards.testimonial-card .icon-star img {
+  width: 13px;
+  height: 12px;
+}
+
+/* Date (h6) */
+.cards.testimonial-card .cards-card-body h6 {
+  color: var(--text-color);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: normal;
+  margin: 0;
+}
+
+/* Remove empty card bodies */
+.cards.testimonial-card .cards-card-body:empty {
+  display: none;
+}
+
+/* MOBILE VIEW: BENEFIT CARDS */
+@media (width <= 600px) {
   .cards .benefit-cards {
-    /* width: 100%;
-    flex-direction: column;
-    align-items: center;
-    text-align: center; */
     gap: 8px;
     margin-bottom: 0;
     width: 100%;
     border-radius: 8px;
     background: #FFF;
-    box-shadow: 0 0 8px 0 rgba(37, 36, 59, 0.15);
+    box-shadow: 0 0 8px 0 rgb(37 36 59 / 15%);
   }
 
   .cards .benefit-cards .cards-card-body h3{
@@ -131,5 +230,32 @@
 
   .cards .benefit-cards .cards-card-body {
     margin-top: 12px;
+  }
+}
+
+/* TABLET VIEW */
+@media (width >= 601px) {
+  .cards.testimonial-card .grid-cards > li {
+    width: calc(50% - 8px);
+  }
+}
+
+/* DESKTOP VIEW */
+@media (width >= 901px) {
+  .cards.testimonial-card .grid-cards {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .cards.testimonial-card .grid-cards > li {
+    width: calc(33.333% - 11px);
+  }
+}
+
+/* LARGE DESKTOP VIEW */
+@media (width >= 1201px) {
+  .cards.testimonial-card .grid-cards > li {
+    width: calc(33.333% - 11px);
+    max-width: 352px;
   }
 }
