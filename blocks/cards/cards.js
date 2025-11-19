@@ -1,7 +1,74 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+/**
+ * Extracts block-level properties from placeholder cards and sets them as data attributes
+ * @param {HTMLElement} block The block element
+ * @param {HTMLElement} ul The ul containing card items
+ */
+function extractBlockProperties(block, ul) {
+  const propertyFields = ['swipable', 'startingCard'];
+  const propertyValues = {};
+  const itemsToRemove = [];
+
+  // Check first few li elements for property values
+  const items = ul.querySelectorAll('li');
+  let propertyIndex = 0;
+
+  // Use for...of to allow early exit when we hit a real card
+  // eslint-disable-next-line no-restricted-syntax
+  for (const li of items) {
+    // Check if li is completely empty (no content or only whitespace)
+    const isEmpty = !li.textContent.trim() && !li.querySelector('picture, img');
+
+    if (isEmpty && propertyIndex < propertyFields.length) {
+      // Empty li - field value not defined, just remove it and move to next field
+      itemsToRemove.push(li);
+      propertyIndex += 1;
+      // eslint-disable-next-line no-continue
+      continue;
+    }
+
+    // Check if this li only contains a single text value (boolean or number)
+    const paragraphs = li.querySelectorAll('p');
+    const hasImage = li.querySelector('picture, img');
+    const hasHeading = li.querySelector('h1, h2, h3, h4, h5, h6');
+
+    // If only one paragraph, no images, no headings, might be a property value
+    const isPropertyCandidate = paragraphs.length === 1
+      && !hasImage
+      && !hasHeading
+      && propertyIndex < propertyFields.length;
+
+    if (isPropertyCandidate) {
+      const text = paragraphs[0].textContent.trim();
+
+      // Check if it's a boolean or number
+      if (text === 'true' || text === 'false' || !Number.isNaN(Number(text))) {
+        const fieldName = propertyFields[propertyIndex];
+        propertyValues[fieldName] = text;
+        itemsToRemove.push(li);
+        propertyIndex += 1;
+      }
+    } else {
+      // Stop checking once we hit a real card
+      break;
+    }
+  }
+
+  // Set data attributes on block (convert camelCase to kebab-case)
+  Object.keys(propertyValues).forEach((key) => {
+    const kebabCase = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+    block.dataset[key] = propertyValues[key];
+    // Also set as kebab-case attribute for consistency
+    block.setAttribute(`data-${kebabCase}`, propertyValues[key]);
+  });
+
+  // Remove placeholder items
+  itemsToRemove.forEach((li) => li.remove());
+}
+
+export default async function decorate(block) {
   // Build UL structure
   const ul = document.createElement('ul');
   [...block.children].forEach((row) => {
@@ -11,8 +78,12 @@ export default function decorate(block) {
     [...li.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) {
         div.className = 'cards-card-image';
-      } else {
+      } else if (div.children.length > 0 || div.textContent.trim().length > 0) {
+        // Only add cards-card-body class if div has content
         div.className = 'cards-card-body';
+      } else {
+        // Remove empty divs
+        div.remove();
       }
     });
     ul.append(li);
@@ -29,29 +100,137 @@ export default function decorate(block) {
   block.textContent = '';
   ul.classList.add('grid-cards');
 
-  // Only add benefit-cards class if NOT testimonial-card variant
+  // Extract block properties from placeholder cards (e.g., swipable, startingCard)
+  extractBlockProperties(block, ul);
+
+  // Check if testimonial-card variant
   const isTestimonial = block.classList.contains('testimonial-card');
-  ul.querySelectorAll('li').forEach((li, index) => {
+
+  // Only add benefit-cards class if NOT testimonial-card variant
+  ul.querySelectorAll('li').forEach((li) => {
     if (!isTestimonial) {
       li.classList.add('benefit-cards');
-    } else if (index === 0) {
-      // For testimonial cards, change star icons to yellow on first card (purple background)
-      const starIcons = li.querySelectorAll('.icon-star img');
-      starIcons.forEach((img) => {
-        const currentSrc = img.getAttribute('src');
-        if (currentSrc && currentSrc.includes('star')) {
-          const newSrc = currentSrc.replace(/star(?:-white|-black)?\.svg/, 'star-yellow.svg');
-          img.setAttribute('src', newSrc);
-          img.setAttribute('data-icon-name', 'star-yellow');
-        }
-      });
     }
   });
 
   block.append(ul);
 
-  // === View All / View Less Toggle (Mobile Only) - Only for benefit cards ===
-  if (!isTestimonial) {
+  // Check if swiper is enabled via data attribute
+  const isSwipable = block.dataset.swipable === 'true';
+  const startingCard = parseInt(block.dataset.startingCard || '0', 10);
+
+  if (isSwipable) {
+    // Load Swiper library
+    await loadCSS('/scripts/swiperjs/swiper-bundle.min.css');
+    await loadScript('/scripts/swiperjs/swiper-bundle.min.js');
+
+    // Add Swiper classes
+    block.classList.add('swiper');
+    ul.classList.add('swiper-wrapper');
+    ul.classList.remove('grid-cards');
+    ul.querySelectorAll('li').forEach((li) => {
+      li.classList.add('swiper-slide');
+    });
+
+    // Add pagination
+    const swiperPagination = document.createElement('div');
+    swiperPagination.className = 'swiper-pagination';
+    block.appendChild(swiperPagination);
+
+    // Navigation arrows (commented out for now)
+    // const swiperButtonPrev = document.createElement('div');
+    // swiperButtonPrev.className = 'swiper-button-prev';
+    // block.appendChild(swiperButtonPrev);
+
+    // const swiperButtonNext = document.createElement('div');
+    // swiperButtonNext.className = 'swiper-button-next';
+    // block.appendChild(swiperButtonNext);
+
+    // Initialize Swiper
+    // Build Swiper configuration
+    const swiperConfig = {
+      slidesPerView: 1,
+      spaceBetween: 16,
+      initialSlide: startingCard,
+      // navigation: {
+      //   nextEl: '.swiper-button-next',
+      //   prevEl: '.swiper-button-prev',
+      // },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        600: { // tablet
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        900: { // desktop
+          slidesPerView: 3,
+          spaceBetween: 36,
+        },
+      },
+    };
+
+    // Add centeredSlides for testimonial cards
+    if (isTestimonial) {
+      swiperConfig.centeredSlides = true;
+      // Ensure all slides are accessible and rendered
+      swiperConfig.loop = false;
+      swiperConfig.watchSlidesProgress = true;
+      swiperConfig.watchSlidesVisibility = true;
+      swiperConfig.observer = true;
+      swiperConfig.observeParents = true;
+      // Prevent Swiper from hiding slides
+      swiperConfig.slidesOffsetBefore = 0;
+      swiperConfig.slidesOffsetAfter = 0;
+    }
+
+    // eslint-disable-next-line no-undef
+    const swiper = new Swiper(block, swiperConfig);
+
+    // Store swiper instance for potential future use
+    block.swiperInstance = swiper;
+
+    // For testimonial cards, update star icons on active slide
+    if (isTestimonial) {
+      const updateStarIcons = () => {
+        // Use requestAnimationFrame to ensure DOM is updated
+        requestAnimationFrame(() => {
+          // Reset ALL star icons in ALL slides to white first
+          block.querySelectorAll('.swiper-slide [class*="icon-star"] img').forEach((img) => {
+            const currentSrc = img.getAttribute('src');
+            if (currentSrc && currentSrc.includes('star')) {
+              img.setAttribute('src', '/icons/star-white.svg');
+              img.setAttribute('data-icon-name', 'star-white');
+            }
+          });
+
+          // Change star icons to yellow ONLY on the active slide
+          const activeSlide = block.querySelector('.swiper-slide-active');
+          if (activeSlide) {
+            const starIcons = activeSlide.querySelectorAll('[class*="icon-star"] img');
+            starIcons.forEach((img) => {
+              const currentSrc = img.getAttribute('src');
+              if (currentSrc && currentSrc.includes('star')) {
+                img.setAttribute('src', '/icons/star-yellow.svg');
+                img.setAttribute('data-icon-name', 'star-yellow');
+              }
+            });
+          }
+        });
+      };
+
+      // Update on initial load
+      updateStarIcons();
+
+      // Update when slide change transition ends (ensures DOM is fully updated)
+      swiper.on('slideChangeTransitionEnd', updateStarIcons);
+      // Also update on slideChange for immediate feedback
+      swiper.on('slideChange', updateStarIcons);
+    }
+  } else if (!isTestimonial) {
+    // === View All / View Less Toggle (Mobile Only) - Only for benefit cards ===
     const cards = ul.querySelectorAll('li');
     const maxVisible = 3;
 
