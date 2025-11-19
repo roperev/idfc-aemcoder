@@ -100,13 +100,26 @@
   text-decoration: underline;
 }
 
+/* TESTIMONIAL CARD CONTAINER STYLING */
+.section.cards-container:has(.cards.testimonial-card) {
+  background-color: #000;
+  margin: 0;
+  padding: 40px 0;
+}
+
+.section.cards-container:has(.cards.testimonial-card) .default-content-wrapper h2 {
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+
 /* TESTIMONIAL CARD STYLING */
 .cards.testimonial-card .grid-cards {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  overflow: hidden auto;
   gap: 0;
-  padding: 0;
+  padding: 40px 0 0;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 }
@@ -115,89 +128,120 @@
   flex: 0 0 auto;
   width: 100%;
   max-width: 100%;
-  background: #FFF;
-  border-radius: 8px;
+  background: var(--dark-color);
+  border-radius: 20px;
   box-shadow: 0 4px 8px 2px rgb(37 36 59 / 15%);
   padding: 24px;
   display: flex;
   flex-direction: column;
   margin-right: 0;
+  min-height: 300px;
+  box-sizing: border-box;
+  height: auto;
+  overflow: visible;
+}
+
+.cards.testimonial-card .grid-cards > li .cards-card-body {
+  margin: 0;
+}
+
+.cards.testimonial-card .grid-cards > li:first-child {
+  background: var(--purple-color);
 }
 
 .cards.testimonial-card .grid-cards > li:not(:last-child) {
   margin-right: 16px;
 }
 
+/* All text in testimonial cards - white */
+
+/* Using full path: .cards.testimonial-card .grid-cards > li .cards-card-body for maximum specificity */
+.cards.testimonial-card .grid-cards > li .cards-card-body h5,
+.cards.testimonial-card .grid-cards > li .cards-card-body h6,
+.cards.testimonial-card .grid-cards > li .cards-card-body p {
+  color: #fff;
+}
+
 /* Person name (h5) */
-.cards.testimonial-card .cards-card-body h5 {
-  color: var(--text-color);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: -0.3px;
-  margin: 0 0 4px;
+.cards.testimonial-card .grid-cards > li .cards-card-body h5 {
+  font-size: var(--body-font-size-s);
+  font-family: var(--body-font-family-semibold);
+  margin: 36px 0 11px;
 }
 
-/* Card title paragraph */
-.cards.testimonial-card .cards-card-body h5 + p {
-  color: var(--text-color);
+/* Card title paragraph (after h5) - "FIRST Digital Credit Card" */
+.cards.testimonial-card .grid-cards > li .cards-card-body h5 + p {
   font-size: 14px;
-  font-weight: 300;
-  line-height: normal;
-  margin: 0 0 16px;
+  font-family: var(--heading-font-family);
+  margin: 0 0 8px;
 }
 
-/* Star ratings */
-.cards.testimonial-card .cards-card-body p:has(.icon-star) {
-  display: flex;
-  gap: 4px;
-  margin: 0 0 12px;
-  padding: 0;
+/* Testimonial text paragraph (cards-card-body p) - excludes inverted commas, stars, and underlined text */
+.cards.testimonial-card .grid-cards > li .cards-card-body p:not(:has(.icon-inverted-commas), :has(.icon-star), :has(u)) {
+  font-size: var(--body-font-size-xs);
+  font-family: var(--body-font-family-semibold);
+  line-height: 24px;
+  margin: 0;
+}
+
+/* Paragraph with underline tags (u) */
+.cards.testimonial-card .grid-cards > li .cards-card-body p u {
+  font-size: 14px;
+  font-family: var(--body-font-family-semibold);
+  text-decoration: none;
 }
 
 /* Inverted commas icon */
-.cards.testimonial-card .cards-card-body p:has(.icon-inverted-commas) {
+.cards.testimonial-card .grid-cards > li .cards-card-body p:has(.icon-inverted-commas) {
   margin: 0 0 16px;
   line-height: 0;
 }
 
-.cards.testimonial-card .icon-inverted-commas img {
+.cards.testimonial-card .grid-cards > li .icon-inverted-commas img {
   width: 20px;
   height: 16.75px;
 }
 
-/* Testimonial text paragraph */
-.cards.testimonial-card .cards-card-body p:not(:has(.icon-inverted-commas), :has(.icon-star)) {
-  color: var(--text-color);
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 24px;
-  letter-spacing: -0.262px;
-  margin: 0 0 16px;
+/* Star ratings - when in p element */
+.cards.testimonial-card .grid-cards > li .cards-card-body p:has(.icon-star) {
+  display: flex;
+  margin: 0 0 12px;
 }
 
-.cards.testimonial-card .icon-star {
+/* Star icons - all variants */
+.cards.testimonial-card .grid-cards > li .icon-star,
+.cards.testimonial-card .grid-cards > li .icon-star-white,
+.cards.testimonial-card .grid-cards > li .icon-star-yellow {
   display: inline-block;
-  width: 13px;
+  width: auto;
   height: 12px;
-}
-
-.cards.testimonial-card .icon-star img {
-  width: 13px;
-  height: 12px;
+  padding-right: 4px;
 }
 
 /* Date (h6) */
-.cards.testimonial-card .cards-card-body h6 {
-  color: var(--text-color);
+.cards.testimonial-card .grid-cards > li .cards-card-body h6 {
   font-size: 12px;
-  font-weight: 300;
-  line-height: normal;
+  font-family: var(--body-font-family);
   margin: 0;
 }
 
+/* Date with stars - flex layout */
+.cards.testimonial-card .grid-cards > li .cards-card-body h6:has(.icon-star) {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.cards.testimonial-card .grid-cards > li h6:has(.icon-star) .icon-star {
+  padding-right: 4px;
+}
+
+.cards.testimonial-card .grid-cards > li h6:has(.icon-star) .icon-star:last-child {
+  padding-right: 16px;
+}
+
 /* Remove empty card bodies */
-.cards.testimonial-card .cards-card-body:empty {
+.cards.testimonial-card .grid-cards > li .cards-card-body:empty {
   display: none;
 }
 
@@ -231,15 +275,17 @@
   }
 }
 
-/* TABLET VIEW */
-@media (width >= 601px) {
+/* TABLET VIEW - 600px and above */
+@media (width >= 600px) {
   .cards.testimonial-card .grid-cards > li {
     width: calc(50% - 8px);
+    aspect-ratio: 4 / 5;
+    min-height: 350px;
   }
 }
 
-/* DESKTOP VIEW */
-@media (width >= 901px) {
+/* DESKTOP VIEW - 900px and above */
+@media (width >= 900px) {
   .cards.testimonial-card .grid-cards {
     flex-wrap: wrap;
     overflow-x: visible;
@@ -247,13 +293,17 @@
 
   .cards.testimonial-card .grid-cards > li {
     width: calc(33.333% - 11px);
+    aspect-ratio: 5 / 6;
+    min-height: 400px;
   }
 }
 
-/* LARGE DESKTOP VIEW */
-@media (width >= 1201px) {
+/* LARGE DESKTOP VIEW - 1200px and above */
+@media (width >= 1200px) {
   .cards.testimonial-card .grid-cards > li {
     width: calc(33.333% - 11px);
     max-width: 352px;
+    aspect-ratio: 5 / 6;
+    min-height: 420px;
   }
 }

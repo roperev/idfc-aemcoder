@@ -31,9 +31,20 @@ export default function decorate(block) {
 
   // Only add benefit-cards class if NOT testimonial-card variant
   const isTestimonial = block.classList.contains('testimonial-card');
-  ul.querySelectorAll('li').forEach((li) => {
+  ul.querySelectorAll('li').forEach((li, index) => {
     if (!isTestimonial) {
       li.classList.add('benefit-cards');
+    } else if (index === 0) {
+      // For testimonial cards, change star icons to yellow on first card (purple background)
+      const starIcons = li.querySelectorAll('.icon-star img');
+      starIcons.forEach((img) => {
+        const currentSrc = img.getAttribute('src');
+        if (currentSrc && currentSrc.includes('star')) {
+          const newSrc = currentSrc.replace(/star(?:-white|-black)?\.svg/, 'star-yellow.svg');
+          img.setAttribute('src', newSrc);
+          img.setAttribute('data-icon-name', 'star-yellow');
+        }
+      });
     }
   });
 
