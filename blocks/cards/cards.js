@@ -156,7 +156,7 @@ export default async function decorate(block) {
         },
         900: { // desktop
           slidesPerView: 3,
-          spaceBetween: 36,
+          spaceBetween: 60,
         },
       },
     };
