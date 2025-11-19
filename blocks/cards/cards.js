@@ -133,8 +133,11 @@ export default async function decorate(block) {
     // block.appendChild(swiperButtonNext);
 
     // Initialize Swiper
-    // eslint-disable-next-line no-undef
-    const swiper = new Swiper(block, {
+    // Check if testimonial-card class is present for centered slides
+    const isTestimonial = block.classList.contains('testimonial-card');
+
+    // Build Swiper configuration
+    const swiperConfig = {
       slidesPerView: 1,
       spaceBetween: 16,
       initialSlide: startingCard,
@@ -156,7 +159,15 @@ export default async function decorate(block) {
           spaceBetween: 36,
         },
       },
-    });
+    };
+
+    // Add centeredSlides for testimonial cards
+    if (isTestimonial) {
+      swiperConfig.centeredSlides = true;
+    }
+
+    // eslint-disable-next-line no-undef
+    const swiper = new Swiper(block, swiperConfig);
 
     // Store swiper instance for potential future use
     block.swiperInstance = swiper;
