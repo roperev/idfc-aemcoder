@@ -1,6 +1,8 @@
 import {
   loadHeader,
   loadFooter,
+  buildBlock,
+  decorateBlock,
   decorateButtons,
   decorateIcons,
   decorateSections,
@@ -461,6 +463,33 @@ async function loadCategoryNavFragment(main) {
   }
 }
 
+/**
+ * check if link text is same as the href
+ * @param {Element} link the link element
+ * @returns {boolean} true or false
+ */
+export function linkTextIncludesHref(link) {
+  const href = link.getAttribute('href');
+  const textcontent = link.textContent;
+
+  return textcontent.includes(href);
+}
+
+/**
+ * Builds 'embed' blocks when non-fragment links are encountered
+ * @param {Element} main The container element
+ */
+export function buildEmbedBlocks(main) {
+  const embedPlatforms = /youtu\.be|youtu|vimeo|twitter\.com/;
+  main.querySelectorAll('a[href]').forEach((a) => {
+    if (embedPlatforms.test(a.href) && linkTextIncludesHref(a)) {
+      const embedBlock = buildBlock('embed', a.cloneNode(true));
+      a.replaceWith(embedBlock);
+      decorateBlock(embedBlock);
+    }
+  });
+}
+
 async function createForm(formHref, submitHref) {
   const { pathname } = new URL(formHref);
   const resp = await fetch(pathname);
@@ -688,6 +717,7 @@ export function decorateMain(main) {
   decorateSections(main);
   applySectionBackgroundColors(main);
   decorateBlocks(main);
+  buildEmbedBlocks(main);
 }
 
 /**
