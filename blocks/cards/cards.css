@@ -12,8 +12,6 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  
-  /* justify-content: center; */
 }
 
 .cards > ul > li {
@@ -35,22 +33,25 @@
 }
 
 /* BENEFIT CARD STYLING */
+
+/* Mobile-first base styles */
 .cards .benefit-cards {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 16px;
+  gap: 8px;
+  margin-bottom: 0;
+  width: 100%;
   border-radius: 8px;
   background: #FFF;
-  box-shadow: 0 4px 8px 2px rgba(37 36 59 / 15%);
-  width: calc(50% - 1rem); /* desktop: 2 per row */
+  box-shadow: 0 0 8px 0 rgb(37 36 59 / 15%);
   box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
 .cards .benefit-cards .cards-card-image img {
-  width: 150px;
-  height: 156px;
+  width: 120px;
+  height: auto;
   vertical-align: middle;
   border-radius: 4px;
   object-fit: cover;
@@ -58,11 +59,12 @@
 
 .cards .benefit-cards .cards-card-body {
   flex: 1;
+  margin-top: 12px;
 }
 
 .cards .benefit-cards .cards-card-body h3 {
   color: var(--text-color);
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -72,15 +74,15 @@
 
 .cards .benefit-cards .cards-card-body p {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 300;
-  line-height: 24px;
+  line-height: normal;
   letter-spacing: -0.262px;
   margin: 0;
 }
 
-.cards .benefit-cards .cards-card-body p u{
+.cards .benefit-cards .cards-card-body p u {
   color: #1c1c1c;
 }
 
@@ -103,45 +105,60 @@
   text-decoration: underline;
 }
 
-/* DESKTOP VIEW: Multiple Columns + toggleable */
-@media (width >= 900px) {
+/* TESTIMONIAL CARD CONTAINER STYLING */
+.section.cards-container:has(.cards.testimonial-card) {
+  background-color: #000;
+  margin: 0;
+  padding: 40px 0;
+}
+
+.section.cards-container:has(.cards.testimonial-card) .default-content-wrapper h2 {
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* TESTIMONIAL CARD STYLING */
+
+/* Desktop styles for benefit cards */
+@media (width >= 600px) {
   .cards .benefit-cards {
-    /* width: 100%;
-    flex-direction: column;
-    align-items: center;
-    text-align: center; */
-    gap: 8px;
-    margin-bottom: 0;
-    width: 100%;
-    border-radius: 8px;
-    background: #FFF;
-    box-shadow: 0 0 8px 0 rgba(37 36 59 / 15%);
-  }
-
-  .cards .benefit-cards .cards-card-body h3{
-    font-size: 14px;
-  }
-
-  .cards .benefit-cards .cards-card-body p{
-    font-size: 12px;
-    line-height: normal;
+    gap: 16px;
+    width: calc(50% - 1rem);
+    box-shadow: 0 4px 8px 2px rgb(37 36 59 / 15%);
   }
 
   .cards .benefit-cards .cards-card-image img {
-    width: 120px;
-    height: auto;
+    width: 150px;
+    height: 156px;
   }
 
   .cards .benefit-cards .cards-card-body {
-    margin-top: 12px;
+    margin-top: 0;
+  }
+
+  .cards .benefit-cards .cards-card-body h3 {
+    font-size: 16px;
+  }
+
+  .cards .benefit-cards .cards-card-body p {
+    font-size: 14px;
+    line-height: 24px;
   }
 }
+
 
 /* === SWIPER INTEGRATION STYLES === */
 .cards.swiper {
   width: 100%;
   height: auto;
   padding-bottom: 60px; /* Space for pagination */
+  position: relative;
+  overflow: visible;
+}
+
+.cards.testimonial-card.swiper {
+  overflow: hidden;
   position: relative;
 }
 
@@ -182,17 +199,13 @@
   background: #f5f5f5;
 }
 
-/* Hide navigation on mobile */
-@media (width <= 768px) {
-  .cards .swiper-button-next,
-  .cards .swiper-button-prev {
-    display: none;
-  }
-}
-
 /* Swiper Pagination */
 .cards .swiper-pagination {
   bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .cards .swiper-pagination-bullet {
@@ -380,4 +393,127 @@
   .cards.all-about-card .cards-card-body h3 {
     font-size: 16px;
   }
+  background: #ccc;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
 }
+
+/* Testimonial cards with Swiper - override general Swiper styles */
+.cards.testimonial-card.swiper .swiper-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: visible;
+  gap: 0;
+  padding: 40px 0 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cards.testimonial-card.swiper .swiper-slide {
+  flex: 0 0 auto;
+  background-color: var(--gray);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 2px rgb(37 36 59 / 15%);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 0;
+  box-sizing: border-box;
+  height: auto;
+  overflow: visible;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform: scale(0.9);
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body {
+  margin: 0;
+}
+
+.cards.testimonial-card.swiper .swiper-slide-active {
+  background-color: var(--purple-color);
+  transform: scale(1);
+  z-index: 10;
+  box-shadow: 0 8px 16px 4px rgb(37 36 59 / 25%);
+}
+
+/* Testimonial card text styling for Swiper slides */
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body h5,
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body h6,
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body p {
+  color: #fff;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body h5 {
+  font-size: var(--body-font-size-m);
+  font-family: var(--body-font-family-semibold);
+  margin: 36px 0 11px;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body h5 + p {
+  font-size: 14px;
+  font-family: var(--heading-font-family);
+  margin: 0 0 8px;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body p u {
+  font-size: 14px;
+  font-family: var(--heading-font-family);
+  text-decoration: none;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body p:not(:has(.icon-inverted-commas), :has(.icon-star), :has(u)) {
+  font-size: var(--body-font-size-s);
+  font-family: var(--body-font-family-semibold);
+  line-height: 24px;
+  margin: 0;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body p:has(.icon-inverted-commas) {
+  margin: 0 0 16px;
+  line-height: 0;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .icon-inverted-commas img {
+  width: 20px;
+  height: 16.75px;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body p:has(.icon-star) {
+  display: flex;
+  margin: 0 0 12px;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .icon-star,
+.cards.testimonial-card.swiper .swiper-slide .icon-star-white,
+.cards.testimonial-card.swiper .swiper-slide .icon-star-yellow {
+  display: inline-block;
+  width: auto;
+  height: 12px;
+  padding-right: 4px;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body h6 {
+  font-size: 12px;
+  font-family: var(--body-font-family);
+  margin: 0;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body h6:has(.icon-star) {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.cards.testimonial-card.swiper .swiper-slide h6:has(.icon-star) .icon-star {
+  padding-right: 4px;
+}
+
+.cards.testimonial-card.swiper .swiper-slide h6:has(.icon-star) .icon-star:last-child {
+  padding-right: 16px;
+}
+
+.cards.testimonial-card.swiper .swiper-slide .cards-card-body:empty {
+  display: none;
+}
+
