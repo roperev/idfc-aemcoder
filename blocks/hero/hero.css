@@ -49,6 +49,13 @@
   margin-top: 0;
 }
 
+.hero p em {
+font-weight: 700;
+    font-family: Inter-bold, sans-serif;
+    font-size: 14px;
+    margin-top: 0;
+}
+
 .hero picture {
   position: static;
   z-index: 1;
@@ -134,6 +141,8 @@
   border: 1px solid #fff;
   font-family: Inter-bold, sans-serif;
   font-style: normal;
+  display: inline-block;
+  overflow: hidden;
 }
 
 .hero .button.secondary:hover {
@@ -181,8 +190,8 @@
   }
 
   .hero .button-groups-wrapper {
-    flex-flow: row nowrap;
-    gap: 20px;
+    flex-direction: column;
+    gap: 24px;
     align-items: flex-start;
     width: auto;
     margin-left: 0;
@@ -190,7 +199,7 @@
   }
 
   .hero .button-group {
-    width: auto;
+    width: 67%;
     text-align: left;
     flex: 0 0 auto;
   }
@@ -237,6 +246,15 @@
   .hero picture {
     width: 50%;
     max-width: 650px;
+  }
+
+  .hero .button-groups-wrapper {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .hero .button-group {
+    width: auto;
   }
 }
 
