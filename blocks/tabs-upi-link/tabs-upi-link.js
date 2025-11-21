@@ -42,6 +42,9 @@ export default async function decorate(block) {
   tablist.className = 'tabs-list';
   tablist.setAttribute('role', 'tablist');
 
+  // Store tab names for later use
+  const tabNames = [];
+
   // Process each tab panel - similar to original tabs.js but handle nested structure
   tabPanels.forEach((tabpanel, i) => {
     // Find the tab name element - it's in the first child div's p element
@@ -53,6 +56,9 @@ export default async function decorate(block) {
 
     const tabName = tabNameElement.textContent.trim();
     if (!tabName) return; // Skip if empty
+
+    // Store tab name (use "app" for first tab, actual name for others)
+    tabNames.push(i === 0 ? 'the app' : tabName);
 
     const id = toClassName(tabName);
 
@@ -157,9 +163,27 @@ export default async function decorate(block) {
     tabsContainer.appendChild(tablist);
   }
 
-  // Move all tab panels to tabs container
-  tabPanels.forEach((tabpanel) => {
+  // Move all tab panels to tabs container and add QR code text
+  tabPanels.forEach((tabpanel, i) => {
     tabsContainer.appendChild(tabpanel);
+
+    // Find the QR code picture in this tab panel
+    const qrPicture = tabpanel.querySelector('.tabs-upi-link-panel-content picture');
+    if (qrPicture && tabNames[i]) {
+      const tabName = tabNames[i];
+
+      // Create text element
+      const qrText = document.createElement('p');
+      qrText.className = 'tabs-upi-link-qr-text';
+      qrText.textContent = `Scan the QR code to open ${tabName}`;
+
+      // Wrap picture and text in a container
+      const qrWrapper = document.createElement('div');
+      qrWrapper.className = 'tabs-upi-link-qr-wrapper';
+      qrPicture.parentNode.insertBefore(qrWrapper, qrPicture);
+      qrWrapper.appendChild(qrPicture);
+      qrWrapper.appendChild(qrText);
+    }
   });
 
   // Add tabs container to wrapper
@@ -178,4 +202,29 @@ export default async function decorate(block) {
 
   // Add tabs wrapper (contains image + tabs)
   block.appendChild(tabsWrapper);
+
+  // Replace "Scan" with "Tap" in H3 elements for mobile/tablet view (< 900px)
+  function updateScanToTap() {
+    const isMobile = window.matchMedia('(max-width: 899px)').matches;
+    const h3Elements = block.querySelectorAll('.tabs-panel h3');
+
+    h3Elements.forEach((h3) => {
+      // Get the original text content (without any previous modifications)
+      let text = h3.textContent;
+
+      if (isMobile) {
+        // Replace "Scan" with "Tap"
+        text = text.replace(/Scan/g, 'Tap');
+        h3.textContent = text;
+      } else {
+        // Replace "Tap" back to "Scan"
+        text = text.replace(/Tap/g, 'Scan');
+        h3.textContent = text;
+      }
+    });
+  }
+
+  // Run on load and resize
+  updateScanToTap();
+  window.addEventListener('resize', updateScanToTap);
 }
