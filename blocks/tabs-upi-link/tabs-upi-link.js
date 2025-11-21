@@ -120,6 +120,12 @@ export default async function decorate(block) {
         const mobilePicture = picture.cloneNode(true);
         mobileImageWrapper.appendChild(mobilePicture);
 
+        // Extract button container if it exists
+        const buttonContainer = tabpanel.querySelector('.button-container');
+        if (buttonContainer) {
+          buttonContainer.remove();
+        }
+
         // Wrap all existing content (except the image we're adding) in a container
         const contentWrapper = document.createElement('div');
         contentWrapper.className = 'tabs-upi-link-panel-content';
@@ -127,9 +133,17 @@ export default async function decorate(block) {
           contentWrapper.appendChild(tabpanel.firstChild);
         }
 
-        // Insert image first, then content wrapper
-        tabpanel.appendChild(mobileImageWrapper);
-        tabpanel.appendChild(contentWrapper);
+        // Create a wrapper for image and content (top section)
+        const topSection = document.createElement('div');
+        topSection.className = 'tabs-upi-link-panel-top';
+        topSection.appendChild(mobileImageWrapper);
+        topSection.appendChild(contentWrapper);
+
+        // Insert top section first, then button container at the bottom
+        tabpanel.appendChild(topSection);
+        if (buttonContainer) {
+          tabpanel.appendChild(buttonContainer);
+        }
       });
     }
   }
