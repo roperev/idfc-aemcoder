@@ -1,3 +1,5 @@
+import { decorateButtons } from '../../scripts/aem.js';
+
 export default function decorate(block) {
   // Move the picture element to be positioned absolutely on the right
   const picture = block.querySelector('picture');
@@ -10,33 +12,23 @@ export default function decorate(block) {
     block.appendChild(picture);
   }
 
-  // Group button labels with their buttons based on HTML structure
-  // After removing picture parent, find the remaining content div
+  // Group button labels with their buttons
   const contentDivs = Array.from(block.querySelectorAll('div > div'));
   const contentDiv = contentDivs.find((div) => div.children.length > 0);
 
   if (contentDiv) {
+    // Use existing decorateButtons function to handle button decoration
+    decorateButtons(contentDiv);
+
     const allParagraphs = Array.from(contentDiv.querySelectorAll('p'));
     const heading = contentDiv.querySelector('h1, h2');
 
-    // Find button pairs by looking for <em><a> or <strong><a> patterns
+    // Find button containers (already decorated by decorateButtons)
     const buttonPairs = [];
     const processedIndices = new Set();
 
     allParagraphs.forEach((p, index) => {
-      // Check if paragraph contains a link wrapped in em or strong
-      const emLink = p.querySelector('em > a');
-      const strongLink = p.querySelector('strong > a');
-
-      if (emLink || strongLink) {
-        const link = emLink || strongLink;
-        const isSecondary = !!emLink;
-
-        // Apply button styling
-        link.classList.add('button');
-        link.classList.add(isSecondary ? 'secondary' : 'primary');
-        p.classList.add('button-container');
-
+      if (p.classList.contains('button-container')) {
         // Find the label (previous paragraph without a link)
         let label = null;
         if (index > 0) {
@@ -52,9 +44,9 @@ export default function decorate(block) {
       }
     });
 
-    // Find footer paragraphs (not labels, not buttons, not headings)
+    // Find footer paragraphs (not labels, not buttons)
     const footerParagraphs = allParagraphs.filter(
-      (p, index) => !processedIndices.has(index) && !p.querySelector('a'),
+      (p, index) => !processedIndices.has(index),
     );
 
     if (buttonPairs.length > 0) {
