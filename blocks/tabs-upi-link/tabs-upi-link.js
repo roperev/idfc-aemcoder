@@ -224,7 +224,11 @@ export default async function decorate(block) {
     });
   }
 
-  // Run on load and resize
+  // Run on load and resize with debouncing
   updateScanToTap();
-  window.addEventListener('resize', updateScanToTap);
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(updateScanToTap, 150);
+  });
 }
