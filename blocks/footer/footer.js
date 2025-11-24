@@ -20,39 +20,26 @@ function stripAueAttributes(element) {
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
-  // Load footer fragment using loadFragment (same as header)
+  // load footer as fragment
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   const fragment = await loadFragment(footerPath);
 
-  // Build footer DOM by extracting content from fragment sections
-  // This approach (like header.js) leaves instrumented sections behind in the fragment
+  // decorate footer DOM
+  block.textContent = '';
   const footer = document.createElement('div');
 
   if (fragment) {
-    // Get all sections from the fragment
-    const sections = fragment.querySelectorAll(':scope > div');
+    // Strip data-aue-* attributes from fragment to prevent footer content
+    // from appearing in Universal Editor content tree
+    stripAueAttributes(fragment);
 
-    sections.forEach((section) => {
-      // Create a new section div (uninstrumented)
-      const newSection = document.createElement('div');
-      // Copy class names to preserve styling
-      newSection.className = section.className;
-
-      // Clone all children from the original section
-      // Children may have data-aue-* attributes at multiple levels (blocks, accordions, etc.)
-      Array.from(section.children).forEach((child) => {
-        const clonedChild = child.cloneNode(true);
-        // Recursively strip all data-aue-* attributes from the cloned subtree
-        stripAueAttributes(clonedChild);
-        newSection.appendChild(clonedChild);
-      });
-
-      footer.appendChild(newSection);
-    });
+    // Append all sections from fragment
+    while (fragment.firstElementChild) {
+      footer.append(fragment.firstElementChild);
+    }
   }
 
-  block.textContent = '';
   block.append(footer);
 
   // Open accordion details on desktop
