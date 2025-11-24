@@ -2,6 +2,20 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../../scripts/scripts.js';
 
 /**
+ * Recursively removes all data-aue-* attributes from an element and its descendants
+ * @param {Element} element The element to strip attributes from
+ */
+function stripAueAttributes(element) {
+  // Remove data-aue-* attributes from this element
+  [...element.attributes]
+    .filter((attr) => attr.name.startsWith('data-aue-'))
+    .forEach((attr) => element.removeAttribute(attr.name));
+
+  // Recursively strip from all children
+  Array.from(element.children).forEach((child) => stripAueAttributes(child));
+}
+
+/**
  * loads and decorates the footer
  * @param {Element} block The footer block element
  */
@@ -25,10 +39,13 @@ export default async function decorate(block) {
       // Copy class names to preserve styling
       newSection.className = section.className;
 
-      // Extract and move all child content from the original section
-      // This leaves the instrumented section element behind in the fragment
+      // Clone all children from the original section
+      // Children may have data-aue-* attributes at multiple levels (blocks, accordions, etc.)
       Array.from(section.children).forEach((child) => {
-        newSection.appendChild(child.cloneNode(true));
+        const clonedChild = child.cloneNode(true);
+        // Recursively strip all data-aue-* attributes from the cloned subtree
+        stripAueAttributes(clonedChild);
+        newSection.appendChild(clonedChild);
       });
 
       footer.appendChild(newSection);
