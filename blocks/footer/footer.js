@@ -1,37 +1,46 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../../scripts/scripts.js';
+import { getMetadata, decorateBlock, loadBlock } from '../../scripts/aem.js';
+
 /**
  * loads and decorates the footer
  * @param {Element} block The footer block element
  */
 export default async function decorate(block) {
-  // load footer as fragment
+  // load footer fragment directly from .plain.html (without decoration)
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
 
-  // decorate footer DOM
   block.textContent = '';
   const footer = document.createElement('div');
 
-  // Build footer DOM from fragment content without transferring section elements
-  // This prevents footer sections from appearing in the Universal Editor content tree
-  if (fragment) {
-    // Get all sections from the fragment
-    const sections = fragment.querySelectorAll(':scope > div');
-    sections.forEach((section) => {
-      // Create a new section div (without data-aue attributes)
-      const newSection = document.createElement('div');
-      newSection.className = section.className;
+  // Fetch the plain HTML directly to avoid Universal Editor instrumentation
+  if (footerPath && footerPath.startsWith('/')) {
+    const path = footerPath.replace(/(\.plain)?\.html/, '');
+    const resp = await fetch(`${path}.plain.html`);
 
-      // Move the inner content (blocks, wrappers, etc.) from the section
-      // The section element itself (with data-aue-resource) stays in fragment
-      while (section.firstChild) {
-        newSection.appendChild(section.firstChild);
-      }
+    if (resp.ok) {
+      const html = await resp.text();
 
-      footer.append(newSection);
-    });
+      // Create a temporary container to parse the HTML
+      const temp = document.createElement('div');
+      temp.innerHTML = html;
+
+      // Extract sections and their content (no data-aue-* attributes in plain HTML)
+      const sections = temp.querySelectorAll(':scope > div');
+      sections.forEach((section) => {
+        const newSection = document.createElement('div');
+        newSection.className = section.className;
+        newSection.innerHTML = section.innerHTML;
+
+        // Decorate any blocks within this section
+        const blocks = newSection.querySelectorAll('.accordion');
+        blocks.forEach((blockEl) => {
+          decorateBlock(blockEl);
+          loadBlock(blockEl);
+        });
+
+        footer.append(newSection);
+      });
+    }
   }
 
   block.append(footer);
