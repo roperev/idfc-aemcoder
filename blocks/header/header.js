@@ -106,10 +106,19 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  // eslint-disable-next-line no-console
+  console.log('[DEBUG header.js decorate] START - Decorating header block');
+  // eslint-disable-next-line no-console
+  console.log('[DEBUG header.js decorate] Block element:', block);
+  
   // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  // eslint-disable-next-line no-console
+  console.log('[DEBUG header.js decorate] Loading nav fragment from:', navPath);
   const fragment = await loadFragment(navPath);
+  // eslint-disable-next-line no-console
+  console.log('[DEBUG header.js decorate] Nav fragment loaded, building header DOM');
 
   // decorate nav DOM
   block.textContent = '';
@@ -337,4 +346,7 @@ export default async function decorate(block) {
       navWrapper.classList.remove('scrolled');
     }
   });
+  
+  // eslint-disable-next-line no-console
+  console.log('[DEBUG header.js decorate] COMPLETE - Header decoration finished');
 }
