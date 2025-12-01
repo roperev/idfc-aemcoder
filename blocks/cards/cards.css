@@ -423,7 +423,7 @@
   box-sizing: border-box;
   height: auto;
   overflow: visible;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.5s ease;
   transform: scale(0.9);
 }
 
@@ -436,6 +436,7 @@
   transform: scale(1);
   z-index: 10;
   box-shadow: 0 8px 16px 4px rgb(37 36 59 / 25%);
+  transition: all 0.5s ease;
 }
 
 /* Testimonial card text styling for Swiper slides */
