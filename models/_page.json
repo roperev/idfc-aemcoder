@@ -7,7 +7,13 @@
           "component": "boolean",
           "name": "breadcrumbs",
           "label": "Show Breadcrumbs",
-          "description": "Show the breadcrumbs on the page."
+          "description": "Show the breadcrumbs trail on the page (default: off)"
+        },
+        {
+          "component": "text",
+          "name": "breadcrumbsTitle",
+          "label": "Breadcrumbs Title",
+          "description": "Title for page's breadcrumb entry when breadcrumbs are enabled"
         },
         {
           "component": "text",
@@ -20,6 +26,7 @@
           "component": "aem-content",
           "name": "category-nav",
           "label": "Category Nav",
+          "description": "Category navigation from framework to display for the page",
           "valueType": "string",
           "validation": {
             "rootPath": "/content/idfc-edge/framework"

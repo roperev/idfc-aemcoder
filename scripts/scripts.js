@@ -877,6 +877,7 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
 
       if (isLastSegment) {
         // For the last segment (current page), use page title
+        // (will be overridden by breadcrumbsTitle metadata if present)
         let pageTitle = getMetadata('og:title') || document.title;
         // Strip out site name suffix (anything after |, -, or : followed by site name)
         pageTitle = pageTitle.split('|')[0].split(' - ')[0].trim();
@@ -896,9 +897,16 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   }
 
   // Don't add "Home" to breadcrumbs - start with first level after home
+  // Uncomment this if you want to add a home label to the beginning of the breadcrumbs
   // const placeholders = await fetchPlaceholders();
   // const homePlaceholder = placeholders.breadcrumbsHomeLabel || 'Home';
   // crumbs.unshift({ title: homePlaceholder, url: homeUrl });
+
+  // Override last breadcrumb title with breadcrumbsTitle if available
+  const breadcrumbsTitle = getMetadata('breadcrumbsTitle');
+  if (breadcrumbsTitle && crumbs.length > 0) {
+    crumbs[crumbs.length - 1].title = breadcrumbsTitle;
+  }
 
   // last link is current page and should not be linked
   if (crumbs.length > 1) {
