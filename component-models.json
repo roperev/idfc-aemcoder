@@ -636,6 +636,10 @@
           {
             "name": "Table",
             "value": "table"
+          },
+          {
+            "name": "Important Documents",
+            "value": "important-documents"
           }
         ]
       },
