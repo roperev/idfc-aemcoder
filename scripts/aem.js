@@ -441,6 +441,32 @@ function decorateButtons(element) {
       }
     }
   });
+
+  // Handle button groups: wrap button with preceding superscript text
+  // This allows text (in superscript) and button to be moved together in responsive layouts
+  element.querySelectorAll('p.button-container').forEach((buttonContainer) => {
+    // Check if this button container hasn't already been grouped
+    if (buttonContainer.parentElement?.classList.contains('button-group')) {
+      return;
+    }
+
+    // Check if the previous sibling is a <p> containing a <sup>
+    const previousSibling = buttonContainer.previousElementSibling;
+    if (previousSibling
+      && previousSibling.tagName === 'P'
+      && previousSibling.querySelector('sup')) {
+      // Create a new div with class 'button-group'
+      const buttonGroup = document.createElement('div');
+      buttonGroup.className = 'button-group';
+
+      // Insert the new div before the previous sibling
+      buttonContainer.parentElement.insertBefore(buttonGroup, previousSibling);
+
+      // Move both elements into the button-group
+      buttonGroup.appendChild(previousSibling);
+      buttonGroup.appendChild(buttonContainer);
+    }
+  });
 }
 
 /**
