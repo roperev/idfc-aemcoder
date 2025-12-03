@@ -903,7 +903,7 @@ async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
   // crumbs.unshift({ title: homePlaceholder, url: homeUrl });
 
   // Override last breadcrumb title with breadcrumbsTitle if available
-  const breadcrumbsTitle = getMetadata('breadcrumbsTitle');
+  const breadcrumbsTitle = getMetadata('breadcrumbstitle');
   if (breadcrumbsTitle && crumbs.length > 0) {
     crumbs[crumbs.length - 1].title = breadcrumbsTitle;
   }
