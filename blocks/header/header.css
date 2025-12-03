@@ -1,4 +1,5 @@
 /* stylelint-disable selector-class-pattern */
+/* stylelint-disable no-descending-specificity */
 @import url("./nav-pane.css");
 @import url("./mob-header.css");
 
@@ -16,7 +17,7 @@
 .top-nav-left > li > a {
   display: block;
   border-bottom: 3px solid rgba(0 0 0 / 0%);
-  padding: 14px 30px 14px 0;
+  padding: 15px 30px 10px 0;
   height: 45px;
   color: #353535;
   white-space: nowrap;
@@ -678,35 +679,5 @@ header nav .nav-tools {
   .nav-tools .default-content-wrapper .icon-login_header {
     width: 14px;
     height: 14px;
-  }
-}
-
-@media (width <= 1280px) {
-  .top-nav-left>li.hide-1024 {
-    display: none
-  }
-
-  .top-nav-left>li {
-    font-size: 14px;
-    margin: 0
-  }
-
-  .top-nav-left>li>a {
-    padding: 15px 30px 10px 0;
-  }
-}
-
-@media (width <= 1024px) {
-  .top-nav-left .dropdown-content.menu-cardList-cnt {
-    min-width: 550px
-  }
-
-  .top-nav-left>li {
-    font-size: 14px;
-    margin: 0
-  }
-
-  .top-nav-left>li>a {
-    padding: 15px 18px 10px 0;
   }
 }

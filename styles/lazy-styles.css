@@ -8,7 +8,7 @@ main .breadcrumbs {
   font-size: 11px;
   font-family: var(--body-font-family-semibold);
   position: relative;
-  z-index: 10;
+  z-index: 3; /* stay under navigation */
   background-color: rgb(232 232 232 / 90%);
   border-radius: 20px;
   box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
