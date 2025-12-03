@@ -13,7 +13,15 @@
           "component": "text",
           "name": "breadcrumbsTitle",
           "label": "Breadcrumbs Title",
-          "description": "Title for page's breadcrumb entry when breadcrumbs are enabled"
+          "description": "Title for page's breadcrumb entry when breadcrumbs are enabled",
+          "condition": {
+            "==": [
+              {
+                "var": "breadcrumbs"
+              },
+              true
+            ]
+          }
         },
         {
           "component": "text",
