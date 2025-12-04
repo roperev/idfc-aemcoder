@@ -102,10 +102,14 @@ export default async function decorate(block) {
 
   // Check if testimonial-card variant
   const isTestimonial = block.classList.contains('testimonial-card');
+  // Check if important-documents variant
+  const isImportantDocuments = block.classList.contains('important-documents');
 
-  // Only add benefit-cards class if NOT testimonial-card variant
+  // Add appropriate class to card items
   ul.querySelectorAll('li').forEach((li) => {
-    if (!isTestimonial) {
+    if (isImportantDocuments) {
+      li.classList.add('important-documents-card');
+    } else if (!isTestimonial) {
       li.classList.add('benefit-cards');
     }
   });

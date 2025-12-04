@@ -118,6 +118,118 @@
   text-align: center;
 }
 
+/* IMPORTANT DOCUMENTS CARD CONTAINER STYLING */
+.section:has(.cards.important-documents) {
+  background: linear-gradient(to bottom, #C5767D, #9E1E29);
+  padding: 24px 0;
+}
+
+/* Hide View All button for important-documents */
+.cards.important-documents .view-toggle {
+  display: none;
+}
+
+/* Important Documents Cards - Mobile Grid Layout */
+.cards.important-documents .grid-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 20px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Important Documents Card Styling */
+.cards.important-documents li,
+.cards.important-documents .important-documents-card {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 10px;
+  background: #FFF;
+  border-radius: 8px;
+  box-shadow: 0 0 8px 0 rgb(37 36 59 / 15%);
+  width: 100%;
+  gap: 10px;
+  min-height: 140px;
+  justify-content: flex-start;
+}
+
+/* Important Documents Card Image */
+.cards.important-documents .cards-card-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.cards.important-documents .cards-card-image img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+/* Important Documents Card Body */
+.cards.important-documents .cards-card-body {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.cards.important-documents .cards-card-body p {
+  margin: 0;
+}
+
+.cards.important-documents .cards-card-body .button-container {
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.cards.important-documents .cards-card-body .button-container strong {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.cards.important-documents .cards-card-body a,
+.cards.important-documents .cards-card-body a.button.primary {
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  display: block;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.cards.important-documents .cards-card-body a:hover,
+.cards.important-documents .cards-card-body a.button.primary:hover {
+  text-decoration: underline;
+  background: transparent;
+}
+
+/* Important Documents Section Title */
+.section:has(.cards.important-documents) .default-content-wrapper h3 {
+  color: #FFF;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin: 32px 0 24px;
+  padding: 0 16px;
+}
+
 /* TESTIMONIAL CARD STYLING */
 
 /* Desktop styles for benefit cards */
@@ -144,6 +256,28 @@
   .cards .benefit-cards .cards-card-body p {
     font-size: 14px;
     line-height: 24px;
+  }
+
+  /* Important Documents Cards - Tablet View (600px+) */
+  .cards.important-documents .grid-cards {
+    gap: 10px;
+    padding: 0 24px;
+    max-width: 80%;
+  }
+
+  .cards.important-documents li,
+  .cards.important-documents .important-documents-card {
+    padding: 10px 6px;
+    gap: 6px;
+  }
+
+  .cards.important-documents .cards-card-image img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cards.important-documents .cards-card-image {
+    margin-bottom: 3px;
   }
 }
 
@@ -393,6 +527,47 @@
 
   .cards.all-about-card .cards-card-body h3 {
     font-size: 16px;
+  }
+
+  /* Important Documents Cards - Desktop View (900px+) */
+  .cards.important-documents .grid-cards {
+    grid-template-columns: repeat(4, 175px);
+    grid-auto-rows: 175px;
+    gap: 16px;
+    padding: 0;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cards.important-documents .grid-cards > li {
+    grid-row: 1;
+    width: 175px;
+    height: 175px;
+  }
+
+  .cards.important-documents li,
+  .cards.important-documents .important-documents-card {
+    width: 175px;
+    height: 175px;
+    padding: 12px 8px;
+  }
+
+  .cards.important-documents .cards-card-image img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .cards.important-documents .cards-card-image {
+    margin-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .cards.important-documents .cards-card-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   background: #ccc;
   width: 14px;
