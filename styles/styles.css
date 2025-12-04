@@ -290,6 +290,22 @@ button.secondary {
   color: var(--text-color);
 }
 
+/* button groups - wraps text (typically superscript) and button together for responsive layouts */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: flex-start;
+}
+
+.button-group p {
+  margin: 0;
+}
+
+.button-group .button-container {
+  margin: 0;
+}
+
 main img {
   max-width: 100%;
   width: auto;
