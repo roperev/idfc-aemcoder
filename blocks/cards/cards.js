@@ -1,4 +1,6 @@
-import { createOptimizedPicture, loadScript, loadCSS } from '../../scripts/aem.js';
+import {
+  createOptimizedPicture, loadScript, loadCSS, getMetadata,
+} from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
@@ -123,15 +125,51 @@ function generateTestimonialSchema(block) {
   );
   const avgRating = (totalRating / testimonials.length).toFixed(1);
 
-  // Return Product schema with reviews
-  return {
+  // Get dynamic metadata from page
+  const pageTitle = document.title || 'IDFC FIRST Bank Credit Card';
+  const pageDescription = getMetadata('description')
+    || getMetadata('og:description')
+    || 'Apply for Credit Card at IDFC FIRST Bank with exclusive benefits and rewards.';
+
+  // Get canonical URL (with fallbacks)
+  const canonicalLink = document.querySelector('link[rel="canonical"]');
+  const pageUrl = canonicalLink?.href || getMetadata('og:url') || window.location.href;
+
+  // Get product image from Open Graph metadata
+  const pageImage = getMetadata('og:image');
+
+  // Get published and modified dates
+  const publishedTime = getMetadata('published-time');
+  const modifiedTime = getMetadata('modified-time');
+
+  // Get category from breadcrumbs title
+  const category = getMetadata('breadcrumbstitle');
+
+  // Extract brand name from title or use default
+  let brandName = 'IDFC FIRST Bank';
+  if (pageTitle.includes('IDFC')) {
+    const titleParts = pageTitle.split('|');
+    if (titleParts.length > 1) {
+      brandName = titleParts[1].trim();
+    }
+  }
+
+  // Get product name from title (remove brand suffix if present)
+  let productName = pageTitle;
+  if (pageTitle.includes('|')) {
+    [productName] = pageTitle.split('|');
+    productName = productName.trim();
+  }
+
+  // Build Product schema with reviews
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: 'IDFC FIRST Bank RuPay Credit Card',
-    description: 'Apply for RuPay Credit Card at IDFC FIRST Bank & get 3X rewards on UPI transactions. Enjoy exclusive benefits, cashback, seamless digital payments.',
+    name: productName,
+    description: pageDescription,
     brand: {
       '@type': 'Brand',
-      name: 'IDFC FIRST Bank',
+      name: brandName,
     },
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -141,6 +179,29 @@ function generateTestimonialSchema(block) {
     },
     review: testimonials,
   };
+
+  // Add optional fields if available
+  if (pageUrl) {
+    schema.url = pageUrl;
+  }
+
+  if (pageImage) {
+    schema.image = pageImage;
+  }
+
+  if (publishedTime) {
+    schema.datePublished = publishedTime;
+  }
+
+  if (modifiedTime) {
+    schema.dateModified = modifiedTime;
+  }
+
+  if (category) {
+    schema.category = category;
+  }
+
+  return schema;
 }
 
 /**
