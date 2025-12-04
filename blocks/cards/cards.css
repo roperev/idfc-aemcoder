@@ -126,7 +126,7 @@
 
 /* IMPORTANT DOCUMENTS CARD CONTAINER STYLING */
 .section:has(.cards.important-documents) {
-  background: linear-gradient(to bottom, #C5767D, #9E1E29);
+  background: var(--gradient-important-documents);
   padding: 24px 0;
 }
 
