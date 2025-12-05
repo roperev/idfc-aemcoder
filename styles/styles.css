@@ -24,6 +24,8 @@
   --dark-red-link-color:#801c1e;
   --red-color: #D73F41;
   --gradient-upi-steps-red: linear-gradient(165deg, #ca0919 0%, #8C2034 40%, #732C53 80%, #513873 100%);
+  --gradient-tabs-upi-link-red: radial-gradient(at top left, #AC2A34 0%, #661E2A 50%, #140F23 100%);
+  --gradient-important-documents: linear-gradient(to bottom, #C5767D, #9E1E29);
   --gradient-red: linear-gradient(92deg, #5D2227 36.27%, #982B35 70.68%, #5D2227 85.89%);
   --gradient-blue: linear-gradient(137deg, #08133C 4.07%, #2E3E79 75.46%);
   --gradient-pewter: linear-gradient(270deg, #332B28 0%, #514A44 21.11%, #8B837D 50.14%, #625A50 71.74%, #7A766D 90.18%, #433C32 100%);
@@ -41,6 +43,7 @@
   --teal: #20c997;
   --cyan: #17a2b8;
   --white: #fff;
+  --gray-light: #f9f9f9;
   --gray: #6c757d;
   --gray-dark: #343a40;
   --primary: #007bff;
@@ -53,9 +56,8 @@
   --dark: #343a40;
 
   /* fonts */
-  --body-font-family: 'Inter', sans-serif; 
-  --body-font-family-semibold: 'Inter-semiBold', sans-serif;
-  --heading-font-family: 'Inter-bold', sans-serif;
+  --body-font-family: 'Inter', sans-serif;
+  --heading-font-family: 'Inter', sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -288,6 +290,22 @@ button.secondary {
   color: var(--text-color);
 }
 
+/* button groups - wraps text (typically superscript) and button together for responsive layouts */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: flex-start;
+}
+
+.button-group p {
+  margin: 0;
+}
+
+.button-group .button-container {
+  margin: 0;
+}
+
 main img {
   max-width: 100%;
   width: auto;
@@ -320,10 +338,92 @@ main>.section:first-of-type {
   margin-top: 0;
 }
 
-@media (max-width: 767px) {
+/* Reserve space for breadcrumbs to prevent CLS - Mobile First */
+
+/* Mobile: hidden by default */
+main .breadcrumbs {
+  display: none;
+}
+
+/* Desktop: show breadcrumbs with full styling */
+@media (width >= 900px) {
+  main .breadcrumbs {
+    display: inline-block;
+    margin: 10px 40px 0;
+    padding: 4px 20px;
+    font-size: 12px;
+    font-family: var(--body-font-family-semibold);
+    position: relative;
+    z-index: 3;
+    background-color: rgb(232 232 232 / 90%);
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+    min-height: 28px;
+    opacity: 0; /* Start hidden */
+    visibility: hidden; /* Hide but reserve space until lazy-styles loads */
+    transition: opacity 0.5s ease-in, visibility 0.5s; /* Smooth fade-in */
+  }
+
+  /* Breadcrumb list styles - must be in eager CSS to prevent CLS */
+  main .breadcrumbs ol {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 10px;
+    white-space: nowrap;
+    align-items: center;
+  }
+
+  main .breadcrumbs ol li {
+    padding: 0;
+    color: #767676;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  main .breadcrumbs ol li a {
+    color: var(--text-color);
+    font-family: var(--body-font-family-semibold);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  main .breadcrumbs ol li a:hover {
+    color: var(--dark-red-color);
+    text-decoration: none;
+  }
+
+  main .breadcrumbs ol li:not(:last-child)::after {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border: solid var(--dark-red-color);
+    border-width: 1px 1px 0 0;
+    transform: rotate(45deg);
+    margin-left: 10px;
+  }
+
+  main .breadcrumbs ol li[aria-current] {
+    color: var(--dark-color);
+    font-family: var(--body-font-family-semibold);
+    font-weight: 400;
+  }
+
+  main:has(.hero-wrapper) .breadcrumbs {
+    margin-left: 60px;
+  }
+
+@media (width <= 767px) {
   .category-nav-wrapper {
     display: none; /* Hide on mobile as per original design */
   }
+}
 
   .section.pl-blogs-container h2,
   .section.swipper-card-container h2 {
@@ -669,9 +769,15 @@ section.faq-accordion-container h4 {
     height: 140px;
   }
 
-  /* Increase header height when category navigation is present */
+  /* Reserve space for category navigation to prevent CLS */
+  /* Category nav wrapper is always present as placeholder, so always reserve space */
   header:has(.category-nav-wrapper) {
     height: 204px; /* 140px base + 64px for category nav */
+  }
+  
+  /* If category-nav-wrapper exists but is empty, still reserve the space */
+  header .category-nav-wrapper {
+    min-height: 64px; /* Ensure consistent height even when empty */
   }
 
 }

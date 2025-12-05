@@ -3,16 +3,36 @@
     "id": "page-metadata",
     "fields": [
       {
+        "component": "boolean",
+        "name": "breadcrumbs",
+        "label": "Show Breadcrumbs",
+        "description": "Show the breadcrumbs trail above page content"
+      },
+      {
+        "component": "text",
+        "name": "breadcrumbsTitle",
+        "label": "Breadcrumbs Title",
+        "description": "Title for breadcrumb entry",
+        "condition": {
+          "==": [
+            {
+              "var": "breadcrumbs"
+            },
+            true
+          ]
+        }
+      },
+      {
         "component": "text",
         "name": "jcr:title",
         "valueType": "string",
-        "label": "Title",
-        "description": "Title of the page."
+        "label": "Title"
       },
       {
         "component": "aem-content",
         "name": "category-nav",
         "label": "Category Nav",
+        "description": "Category navigation displayed above page content",
         "valueType": "string",
         "validation": {
           "rootPath": "/content/idfc-edge/framework"
@@ -155,6 +175,12 @@
             "value": "upi-steps-red-bg"
           }
         ]
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "ID",
+        "description": "Adds an ID value to the section"
       }
     ]
   },
@@ -310,6 +336,10 @@
           {
             "name": "All About",
             "value": "all-about-card"
+          },
+          {
+            "name": "Important Documents",
+            "value": "important-documents"
           }
         ]
       },

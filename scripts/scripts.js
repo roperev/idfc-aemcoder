@@ -399,6 +399,37 @@ export default async function decorateFragment(block) {
 }
 
 /**
+ * Handle button groups: wrap button with preceding superscript text
+ * This allows text (in superscript) and button to be moved together in responsive layouts
+ * @param {Element} element container element
+ */
+function decorateButtonGroups(element) {
+  element.querySelectorAll('p.button-container').forEach((buttonContainer) => {
+    // Check if this button container hasn't already been grouped
+    if (buttonContainer.parentElement?.classList.contains('button-group')) {
+      return;
+    }
+
+    // Check if the previous sibling is a <p> containing a <sup>
+    const previousSibling = buttonContainer.previousElementSibling;
+    if (previousSibling
+      && previousSibling.tagName === 'P'
+      && previousSibling.querySelector('sup')) {
+      // Create a new div with class 'button-group'
+      const buttonGroup = document.createElement('div');
+      buttonGroup.className = 'button-group';
+
+      // Insert the new div before the previous sibling
+      buttonContainer.parentElement.insertBefore(buttonGroup, previousSibling);
+
+      // Move both elements into the button-group
+      buttonGroup.appendChild(previousSibling);
+      buttonGroup.appendChild(buttonContainer);
+    }
+  });
+}
+
+/**
  * Check if we're viewing a framework page (either in Universal Editor or directly)
  * Framework pages are template/fragment pages and should display their raw content
  * @returns {boolean} True if viewing a framework page
@@ -746,12 +777,94 @@ function buildAutoBlocks(main) {
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
+  decorateButtonGroups(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
   applySectionBackgroundColors(main);
   decorateBlocks(main);
   buildEmbedBlocks(main);
+}
+
+function addOverlayRule(ruleSet, selector, property, value) {
+  if (!ruleSet.has(selector)) {
+    ruleSet.set(selector, [`--${property}: ${value};`]);
+  } else {
+    ruleSet.get(selector).push(`--${property}: ${value};`);
+  }
+}
+
+async function loadThemeSpreadSheetConfig() {
+  const theme = getMetadata('design');
+  if (!theme) return;
+  // make sure the json files are added to paths.json first
+  const resp = await fetch(`/${theme}.json?offset=0&limit=500`);
+
+  if (resp.status === 200) {
+    // create style element that should be last in the head
+    document.head.insertAdjacentHTML('beforeend', '<style id="style-overrides"></style>');
+    const sheet = window.document.styleSheets[document.styleSheets.length - 1];
+    // load spreadsheet
+    const json = await resp.json();
+    const tokens = json.data || json.default.data;
+    // go through the entries and create the rule set
+    const ruleSet = new Map();
+    tokens.forEach((e) => {
+      const {
+        Property, Value, Section, Block,
+      } = e;
+      let selector = '';
+      if (Section.length === 0 && Block.length === 0) {
+        // :root { --<property>: <value>; }
+        addOverlayRule(ruleSet, ':root', Property, Value);
+      } else {
+        // define the section selector if set
+        if (Section.length > 0) {
+          selector = `main .section.${Section}`;
+        } else {
+          selector = 'main .section';
+        }
+        // define the block selector if set
+        if (Block.length) {
+          Block.split(',').forEach((entry) => {
+            // eslint-disable-next-line no-param-reassign
+            entry = entry.trim();
+            let blockSelector = selector;
+            // special cases: default wrapper, text, image, button, title
+            switch (entry) {
+              case 'default':
+                blockSelector += ' .default-content-wrapper';
+                break;
+              case 'image':
+                blockSelector += ` .default-content-wrapper img, ${selector} .block.columns img`;
+                break;
+              case 'text':
+                blockSelector += ` .default-content-wrapper p:not(:has(:is(a.button , picture))), ${selector} .columns.block p:not(:has(:is(a.button , picture)))`;
+                break;
+              case 'button':
+                blockSelector += ' .default-content-wrapper a.button';
+                break;
+              case 'title':
+                blockSelector += ` .default-content-wrapper :is(h1,h2,h3,h4,h5,h6), ${selector} .columns.block :is(h1,h2,h3,h4,h5,h6)`;
+                break;
+              default:
+                blockSelector += ` .block.${entry}`;
+            }
+            // main .section.<section-name> .block.<block-name> { --<property>: <value>; }
+            // or any of the spacial cases above
+            addOverlayRule(ruleSet, blockSelector, Property, Value);
+          });
+        } else {
+          // main .section.<section-name> { --<property>: <value>; }
+          addOverlayRule(ruleSet, selector, Property, Value);
+        }
+      }
+    });
+    // finally write the rule sets to the style element
+    ruleSet.forEach((rules, selector) => {
+      sheet.insertRule(`${selector} {${rules.join(';')}}`, sheet.cssRules.length);
+    });
+  }
 }
 
 /**
@@ -763,6 +876,7 @@ async function loadEager(doc) {
   console.log('[DEBUG loadEager] START - Loading eager content');
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  loadThemeSpreadSheetConfig();
   const main = doc.querySelector('main');
   if (main) {
     // eslint-disable-next-line no-console
@@ -822,13 +936,20 @@ async function loadCategoryNav(main) {
     return;
   }
 
-  // Create category-nav wrapper at the top of main
+  // Create category-nav wrapper directly in header to prevent CLS
+  // This ensures header height is correct from the start
+  const navWrapper = document.querySelector('header.header-wrapper .nav-wrapper');
   const categoryNavWrapper = document.createElement('div');
   categoryNavWrapper.classList.add('category-nav-wrapper');
   categoryNavWrapper.setAttribute('data-nav-placeholder', 'true');
 
-  // Insert at the top of main
-  main.insertBefore(categoryNavWrapper, main.firstChild);
+  // Insert into header nav-wrapper (not main) to prevent layout shift
+  if (navWrapper) {
+    navWrapper.appendChild(categoryNavWrapper);
+  } else {
+    // Fallback: insert at top of main if header not found
+    main.insertBefore(categoryNavWrapper, main.firstChild);
+  }
 
   // Load CSS for the category nav
   const blockName = 'category-nav';
@@ -876,6 +997,269 @@ async function loadCategoryNav(main) {
 }
 
 /**
+ * Get direct text content from a menu item (excluding nested elements)
+ * @param {Element} menuItem The menu item element
+ * @returns {string} The direct text content
+ */
+function getDirectTextContent(menuItem) {
+  const menuLink = menuItem.querySelector(':scope > a');
+  if (menuLink) {
+    return menuLink.textContent.trim();
+  }
+  return Array.from(menuItem.childNodes)
+    .filter((n) => n.nodeType === Node.TEXT_NODE)
+    .map((n) => n.textContent)
+    .join(' ');
+}
+
+/**
+ * Build breadcrumbs from navigation tree
+ * @param {Element} nav The navigation element
+ * @param {string} currentUrl The current page URL
+ * @returns {Promise<Array>} Array of breadcrumb objects
+ */
+async function buildBreadcrumbsFromNavTree(nav, currentUrl) {
+  const crumbs = [];
+
+  const homeUrl = document.querySelector('.nav-brand a[href]')?.href;
+  if (!homeUrl) return crumbs;
+
+  let menuItem = Array.from(nav.querySelectorAll('a')).find((a) => a.href === currentUrl);
+  if (menuItem) {
+    do {
+      const link = menuItem.querySelector(':scope > a');
+      crumbs.unshift({ title: getDirectTextContent(menuItem), url: link ? link.href : null });
+      menuItem = menuItem.closest('ul')?.closest('li');
+    } while (menuItem);
+  } else if (currentUrl !== homeUrl) {
+    // Page not found in nav, build breadcrumbs from URL path
+    const url = new URL(currentUrl);
+    const pathSegments = url.pathname.split('/').filter((segment) => segment !== '');
+
+    // Build breadcrumb trail from URL path segments
+    let currentPath = '';
+    pathSegments.forEach((segment, index) => {
+      currentPath += `/${segment}`;
+      const isLastSegment = index === pathSegments.length - 1;
+
+      if (isLastSegment) {
+        // For the last segment (current page), use page title
+        // (will be overridden by breadcrumbsTitle metadata if present)
+        let pageTitle = getMetadata('og:title') || document.title;
+        // Strip out site name suffix (anything after |, -, or : followed by site name)
+        pageTitle = pageTitle.split('|')[0].split(' - ')[0].trim();
+        crumbs.push({ title: pageTitle, url: currentUrl });
+      } else {
+        // For intermediate segments, convert path to readable title
+        let title = segment
+          .split('-')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+        // Pluralize "card" to "cards" for better grammar in breadcrumbs
+        title = title.replace(/\bCard\b/g, 'Cards');
+        const segmentUrl = `${url.origin}${currentPath}`;
+        crumbs.push({ title, url: segmentUrl });
+      }
+    });
+  }
+
+  // Don't add "Home" to breadcrumbs - start with first level after home
+  // Uncomment this if you want to add a home label to the beginning of the breadcrumbs
+  // const placeholders = await fetchPlaceholders();
+  // const homePlaceholder = placeholders.breadcrumbsHomeLabel || 'Home';
+  // crumbs.unshift({ title: homePlaceholder, url: homeUrl });
+
+  // Override last breadcrumb title with breadcrumbsTitle if available
+  const breadcrumbsTitle = getMetadata('breadcrumbstitle');
+  if (breadcrumbsTitle && crumbs.length > 0) {
+    crumbs[crumbs.length - 1].title = breadcrumbsTitle;
+  }
+
+  // last link is current page and should not be linked
+  if (crumbs.length > 1) {
+    crumbs[crumbs.length - 1].url = null;
+  }
+  if (crumbs.length > 0) {
+    crumbs[crumbs.length - 1]['aria-current'] = 'page';
+  }
+  return crumbs;
+}
+
+/**
+ * Generates BreadcrumbList JSON-LD schema
+ * @param {Array} crumbs Array of breadcrumb objects with title and url
+ */
+function generateBreadcrumbSchema(crumbs) {
+  if (!crumbs || crumbs.length === 0) {
+    return null;
+  }
+
+  // Get site origin for constructing absolute URLs
+  const siteOrigin = window.location.origin;
+
+  // Build itemListElement array
+  const itemListElement = crumbs.map((crumb, index) => {
+    // Ensure URL is absolute
+    let itemUrl = crumb.url;
+    if (itemUrl && !itemUrl.startsWith('http')) {
+      itemUrl = `${siteOrigin}${itemUrl}`;
+    }
+
+    const item = {
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.title,
+    };
+
+    // Only add item URL if it's a link (not the current page)
+    if (crumb.url) {
+      item.item = itemUrl;
+    }
+
+    return item;
+  });
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  };
+}
+
+/**
+ * Injects BreadcrumbList JSON-LD schema into the document head
+ * @param {Object} schema The schema object to inject
+ */
+function injectBreadcrumbSchema(schema) {
+  if (!schema) {
+    return;
+  }
+
+  // Remove existing breadcrumb schema if present
+  const existingSchema = document.querySelector('script[type="application/ld+json"][data-schema-type="breadcrumb"]');
+  if (existingSchema) {
+    existingSchema.remove();
+  }
+
+  try {
+    // Stringify with pretty printing
+    const jsonString = JSON.stringify(schema, null, 2);
+
+    // Validate JSON
+    JSON.parse(jsonString);
+
+    // Create and inject schema
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('data-schema-type', 'breadcrumb');
+    script.text = jsonString;
+
+    document.head.appendChild(script);
+  } catch (error) {
+    // Silently fail
+    // eslint-disable-next-line no-console
+    console.error('Failed to inject breadcrumb schema:', error);
+  }
+}
+
+/**
+ * Build breadcrumbs navigation element
+ * @returns {Promise<Element>} The breadcrumbs nav element
+ */
+async function buildBreadcrumbs() {
+  const breadcrumbs = document.createElement('nav');
+  breadcrumbs.className = 'breadcrumbs';
+  breadcrumbs.ariaLabel = 'Breadcrumb';
+
+  // Look for nav-sections within the header navigation
+  const navSections = document.querySelector('header nav .nav-sections');
+  if (!navSections) {
+    return null;
+  }
+
+  const crumbs = await buildBreadcrumbsFromNavTree(navSections, document.location.href);
+
+  if (crumbs.length === 0) {
+    return null;
+  }
+
+  const ol = document.createElement('ol');
+  ol.append(...crumbs.map((item) => {
+    const li = document.createElement('li');
+    if (item['aria-current']) li.setAttribute('aria-current', item['aria-current']);
+    if (item.url) {
+      const a = document.createElement('a');
+      a.href = item.url;
+      a.textContent = item.title;
+      li.append(a);
+    } else {
+      li.textContent = item.title;
+    }
+    return li;
+  }));
+
+  breadcrumbs.append(ol);
+
+  // Generate and inject BreadcrumbList JSON-LD schema
+  const breadcrumbSchema = generateBreadcrumbSchema(crumbs);
+  if (breadcrumbSchema) {
+    injectBreadcrumbSchema(breadcrumbSchema);
+  }
+
+  return breadcrumbs;
+}
+
+/**
+ * Load and inject breadcrumbs into the first section of main
+ * @param {Element} main The main element
+ */
+async function loadBreadcrumbs(main) {
+  // Check if breadcrumbs are enabled via page metadata
+  const breadcrumbsMeta = getMetadata('breadcrumbs');
+
+  if (!breadcrumbsMeta || breadcrumbsMeta.toLowerCase() !== 'true') {
+    return;
+  }
+
+  try {
+    const breadcrumbs = await buildBreadcrumbs();
+    if (breadcrumbs) {
+      // Find the first content section in main (skip category-nav sections)
+      const sections = main.querySelectorAll(':scope > div.section');
+      let targetSection = null;
+
+      // Find the first section that is NOT a category-nav section
+      for (let i = 0; i < sections.length; i += 1) {
+        const section = sections[i];
+        if (!section.classList.contains('category-nav-container')
+            && !section.classList.contains('category-nav-section')) {
+          targetSection = section;
+          break;
+        }
+      }
+
+      if (targetSection) {
+        // Look for a wrapper div inside the section (e.g., hero-wrapper, cards-wrapper)
+        const wrapperDiv = targetSection.querySelector(':scope > div[class*="-wrapper"]');
+
+        if (wrapperDiv) {
+          // Insert breadcrumbs as the first element inside the wrapper
+          wrapperDiv.insertBefore(breadcrumbs, wrapperDiv.firstChild);
+        } else {
+          // Fallback: insert into section if no wrapper found
+          targetSection.insertBefore(breadcrumbs, targetSection.firstChild);
+        }
+      } else {
+        // Fallback: insert as first element in main if no suitable section found
+        main.insertBefore(breadcrumbs, main.firstChild);
+      }
+    }
+  } catch (error) {
+    // Silently fail - breadcrumbs are optional enhancement
+  }
+}
+
+/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
@@ -889,8 +1273,9 @@ async function loadLazy(doc) {
   console.log('[DEBUG loadLazy] About to loadHeader');
   // Load header first so nav-wrapper is available for category navbar
   await loadHeader(doc.querySelector('header'));
-  // eslint-disable-next-line no-console
-  console.log('[DEBUG loadLazy] Header loaded');
+
+  // Load breadcrumbs after header is available and insert as first element in main
+  await loadBreadcrumbs(main);
 
   // eslint-disable-next-line no-console
   console.log('[DEBUG loadLazy] About to loadCategoryNav');

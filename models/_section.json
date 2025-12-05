@@ -55,6 +55,12 @@
               "value": "upi-steps-red-bg"
             }
           ]
+        },
+        {
+          "component": "text",
+          "name": "id",
+          "label": "ID",
+          "description": "Adds an ID value to the section"
         }
       ]
     }
@@ -91,7 +97,8 @@
         "sticky-cta",
         "anchor-nav",
         "steps",
-        "tabs-upi-link"
+        "tabs-upi-link",
+        "linkToUPI"
       ]
     }
   ]
