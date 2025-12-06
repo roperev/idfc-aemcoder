@@ -102,21 +102,6 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
- * Recursively removes all data-aue-* attributes from an element and its descendants
- * This prevents header content from appearing in Universal Editor content tree
- * @param {Element} element The element to strip attributes from
- */
-function stripAueAttributes(element) {
-  // Remove data-aue-* attributes from this element
-  [...element.attributes]
-    .filter((attr) => attr.name.startsWith('data-aue-'))
-    .forEach((attr) => element.removeAttribute(attr.name));
-
-  // Recursively strip from all children
-  Array.from(element.children).forEach((child) => stripAueAttributes(child));
-}
-
-/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -125,11 +110,6 @@ export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
-
-  // Prevent header content from appearing in Universal Editor content tree
-  if (fragment) {
-    stripAueAttributes(fragment);
-  }
 
   // decorate nav DOM
   block.textContent = '';
