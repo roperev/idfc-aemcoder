@@ -63,6 +63,10 @@ async function loadFonts() {
   }
 }
 
+/**
+ * Autolinks modals
+ * @param {Element} element The element to autolink modals
+ */
 function autolinkModals(element) {
   element.addEventListener('click', async (e) => {
     const origin = e.target.closest('a');
