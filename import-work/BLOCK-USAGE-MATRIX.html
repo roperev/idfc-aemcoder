@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="/scripts/aem.js" type="module"></script>
+<script src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div><h1 id="block-usage-matrix--implementation-guide">Block Usage Matrix &#x26; Implementation Guide</h1><h2 id="rupay--mayura-credit-card-pages">RuPay + Mayura Credit Card Pages</h2><p><strong>Date:</strong> 2025-12-09</p></div>
+<div><h2 id="quick-reference-table">Quick Reference Table</h2><h3 id="block-reusability-across-both-pages">Block Reusability Across Both Pages</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="block-name"><div><div><strong>hero</strong></div><div>Hero section</div><div>Hero section</div><div>✅ 2 variants</div><div>🔴 Critical</div></div><div><div><strong>cards</strong></div><div>5 sections</div><div>8 sections</div><div>✅ 3 variants</div><div>🔴 Critical</div></div><div><div><strong>steps</strong></div><div>2 sections</div><div>1 section</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>faq-accordion</strong></div><div>1 section</div><div>1 section</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>sticky-cta</strong></div><div>1 element</div><div>1 element</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>pl-swipper-blogs</strong></div><div>1 section</div><div>1 section</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>columns</strong></div><div>3 sections</div><div>2 sections</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>mid-banner</strong></div><div>1 section</div><div>-</div><div>✅ 1 variant</div><div>🟡 Medium</div></div><div><div><strong>link-to-upi</strong></div><div>1 section</div><div>-</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>tabs-upi-link</strong></div><div>Could use</div><div>-</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>swipper-card</strong></div><div>1 section</div><div>-</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>banner</strong></div><div>-</div><div>1-2 sections</div><div>✅ 1 variant</div><div>🟡 Medium</div></div><div><div><strong>tabs</strong></div><div>-</div><div>Could use</div><div>❌ None</div><div>🟢 Ready</div></div><div><div><strong>form</strong></div><div>-</div><div>Calculator?</div><div>⚠️ Custom?</div><div>🟡 Optional</div></div></div><p><strong>Legend:</strong></p><ul>
+<li>🔴 Critical: Must have for launch</li>
+<li>🟡 Medium: Needed for full feature parity</li>
+<li>🟢 Ready: Use as-is, no changes</li>
+<li>⚠️ Custom: May need custom block</li>
+</ul></div>
+<div><h2 id="rupay-page-detailed-section-mapping">RuPay Page: Detailed Section Mapping</h2><h3 id="section-1-hero">Section 1: Hero</h3><p><strong>Block:</strong> <code>hero</code>
+<strong>Variant:</strong> <code>hero-rupay</code>
+<strong>Status:</strong> ⚠️ Variant needed</p><p><strong>Content:</strong></p><ul>
+<li>Headline: "Your UPI, FIRST RuPay Credit Card..."</li>
+<li>CTA: "Open Your First UPI Credit Card Account"</li>
+<li>Image: 3D card stack</li>
+<li>Decorative graphics</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Hero (Rupay)
+---
+[Heading text] | [Card image]
+[CTA button]   |
+[Footer text]  |
+</code></pre><p><strong>Variant Requirements:</strong></p><ul>
+<li>Dark gradient background (#000 to dark gray)</li>
+<li>Support for decorative rectangle/shadow images</li>
+<li>3D illustration aesthetic</li>
+<li>Purple accent color (#6B46C1)</li>
+</ul><p><strong>Effort:</strong> 4-6 hours</p></div>
+<div><h3 id="section-2-features-of-first-digital-rupay-credit-card">Section 2: Features of FIRST Digital RuPay Credit Card</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> Standard (no variant needed)
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>3-column card grid</li>
+<li>Icon + title + description per card</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (3-col)
+---
+[Icon 1] | [Title 1 + Description 1]
+[Icon 2] | [Title 2 + Description 2]
+[Icon 3] | [Title 3 + Description 3]
+</code></pre><p><strong>CSS Adjustments:</strong></p><ul>
+<li>May need to adjust spacing</li>
+<li>Ensure 3-column layout on desktop</li>
+<li>Responsive: 1 column mobile, 2 tablet, 3 desktop</li>
+</ul><p><strong>Effort:</strong> 0-1 hour (CSS only)</p></div>
+<div><h3 id="section-3-earn-rewards-on-upi-transactions">Section 3: Earn Rewards on UPI Transactions</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> <code>cards-rewards-rupay</code>
+<strong>Status:</strong> ⚠️ Variant needed</p><p><strong>Content:</strong></p><ul>
+<li>4-column card grid</li>
+<li>Purple gradient background</li>
+<li>3D icons</li>
+<li>Reward points highlighting</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (Rewards, Rupay)
+---
+[Icon 1] | [Title 1 + Description 1]
+[Icon 2] | [Title 2 + Description 2]
+[Icon 3] | [Title 3 + Description 3]
+[Icon 4] | [Title 4 + Description 4]
+</code></pre><p><strong>Variant Requirements:</strong></p><ul>
+<li>Purple gradient background (#6B46C1 to #8B5CF6)</li>
+<li>White text on colored background</li>
+<li>4-column layout (2 on tablet, 1 on mobile)</li>
+<li>Enhanced card shadows</li>
+<li>Support for 3D icon styling</li>
+</ul><p><strong>Effort:</strong> 4-6 hours</p></div>
+<div><h3 id="section-4-how-to-apply-for-first-digital-rupay-credit-card">Section 4: How to Apply for FIRST Digital RuPay Credit Card</h3><p><strong>Block:</strong> <code>steps</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>5 sequential steps</li>
+<li>Icon + title + description per step</li>
+<li>Horizontal flow on desktop</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Steps
+---
+Optional: title
+Optional: subtitle
+Optional: componentId
+Optional: animation (true/false)
+Optional: animationDuration (3)
+[Step 1 Icon] | [Step 1 Title + Description]
+[Step 2 Icon] | [Step 2 Title + Description]
+...
+</code></pre><p><strong>Animation:</strong></p><ul>
+<li>Can enable IntersectionObserver animation</li>
+<li>Sequential fade-in with connector lines</li>
+<li>Duration: 3-5 seconds total</li>
+</ul><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-5-step-by-step-guide-to-link-rupay-card-to-upi">Section 5: Step-by-Step Guide to Link RuPay Card to UPI</h3><p><strong>Block:</strong> <code>steps</code> + <code>link-to-upi</code> or <code>columns</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Multi-step UPI linking guide</li>
+<li>Phone mockups</li>
+<li>App logos</li>
+<li>QR code</li>
+</ul><p><strong>Implementation Option A (Steps):</strong></p><pre><code>Steps
+---
+title: Link Your RuPay Credit Card to UPI Apps
+[Phone mockup 1] | [Step 1 description]
+[App logos] | [Step 2 description]
+[QR code] | [Step 3 description]
+</code></pre><p><strong>Implementation Option B (Link-to-UPI):</strong></p><pre><code>Link-to-UPI
+---
+title: Link Your RuPay Credit Card
+text: &#x3C;rich text with steps>
+image: Phone mockup
+imageAlt: UPI linking guide
+</code></pre><p><strong>Implementation Option C (Columns):</strong></p><pre><code>Columns (3-col)
+---
+[Phone image] | [App logos] | [QR code]
+[Description] | [Description] | [Description]
+</code></pre><p><strong>Recommendation:</strong> Use combination of <code>steps</code> for process flow + <code>columns</code> for visual elements</p><p><strong>Effort:</strong> 1-2 hours (content structuring)</p></div>
+<div><h3 id="section-6-link-your-rupay-credit-card-to-top-upi-apps">Section 6: Link Your RuPay Credit Card to Top UPI Apps</h3><p><strong>Block:</strong> <code>mid-banner</code>
+<strong>Variant:</strong> <code>mid-banner-upi-apps</code>
+<strong>Status:</strong> ⚠️ Variant needed</p><p><strong>Content:</strong></p><ul>
+<li>Headline</li>
+<li>UPI app logos (Google Pay, PhonePe, Paytm, Amazon Pay)</li>
+<li>QR code for download</li>
+<li>CTA text</li>
+<li>Red/maroon background</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Mid-Banner (UPI Apps)
+---
+[Heading]
+[CTA 1: App logos]
+[CTA 2: Download QR]
+[Bottom text]
+[Desktop image]
+[Mobile image]
+</code></pre><p><strong>Variant Requirements:</strong></p><ul>
+<li>Red/maroon background (#9D1D27)</li>
+<li>Flexible logo grid (4+ logos)</li>
+<li>QR code integration</li>
+<li>"Great Looking? Done for You" callout styling</li>
+</ul><p><strong>Effort:</strong> 3-4 hours</p></div>
+<div><h3 id="section-7-joining-perks-of-first-digital-rupay-credit-card">Section 7: Joining Perks of FIRST Digital RuPay Credit Card</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> Standard
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>3-column cards</li>
+<li>Benefits focused on joining</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (3-col)
+---
+[Icon 1] | [Title 1 + Description 1]
+[Icon 2] | [Title 2 + Description 2]
+[Icon 3] | [Title 3 + Description 3]
+</code></pre><p><strong>CSS:</strong></p><ul>
+<li>Dark background (black)</li>
+<li>White text</li>
+<li>Similar to features section but dark theme</li>
+</ul><p><strong>Effort:</strong> 0-1 hour (CSS only)</p></div>
+<div><h3 id="section-8-pay-using-upi">Section 8: Pay Using UPI</h3><p><strong>Block:</strong> <code>columns</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>3-column icon grid</li>
+<li>Simple icons with labels</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Columns (3-col)
+---
+[Icon 1] | [Icon 2] | [Icon 3]
+[Label 1] | [Label 2] | [Label 3]
+</code></pre><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-9-testimonials">Section 9: Testimonials</h3><p><strong>Block:</strong> <code>swipper-card</code> OR <code>cards</code> with testimonial-card variant
+<strong>Variant:</strong> testimonial-card (already exists!)
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Customer testimonials</li>
+<li>2-column carousel</li>
+<li>Dark purple background</li>
+<li>Pagination dots</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (Testimonial-Card)
+---
+swipable: true
+startingCard: 0
+[Quote icon + text] | [Author name + rating stars]
+[Quote icon + text] | [Author name + rating stars]
+...
+</code></pre><p><strong>Features:</strong></p><ul>
+<li>Automatic JSON-LD schema generation</li>
+<li>Star rating system (yellow on active, white on inactive)</li>
+<li>Swiper with 1.3 slides on mobile, 3 on desktop</li>
+<li>Pagination dots</li>
+</ul><p><strong>Effort:</strong> 0-1 hour (content + CSS tweaks)</p></div>
+<div><h3 id="section-10-latest-blog-posts">Section 10: Latest Blog Posts</h3><p><strong>Block:</strong> <code>pl-swipper-blogs</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>3-column blog carousel</li>
+<li>Image + title + excerpt + CTA per card</li>
+<li>Red/maroon gradient background</li>
+<li>Navigation dots</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>PL-Swipper-Blogs
+---
+[Blog 1 image] | [Title + excerpt + CTA]
+[Blog 2 image] | [Title + excerpt + CTA]
+[Blog 3 image] | [Title + excerpt + CTA]
+</code></pre><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-11-frequently-asked-questions">Section 11: Frequently Asked Questions</h3><p><strong>Block:</strong> <code>faq-accordion</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Collapsible FAQ items</li>
+<li>"More FAQs" / "Less FAQs" toggle</li>
+<li>Shows 3 by default</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>FAQ-Accordion
+---
+[Question 1] | [Answer 1]
+[Question 2] | [Answer 2]
+[Question 3] | [Answer 3]
+...
+</code></pre><p><strong>Features:</strong></p><ul>
+<li>Auto-shows first 3 items</li>
+<li>Toggle button to expand/collapse all</li>
+<li>One-at-a-time accordion behavior</li>
+</ul><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-12-related-credit-card-products">Section 12: Related Credit Card Products</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> Standard (4-column on desktop)
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Product icons + names + links</li>
+<li>Grid layout</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (4-col)
+---
+[Product 1 icon] | [Name + link]
+[Product 2 icon] | [Name + link]
+[Product 3 icon] | [Name + link]
+[Product 4 icon] | [Name + link]
+</code></pre><p><strong>CSS:</strong></p><ul>
+<li>White background</li>
+<li>4 columns on desktop</li>
+<li>2 columns on tablet</li>
+<li>1 column on mobile</li>
+</ul><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-13-upi-acceptance-partner-logos">Section 13: UPI Acceptance Partner Logos</h3><p><strong>Block:</strong> <code>columns</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Multi-column logo grid</li>
+<li>Partner logos (Google Pay, PhonePe, etc.)</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Columns (6-col)
+---
+[Logo 1] | [Logo 2] | [Logo 3] | [Logo 4] | [Logo 5] | [Logo 6]
+[Logo 7] | [Logo 8] | [Logo 9] | [Logo 10] | [Logo 11] | [Logo 12]
+...
+</code></pre><p><strong>CSS:</strong></p><ul>
+<li>Responsive grid</li>
+<li>Logo sizing consistent</li>
+<li>Light gray background</li>
+</ul><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-14-sticky-cta">Section 14: Sticky CTA</h3><p><strong>Block:</strong> <code>sticky-cta</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Fixed position "Apply Now" button</li>
+<li>Different text for mobile/desktop</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Sticky-CTA
+---
+[Apply Now CTA link]
+[Tracking ID: rupay-cta]
+[Mobile text: Apply]
+[Subtitle: if any]
+</code></pre><p><strong>Features:</strong></p><ul>
+<li>Automatically switches text on mobile/desktop</li>
+<li>Fixed position (bottom on mobile, right on desktop)</li>
+</ul><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h2 id="rupay-page-summary">RuPay Page Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="status"><div><div>✅ Ready (use as-is)</div><div>11 sections</div><div>79%</div></div><div><div>⚠️ Variant needed</div><div>3 sections</div><div>21%</div></div><div><div>🆕 Custom block</div><div>0 sections</div><div>0%</div></div></div><p><strong>Variants to Create:</strong></p><ol>
+<li>hero-rupay (4-6 hours)</li>
+<li>cards-rewards-rupay (4-6 hours)</li>
+<li>mid-banner-upi-apps (3-4 hours)</li>
+</ol><p><strong>Total Variant Effort:</strong> 11-16 hours
+<strong>Content Migration:</strong> 8-12 hours
+<strong>Testing:</strong> 8-12 hours
+<strong>Total for RuPay:</strong> 27-40 hours</p></div>
+<div><h2 id="mayura-page-detailed-section-mapping">Mayura Page: Detailed Section Mapping</h2><h3 id="section-1-hero-1">Section 1: Hero</h3><p><strong>Block:</strong> <code>hero</code>
+<strong>Variant:</strong> <code>hero-mayura</code>
+<strong>Status:</strong> ⚠️ Variant needed</p><p><strong>Content:</strong></p><ul>
+<li>Headline: "Mayura Metal Card"</li>
+<li>Bilingual logo (Hindi/English)</li>
+<li>CTA: "Apply Now"</li>
+<li>Metal card image</li>
+<li>Heritage peacock motif background</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Hero (Mayura)
+---
+[Logo (Hindi/Eng)] | [Metal card image]
+[Heading]          |
+[CTA button]       |
+</code></pre><p><strong>Variant Requirements:</strong></p><ul>
+<li>Navy blue/black background</li>
+<li>Gold/bronze accent colors</li>
+<li>Heritage pattern support (peacock motif)</li>
+<li>Premium typography</li>
+<li>Metal card photo styling</li>
+</ul><p><strong>Effort:</strong> 4-6 hours</p></div>
+<div><h3 id="section-2-features-of-mayura-metal-credit-card">Section 2: Features of Mayura Metal Credit Card</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> <code>cards-premium</code>
+<strong>Status:</strong> ⚠️ Variant needed</p><p><strong>Content:</strong></p><ul>
+<li>4-column card grid (or 3-column)</li>
+<li>Premium benefits</li>
+<li>Luxury icons</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (Premium)
+---
+[Icon 1] | [60X Rewards + description]
+[Icon 2] | [Zero Forex + description]
+[Icon 3] | [Lounge Access + description]
+[Icon 4] | [Golf Access + description]
+</code></pre><p><strong>Variant Requirements:</strong></p><ul>
+<li>Gold borders on cards</li>
+<li>Elegant shadows/depth</li>
+<li>Premium icon treatment</li>
+<li>Navy/gold color scheme</li>
+<li>Luxury aesthetic</li>
+</ul><p><strong>Effort:</strong> 4-6 hours</p></div>
+<div><h3 id="section-3-the-concept-mayura--peacock">Section 3: The Concept (Mayura = Peacock)</h3><p><strong>Block:</strong> <code>banner</code> OR custom
+<strong>Variant:</strong> <code>banner-heritage</code>
+<strong>Status:</strong> ⚠️ Variant needed OR custom</p><p><strong>Content:</strong></p><ul>
+<li>Cultural storytelling</li>
+<li>Peacock motif imagery</li>
+<li>Heritage patterns</li>
+<li>Premium photography</li>
+</ul><p><strong>Implementation Option A (Banner):</strong></p><pre><code>Banner (Heritage)
+---
+[Heading: The Mayura]
+[CTA 1: Cultural significance]
+[CTA 2: Card benefits]
+[Bottom text]
+[Desktop image: peacock motif]
+[Mobile image: peacock motif]
+</code></pre><p><strong>Implementation Option B (Custom Block):</strong>
+Create new block specifically for heritage storytelling</p><p><strong>Variant Requirements:</strong></p><ul>
+<li>Rich heritage patterns</li>
+<li>Traditional Indian aesthetic</li>
+<li>Premium imagery support</li>
+<li>Cultural storytelling layout</li>
+</ul><p><strong>Recommendation:</strong> Try adapting banner block first. If insufficient, create custom block.</p><p><strong>Effort:</strong> 6-8 hours (variant) OR 12-16 hours (custom block)</p></div>
+<div><h3 id="section-4-earn-60x-reward-points">Section 4: Earn 60X Reward Points</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> <code>cards-rewards-mayura</code>
+<strong>Status:</strong> ⚠️ Variant needed</p><p><strong>Content:</strong></p><ul>
+<li>Reward multiplier display (60X)</li>
+<li>Premium categories</li>
+<li>Luxury brand partnerships</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (Rewards, Mayura)
+---
+[Icon 1] | [60X on dining]
+[Icon 2] | [60X on travel]
+[Icon 3] | [60X on shopping]
+[Icon 4] | [Redemption options]
+</code></pre><p><strong>Variant Requirements:</strong></p><ul>
+<li>Navy/gold color scheme</li>
+<li>60X multiplier prominent</li>
+<li>Premium styling</li>
+<li>Luxury aesthetic</li>
+</ul><p><strong>Effort:</strong> 4-6 hours</p></div>
+<div><h3 id="section-5-tier-of-rewards">Section 5: Tier of Rewards</h3><p><strong>Block:</strong> <code>tabs</code> OR custom table
+<strong>Variant:</strong> Could be <code>tabs-rewards-tier</code>
+<strong>Status:</strong> ⚠️ May need custom</p><p><strong>Content:</strong></p><ul>
+<li>Detailed reward tier structure</li>
+<li>Spend thresholds</li>
+<li>Multiplier breakdown</li>
+<li>Category-wise rewards</li>
+</ul><p><strong>Implementation Option A (Tabs):</strong></p><pre><code>Tabs
+---
+[Tier 1] | [Tier 1 details and rewards]
+[Tier 2] | [Tier 2 details and rewards]
+[Tier 3] | [Tier 3 details and rewards]
+</code></pre><p><strong>Implementation Option B (Cards with swipable):</strong></p><pre><code>Cards (Reward Tiers)
+---
+swipable: true
+[Tier 1 card with full details]
+[Tier 2 card with full details]
+[Tier 3 card with full details]
+</code></pre><p><strong>Recommendation:</strong> Try tabs block first. If too complex, consider custom table block.</p><p><strong>Effort:</strong> 2-4 hours (tabs) OR 8-12 hours (custom)</p></div>
+<div><h3 id="section-6-zero-forex-markup">Section 6: Zero Forex Markup</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> Standard OR premium
+<strong>Status:</strong> ✅ Ready (or use premium variant from Section 2)</p><p><strong>Content:</strong></p><ul>
+<li>Forex benefits</li>
+<li>International usage</li>
+<li>Travel-focused</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (3-col)
+---
+[Icon 1] | [Zero markup description]
+[Icon 2] | [International acceptance]
+[Icon 3] | [Currency conversion]
+</code></pre><p><strong>Effort:</strong> 0-1 hour</p></div>
+<div><h3 id="section-7-metal-card-showcase">Section 7: Metal Card Showcase</h3><p><strong>Block:</strong> <code>banner</code> OR custom
+<strong>Variant:</strong> product-showcase (optional)
+<strong>Status:</strong> ⚠️ May adapt banner OR create custom</p><p><strong>Content:</strong></p><ul>
+<li>Metal card close-up photos</li>
+<li>Material details</li>
+<li>Weight, feel, texture descriptions</li>
+<li>Premium packaging</li>
+</ul><p><strong>Implementation (Banner):</strong></p><pre><code>Banner
+---
+[Heading: Premium Metal Card]
+[CTA 1: Material specs]
+[CTA 2: Order now]
+[Bottom text]
+[Desktop image: card close-up]
+[Mobile image: card close-up]
+</code></pre><p><strong>Effort:</strong> 2-4 hours (adapt banner) OR 8-12 hours (custom block)</p></div>
+<div><h3 id="section-8-travel-benefits">Section 8: Travel Benefits</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> <code>cards-premium</code> OR <code>cards-travel</code>
+<strong>Status:</strong> ✅ Can use premium variant</p><p><strong>Content:</strong></p><ul>
+<li>Lounge access details</li>
+<li>Golf course access</li>
+<li>Travel insurance</li>
+<li>Concierge services</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (Premium, 4-col)
+---
+[Lounge icon] | [Access details]
+[Golf icon] | [Course access]
+[Insurance icon] | [Coverage details]
+[Concierge icon] | [Services]
+</code></pre><p><strong>Effort:</strong> 0-1 hour (use premium variant)</p></div>
+<div><h3 id="section-9-how-to-apply">Section 9: How to Apply</h3><p><strong>Block:</strong> <code>steps</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Application process</li>
+<li>Sequential steps</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Steps
+---
+title: How to Apply for Mayura Card
+[Step 1 icon] | [Step description]
+[Step 2 icon] | [Step description]
+...
+</code></pre><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-10-welcome-benefits">Section 10: Welcome Benefits</h3><p><strong>Block:</strong> <code>cards</code> OR <code>banner</code>
+<strong>Variant:</strong> Standard
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Joining offers</li>
+<li>Welcome bonuses</li>
+<li>First-time benefits</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (3-col)
+---
+[Benefit 1 icon] | [Welcome bonus description]
+[Benefit 2 icon] | [Joining offer description]
+[Benefit 3 icon] | [Perk description]
+</code></pre><p><strong>Effort:</strong> 0-1 hour</p></div>
+<div><h3 id="section-11-fees--charges-calculator">Section 11: Fees &#x26; Charges Calculator</h3><p><strong>Block:</strong> <code>form</code> OR custom calculator
+<strong>Variant:</strong> Custom widget
+<strong>Status:</strong> ⚠️ May need custom</p><p><strong>Content:</strong></p><ul>
+<li>Interactive calculator</li>
+<li>Fee structure display</li>
+<li>Input fields</li>
+<li>Calculation results</li>
+</ul><p><strong>Implementation Option A (Form Block):</strong></p><pre><code>Form
+---
+[Input fields for amounts]
+[Calculation logic]
+[Results display]
+</code></pre><p><strong>Implementation Option B (Custom Calculator):</strong>
+Create dedicated calculator block with JavaScript</p><p><strong>Recommendation:</strong> Start with form block. If insufficient, create custom calculator widget.</p><p><strong>Effort:</strong> 4-6 hours (form adaptation) OR 12-16 hours (custom calculator)</p></div>
+<div><h3 id="section-12-important-documents">Section 12: Important Documents</h3><p><strong>Block:</strong> <code>cards</code> (important-documents variant already exists!)
+<strong>Variant:</strong> important-documents (✅ Already exists!)
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Document icons</li>
+<li>Document names</li>
+<li>Download/view links</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (Important-Documents)
+---
+[Doc 1 icon] | [PAN Card + link]
+[Doc 2 icon] | [Address Proof + link]
+[Doc 3 icon] | [Income Proof + link]
+[Doc 4 icon] | [Bank Statement + link]
+</code></pre><p><strong>Features:</strong></p><ul>
+<li>Full card is clickable</li>
+<li>Special styling for documents</li>
+<li>Icon + label + link</li>
+</ul><p><strong>Effort:</strong> 0 hours (use as-is - this variant already exists!)</p></div>
+<div><h3 id="section-13-latest-blog-posts">Section 13: Latest Blog Posts</h3><p><strong>Block:</strong> <code>pl-swipper-blogs</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Blog carousel</li>
+<li>3 blog posts</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>PL-Swipper-Blogs
+---
+[Blog 1 image] | [Title + excerpt + CTA]
+[Blog 2 image] | [Title + excerpt + CTA]
+[Blog 3 image] | [Title + excerpt + CTA]
+</code></pre><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-14-frequently-asked-questions">Section 14: Frequently Asked Questions</h3><p><strong>Block:</strong> <code>faq-accordion</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>FAQ accordion</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>FAQ-Accordion
+---
+[Question 1] | [Answer 1]
+[Question 2] | [Answer 2]
+...
+</code></pre><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-15-related-credit-card-products">Section 15: Related Credit Card Products</h3><p><strong>Block:</strong> <code>cards</code>
+<strong>Variant:</strong> Standard
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>Related products grid</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Cards (4-col)
+---
+[Product 1] | [Name + link]
+[Product 2] | [Name + link]
+...
+</code></pre><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h3 id="section-16-sticky-cta">Section 16: Sticky CTA</h3><p><strong>Block:</strong> <code>sticky-cta</code>
+<strong>Variant:</strong> None
+<strong>Status:</strong> ✅ Ready</p><p><strong>Content:</strong></p><ul>
+<li>"Apply Now" sticky button</li>
+</ul><p><strong>Implementation:</strong></p><pre><code>Sticky-CTA
+---
+[Apply for Mayura Card]
+[Tracking ID: mayura-cta]
+[Mobile text: Apply]
+</code></pre><p><strong>Effort:</strong> 0 hours (use as-is)</p></div>
+<div><h2 id="mayura-page-summary">Mayura Page Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="status"><div><div>✅ Ready (use as-is)</div><div>9 sections</div><div>56%</div></div><div><div>⚠️ Variant needed</div><div>5 sections</div><div>31%</div></div><div><div>🆕 May need custom</div><div>2 sections</div><div>13%</div></div></div><p><strong>Variants to Create:</strong></p><ol>
+<li>hero-mayura (4-6 hours)</li>
+<li>cards-premium (4-6 hours)</li>
+<li>cards-rewards-mayura (4-6 hours)</li>
+<li>banner-heritage (6-8 hours OR skip if too complex)</li>
+</ol><p><strong>Optional Custom Blocks:</strong>
+5. Calculator widget (12-16 hours OR adapt form block 4-6 hours)
+6. Reward tier table (8-12 hours OR use tabs 2-4 hours)</p><p><strong>Minimum Variant Effort:</strong> 18-26 hours
+<strong>With Optional Customs:</strong> 38-54 hours
+<strong>Content Migration:</strong> 10-14 hours
+<strong>Testing:</strong> 10-14 hours
+<strong>Total for Mayura:</strong> 38-68 hours (depending on custom blocks)</p></div>
+<div><h2 id="combined-timeline">Combined Timeline</h2><h3 id="sequential-approach-recommended">Sequential Approach (Recommended)</h3><p><strong>Week 1-2: RuPay (27-40 hours)</strong></p><ul>
+<li>Days 1-2: hero-rupay, cards-rewards-rupay</li>
+<li>Days 3-4: mid-banner-upi-apps, content migration</li>
+<li>Days 5-7: Testing, refinement</li>
+<li>Day 8: Stakeholder review</li>
+</ul><p><strong>Week 3-4: Mayura (38-68 hours)</strong></p><ul>
+<li>Days 9-10: hero-mayura, cards-premium</li>
+<li>Days 11-12: cards-rewards-mayura, banner-heritage</li>
+<li>Days 13-14: Content migration</li>
+<li>Days 15-16: Calculator/tier sections</li>
+<li>Days 17-18: Testing, refinement</li>
+<li>Day 19: Stakeholder review</li>
+<li>Day 20: Launch</li>
+</ul><p><strong>Total: 4 weeks (65-108 hours)</strong></p></div>
+<div><h2 id="priority-matrix">Priority Matrix</h2><h3 id="must-have-p0---cannot-launch-without">Must-Have (P0) - Cannot launch without</h3><ul>
+<li>✅ hero-rupay</li>
+<li>✅ hero-mayura</li>
+<li>✅ cards-rewards-rupay</li>
+<li>✅ cards-rewards-mayura</li>
+<li>✅ cards-premium</li>
+</ul><h3 id="should-have-p1---launch-with-basic-version">Should-Have (P1) - Launch with basic version</h3><ul>
+<li>⚠️ mid-banner-upi-apps (can use standard banner temporarily)</li>
+<li>⚠️ banner-heritage (can use standard banner temporarily)</li>
+</ul><h3 id="nice-to-have-p2---add-post-launch">Nice-to-Have (P2) - Add post-launch</h3><ul>
+<li>⚠️ Calculator widget (can link to separate page)</li>
+<li>⚠️ Reward tier custom display (can use simple cards)</li>
+</ul></div>
+<div><h2 id="implementation-checklists">Implementation Checklists</h2><h3 id="for-each-variant">For Each Variant</h3><p><strong>Planning (30 minutes):</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Review source page section</li>
+<li class="task-list-item"><input type="checkbox" disabled> Identify unique styling requirements</li>
+<li class="task-list-item"><input type="checkbox" disabled> Document color palette</li>
+<li class="task-list-item"><input type="checkbox" disabled> List required CSS custom properties</li>
+<li class="task-list-item"><input type="checkbox" disabled> Plan responsive behavior</li>
+</ul><p><strong>CSS Development (2-4 hours):</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Create variant CSS file (e.g., hero-rupay.css)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Define CSS custom properties (colors, spacing)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Style for mobile (base styles)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Add tablet breakpoint (768px)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Add desktop breakpoint (1024px)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Add large desktop (1440px+)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Test in browser DevTools</li>
+</ul><p><strong>JavaScript (if needed) (1-2 hours):</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Review if variant needs JS changes</li>
+<li class="task-list-item"><input type="checkbox" disabled> Create variant-specific decoration (usually not needed)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Test functionality</li>
+</ul><p><strong>Testing (1-2 hours):</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Test on mobile (375px, 414px)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Test on tablet (768px)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Test on desktop (1024px, 1440px, 1920px)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Test in Chrome, Safari, Firefox, Edge</li>
+<li class="task-list-item"><input type="checkbox" disabled> Verify responsive images</li>
+<li class="task-list-item"><input type="checkbox" disabled> Check accessibility (keyboard nav, screen reader)</li>
+</ul><p><strong>Documentation (30 minutes):</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Add to block library documentation</li>
+<li class="task-list-item"><input type="checkbox" disabled> Create authoring example</li>
+<li class="task-list-item"><input type="checkbox" disabled> Screenshot for reference</li>
+<li class="task-list-item"><input type="checkbox" disabled> Add to style guide</li>
+</ul></div>
+<div><h2 id="quick-win-opportunities">Quick Win Opportunities</h2><h3 id="use-existing-variants">Use Existing Variants</h3><p>The cards block already has these variants working:</p><ul>
+<li>✅ <code>.testimonial-card</code> - Perfect for RuPay testimonials</li>
+<li>✅ <code>.important-documents</code> - Perfect for Mayura documents</li>
+<li>✅ <code>.benefit-cards</code> - Standard feature cards</li>
+</ul><p><strong>Impact:</strong> Saves 8-12 hours of development time!</p><h3 id="reuse-css-patterns">Reuse CSS Patterns</h3><ul>
+<li>Copy RuPay gradient approach for other gradient sections</li>
+<li>Copy Mayura premium styling for other luxury sections</li>
+<li>Create shared CSS custom properties file</li>
+</ul><p><strong>Impact:</strong> Faster variant creation, consistent styling</p><h3 id="start-with-css-only-variants">Start with CSS-Only Variants</h3><ul>
+<li>Most variants only need CSS changes</li>
+<li>JavaScript rarely needs modification</li>
+<li>Block functionality already perfect</li>
+</ul><p><strong>Impact:</strong> Lower risk, faster delivery</p></div>
+<div><h2 id="success-metrics">Success Metrics</h2><h3 id="code-quality">Code Quality</h3><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> All variants pass Lighthouse audit</li>
+<li class="task-list-item"><input type="checkbox" disabled> Accessibility score > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Performance score > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Mobile-friendly test passes</li>
+</ul><h3 id="authoring-experience">Authoring Experience</h3><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Content authors can use variants easily</li>
+<li class="task-list-item"><input type="checkbox" disabled> Block tables are simple</li>
+<li class="task-list-item"><input type="checkbox" disabled> Preview works in Universal Editor</li>
+<li class="task-list-item"><input type="checkbox" disabled> Documentation is clear</li>
+</ul><h3 id="visual-quality">Visual Quality</h3><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Matches design specifications</li>
+<li class="task-list-item"><input type="checkbox" disabled> Brand colors consistent</li>
+<li class="task-list-item"><input type="checkbox" disabled> Typography on-brand</li>
+<li class="task-list-item"><input type="checkbox" disabled> Spacing consistent</li>
+<li class="task-list-item"><input type="checkbox" disabled> Responsive on all devices</li>
+</ul><h3 id="performance">Performance</h3><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Images optimized</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lazy loading working</li>
+<li class="task-list-item"><input type="checkbox" disabled> Core Web Vitals passing</li>
+<li class="task-list-item"><input type="checkbox" disabled> Page load &#x3C; 3 seconds</li>
+</ul></div>
+<div><p><strong>Document Version:</strong> 1.0
+<strong>Last Updated:</strong> 2025-12-09
+<strong>Pages Covered:</strong> RuPay + Mayura
+<strong>Blocks Mapped:</strong> 31 blocks
+<strong>Sections Mapped:</strong> 30 sections total
+<strong>Variants Documented:</strong> 7 variants
+<strong>Readiness Level:</strong> HIGH</p></div>
+</main>
+<footer></footer>
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="/scripts/aem.js" type="module"></script>
+<script src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div><h1 id="unified-migration-plan-rupay--mayura-credit-card-pages">Unified Migration Plan: RuPay &#x26; Mayura Credit Card Pages</h1><h2 id="executive-summary">Executive Summary</h2><p>This migration plan covers two IDFC First Bank credit card landing pages for migration to AEM Edge Delivery Services (EDS) with AEM Crosswalk integration.</p><p><strong>Pages:</strong></p><ol>
+<li>RuPay Credit Card (Digital/UPI focused) - 86 images</li>
+<li>Mayura Metal Credit Card (Premium/Travel focused) - 96 images</li>
+</ol><p><strong>Approach:</strong> Sequential migration (RuPay first, then Mayura)
+<strong>Timeline:</strong> 4 weeks total
+<strong>Block Reusability:</strong> 70%+ across both pages
+<strong>Effort:</strong> 90-110 hours total</p></div>
+<div><h2 id="migration-goals">Migration Goals</h2><h3 id="primary-goals">Primary Goals</h3><ol>
+<li>✅ Migrate both pages to AEM EDS with full functionality</li>
+<li>✅ Maintain brand consistency while allowing page-specific styling</li>
+<li>✅ Create reusable block library for future credit card pages</li>
+<li>✅ Integrate with AEM Crosswalk (Universal Editor + AEM 6.5)</li>
+<li>✅ Achieve excellent performance (Lighthouse score > 90)</li>
+</ol><h3 id="secondary-goals">Secondary Goals</h3><ol>
+<li>✅ Establish content authoring templates</li>
+<li>✅ Document block variants and usage patterns</li>
+<li>✅ Optimize images and assets</li>
+<li>✅ Ensure mobile-first responsive design</li>
+<li>✅ Set up scalable architecture for future pages</li>
+</ol></div>
+<div><h2 id="project-phases">Project Phases</h2><h3 id="phase-1-setup--foundation-week-1-days-1-2">Phase 1: Setup &#x26; Foundation (Week 1, Days 1-2)</h3><h4 id="tasks">Tasks:</h4><ol>
+<li>
+<p><strong>Environment Setup</strong></p>
+<ul>
+<li>Configure AEM Crosswalk Universal Editor</li>
+<li>Set up EDS preview environment</li>
+<li>Configure AEM 6.5 content storage</li>
+<li>Set up Git repository structure</li>
+</ul>
+</li>
+<li>
+<p><strong>Block Library Audit</strong></p>
+<ul>
+<li>Review 31 existing blocks</li>
+<li>Identify reusable blocks (steps, faq-accordion, etc.)</li>
+<li>Document block capabilities</li>
+<li>Create block variant naming convention</li>
+</ul>
+</li>
+<li>
+<p><strong>Style System Setup</strong></p>
+<ul>
+<li>Create CSS variable system for theming</li>
+<li>Define color palettes (RuPay, Mayura)</li>
+<li>Set up typography system</li>
+<li>Create spacing/layout tokens</li>
+</ul>
+</li>
+<li>
+<p><strong>Asset Organization</strong></p>
+<ul>
+<li>Organize 182 images (86 RuPay + 96 Mayura)</li>
+<li>Identify shared assets</li>
+<li>Create asset naming convention</li>
+<li>Set up image optimization pipeline</li>
+</ul>
+</li>
+</ol><p><strong>Deliverables:</strong></p><ul>
+<li>✅ AEM Crosswalk configured</li>
+<li>✅ Block library documented</li>
+<li>✅ Style guide created</li>
+<li>✅ Assets organized</li>
+</ul><p><strong>Effort:</strong> 16 hours</p></div>
+<div><h3 id="phase-2-rupay-page-migration-week-1-2-days-3-10">Phase 2: RuPay Page Migration (Week 1-2, Days 3-10)</h3><h4 id="2a-core-block-variants-days-3-4">2A: Core Block Variants (Days 3-4)</h4><p><strong>Create Hero Variant: <code>hero-rupay</code></strong></p><ul>
+<li>Dark gradient background</li>
+<li>3D card stack image support</li>
+<li>Decorative graphics (rectangle, shadow)</li>
+<li>Modern typography</li>
+<li>Prominent CTA button</li>
+</ul><p><strong>Create Cards Variant: <code>cards-rewards-rupay</code></strong></p><ul>
+<li>Purple gradient background (#6B46C1 to #8B5CF6)</li>
+<li>3D icon support</li>
+<li>4-column grid layout</li>
+<li>Enhanced spacing</li>
+<li>White text on colored background</li>
+</ul><p><strong>Create Banner Variant: <code>mid-banner-upi-apps</code></strong></p><ul>
+<li>Red branded background (#9D1D27)</li>
+<li>Multiple app logo support</li>
+<li>QR code integration</li>
+<li>Flex layout for logos + content</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ 3 block variants created</li>
+<li>✅ CSS styling complete</li>
+<li>✅ JavaScript decoration working</li>
+<li>✅ Mobile responsive</li>
+</ul><p><strong>Effort:</strong> 24 hours</p><h4 id="2b-rupay-content-migration-days-5-6">2B: RuPay Content Migration (Days 5-6)</h4><p><strong>Sections to Migrate:</strong></p><ol>
+<li>Hero section → <code>hero-rupay</code></li>
+<li>Features cards → <code>cards</code> (3-column)</li>
+<li>Rewards section → <code>cards-rewards-rupay</code></li>
+<li>How to Apply → <code>steps</code></li>
+<li>Link to UPI guide → <code>steps</code> + <code>columns</code></li>
+<li>UPI apps banner → <code>mid-banner-upi-apps</code></li>
+<li>Joining perks → <code>cards</code></li>
+<li>Payment methods → <code>columns</code></li>
+<li>Testimonials → <code>swipper-card</code></li>
+<li>Blog posts → <code>pl-swipper-blogs</code></li>
+<li>FAQ → <code>faq-accordion</code></li>
+<li>Related products → <code>cards</code></li>
+<li>Partner logos → <code>columns</code></li>
+<li>Sticky CTA → <code>sticky-cta</code></li>
+</ol><p><strong>Content Migration Tasks:</strong></p><ul>
+<li>Create Document Authoring content (Google Docs/Word)</li>
+<li>Build block tables for each section</li>
+<li>Migrate copy and images</li>
+<li>Set up internal links</li>
+<li>Configure metadata</li>
+<li>Test in Universal Editor</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ All 14 sections migrated</li>
+<li>✅ Content authored in Document Authoring</li>
+<li>✅ Images optimized and uploaded</li>
+<li>✅ Universal Editor functional</li>
+</ul><p><strong>Effort:</strong> 16 hours</p><h4 id="2c-rupay-testing--refinement-days-7-8">2C: RuPay Testing &#x26; Refinement (Days 7-8)</h4><p><strong>Testing Checklist:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Desktop layout (1920px, 1440px, 1024px)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Tablet layout (768px)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Mobile layout (375px, 414px)</li>
+<li class="task-list-item"><input type="checkbox" disabled> All CTAs working</li>
+<li class="task-list-item"><input type="checkbox" disabled> Forms submitting (if applicable)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Images loading correctly</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lazy loading working</li>
+<li class="task-list-item"><input type="checkbox" disabled> Accordions expanding/collapsing</li>
+<li class="task-list-item"><input type="checkbox" disabled> Carousels sliding</li>
+<li class="task-list-item"><input type="checkbox" disabled> Sticky CTA appearing on scroll</li>
+<li class="task-list-item"><input type="checkbox" disabled> Cross-browser (Chrome, Safari, Firefox, Edge)</li>
+</ul><p><strong>Performance Testing:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse Performance > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse Accessibility > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse SEO > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Core Web Vitals passing</li>
+<li class="task-list-item"><input type="checkbox" disabled> Image optimization verified</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ RuPay page fully functional</li>
+<li>✅ All tests passing</li>
+<li>✅ Performance optimized</li>
+<li>✅ Ready for stakeholder review</li>
+</ul><p><strong>Effort:</strong> 16 hours</p></div>
+<div><h3 id="phase-3-mayura-page-migration-week-3-days-11-15">Phase 3: Mayura Page Migration (Week 3, Days 11-15)</h3><h4 id="3a-mayura-block-variants-days-11-12">3A: Mayura Block Variants (Days 11-12)</h4><p><strong>Create Hero Variant: <code>hero-mayura</code></strong></p><ul>
+<li>Navy/dark background</li>
+<li>Gold/bronze accent colors</li>
+<li>Heritage pattern support</li>
+<li>Metal card image showcase</li>
+<li>Bilingual logo support (Hindi/English)</li>
+<li>Premium typography</li>
+</ul><p><strong>Create Cards Variant: <code>cards-premium</code></strong></p><ul>
+<li>Premium styling (gold borders, elegant shadows)</li>
+<li>Luxury icon support</li>
+<li>Flexible column layout (3-4 columns)</li>
+<li>Premium background textures</li>
+</ul><p><strong>Create Cards Variant: <code>cards-rewards-mayura</code></strong></p><ul>
+<li>Dark navy background</li>
+<li>Gold accent highlights</li>
+<li>60X reward multiplier display</li>
+<li>Tier-based layout support</li>
+</ul><p><strong>Create Banner Variant: <code>banner-heritage</code></strong></p><ul>
+<li>Heritage pattern backgrounds</li>
+<li>Peacock motif support</li>
+<li>Cultural storytelling layout</li>
+<li>Premium visual treatment</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ 4 block variants created</li>
+<li>✅ Premium styling applied</li>
+<li>✅ Heritage elements integrated</li>
+<li>✅ Mobile responsive</li>
+</ul><p><strong>Effort:</strong> 24 hours</p><h4 id="3b-mayura-content-migration-days-13-14">3B: Mayura Content Migration (Days 13-14)</h4><p><strong>Sections to Migrate:</strong></p><ol>
+<li>Hero section → <code>hero-mayura</code></li>
+<li>Features cards → <code>cards-premium</code> (4-column)</li>
+<li>The Concept section → <code>banner-heritage</code> or custom</li>
+<li>Earn 60X rewards → <code>cards-rewards-mayura</code></li>
+<li>Tier of rewards → <code>tabs</code> or custom table</li>
+<li>Zero forex section → <code>cards</code></li>
+<li>Metal card showcase → <code>banner</code> or custom</li>
+<li>Travel benefits → <code>cards</code></li>
+<li>How to Apply → <code>steps</code></li>
+<li>Welcome benefits → <code>cards</code> or <code>banner</code></li>
+<li>Fees calculator → <code>form</code> or custom widget</li>
+<li>Important documents → <code>columns</code> or <code>cards</code></li>
+<li>Blog posts → <code>pl-swipper-blogs</code></li>
+<li>FAQ → <code>faq-accordion</code></li>
+<li>Related products → <code>cards</code></li>
+<li>Sticky CTA → <code>sticky-cta</code></li>
+</ol><p><strong>Complex Sections:</strong></p><ul>
+<li><strong>Fees Calculator:</strong> May need custom JavaScript widget</li>
+<li><strong>Reward Tiers:</strong> Use <code>tabs</code> block or custom table</li>
+<li><strong>Heritage Concept:</strong> Custom layout with rich imagery</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ All 16 sections migrated</li>
+<li>✅ Premium styling applied</li>
+<li>✅ Complex sections functional</li>
+<li>✅ Universal Editor working</li>
+</ul><p><strong>Effort:</strong> 20 hours</p><h4 id="3c-mayura-testing--refinement-day-15">3C: Mayura Testing &#x26; Refinement (Day 15)</h4><p><strong>Testing Checklist:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> All items from RuPay testing checklist</li>
+<li class="task-list-item"><input type="checkbox" disabled> Heritage patterns rendering correctly</li>
+<li class="task-list-item"><input type="checkbox" disabled> Premium styling consistent</li>
+<li class="task-list-item"><input type="checkbox" disabled> Gold accents visible</li>
+<li class="task-list-item"><input type="checkbox" disabled> Fees calculator working (if implemented)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Reward tier display correct</li>
+<li class="task-list-item"><input type="checkbox" disabled> Metal card images optimized</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ Mayura page fully functional</li>
+<li>✅ All tests passing</li>
+<li>✅ Premium aesthetic achieved</li>
+<li>✅ Ready for stakeholder review</li>
+</ul><p><strong>Effort:</strong> 8 hours</p></div>
+<div><h3 id="phase-4-cross-page-integration--testing-week-4-days-16-18">Phase 4: Cross-Page Integration &#x26; Testing (Week 4, Days 16-18)</h3><h4 id="4a-shared-component-validation-day-16">4A: Shared Component Validation (Day 16)</h4><p><strong>Validate Shared Blocks:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <code>steps</code> works identically on both pages</li>
+<li class="task-list-item"><input type="checkbox" disabled> <code>faq-accordion</code> functions the same</li>
+<li class="task-list-item"><input type="checkbox" disabled> <code>pl-swipper-blogs</code> renders consistently</li>
+<li class="task-list-item"><input type="checkbox" disabled> <code>sticky-cta</code> appears correctly on both</li>
+<li class="task-list-item"><input type="checkbox" disabled> <code>header</code> and <code>footer</code> work properly</li>
+<li class="task-list-item"><input type="checkbox" disabled> Related products section consistent</li>
+</ul><p><strong>Test Navigation:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Cross-page links working</li>
+<li class="task-list-item"><input type="checkbox" disabled> Breadcrumbs correct (Mayura)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Internal links to other products</li>
+<li class="task-list-item"><input type="checkbox" disabled> Blog links opening correctly</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ All shared components validated</li>
+<li>✅ Navigation working across pages</li>
+<li>✅ Consistency verified</li>
+</ul><p><strong>Effort:</strong> 8 hours</p><h4 id="4b-performance-optimization-day-17">4B: Performance Optimization (Day 17)</h4><p><strong>Image Optimization:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Convert all images to WebP (with PNG fallback)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Compress images to &#x3C; 100KB each</li>
+<li class="task-list-item"><input type="checkbox" disabled> Create responsive image sets</li>
+<li class="task-list-item"><input type="checkbox" disabled> Implement lazy loading</li>
+<li class="task-list-item"><input type="checkbox" disabled> Test image loading performance</li>
+</ul><p><strong>Code Optimization:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Minify CSS</li>
+<li class="task-list-item"><input type="checkbox" disabled> Minimize JavaScript</li>
+<li class="task-list-item"><input type="checkbox" disabled> Remove unused code</li>
+<li class="task-list-item"><input type="checkbox" disabled> Optimize font loading</li>
+<li class="task-list-item"><input type="checkbox" disabled> Test Core Web Vitals</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ All images optimized</li>
+<li>✅ Code optimized</li>
+<li>✅ Performance targets met</li>
+<li>✅ Core Web Vitals passing</li>
+</ul><p><strong>Effort:</strong> 8 hours</p><h4 id="4c-documentation--training-day-18">4C: Documentation &#x26; Training (Day 18)</h4><p><strong>Documentation to Create:</strong></p><ol>
+<li>
+<p><strong>Block Library Guide</strong></p>
+<ul>
+<li>All variants documented</li>
+<li>Usage examples</li>
+<li>Do's and don'ts</li>
+<li>Code samples</li>
+</ul>
+</li>
+<li>
+<p><strong>Content Authoring Guide</strong></p>
+<ul>
+<li>Block table templates</li>
+<li>Image guidelines</li>
+<li>Content structure examples</li>
+<li>Best practices</li>
+</ul>
+</li>
+<li>
+<p><strong>Style Guide</strong></p>
+<ul>
+<li>Color palettes for each page type</li>
+<li>Typography rules</li>
+<li>Spacing guidelines</li>
+<li>Component patterns</li>
+</ul>
+</li>
+<li>
+<p><strong>Universal Editor Guide</strong></p>
+<ul>
+<li>How to edit content</li>
+<li>Block configuration</li>
+<li>Publishing workflow</li>
+<li>Troubleshooting</li>
+</ul>
+</li>
+</ol><p><strong>Training Materials:</strong></p><ul>
+<li>Video walkthroughs (optional)</li>
+<li>Screenshot guides</li>
+<li>Step-by-step tutorials</li>
+<li>FAQ for content authors</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ Complete documentation</li>
+<li>✅ Training materials ready</li>
+<li>✅ Content authors trained</li>
+<li>✅ Handoff complete</li>
+</ul><p><strong>Effort:</strong> 8 hours</p></div>
+<div><h3 id="phase-5-launch--monitoring-week-4-days-19-20">Phase 5: Launch &#x26; Monitoring (Week 4, Days 19-20)</h3><h4 id="5a-pre-launch-checklist-day-19">5A: Pre-Launch Checklist (Day 19)</h4><p><strong>Final QA:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Both pages fully functional</li>
+<li class="task-list-item"><input type="checkbox" disabled> All links working</li>
+<li class="task-list-item"><input type="checkbox" disabled> Forms submitting correctly</li>
+<li class="task-list-item"><input type="checkbox" disabled> Analytics tracking implemented</li>
+<li class="task-list-item"><input type="checkbox" disabled> SEO metadata correct</li>
+<li class="task-list-item"><input type="checkbox" disabled> Social sharing working</li>
+<li class="task-list-item"><input type="checkbox" disabled> Print styles tested (if needed)</li>
+</ul><p><strong>Stakeholder Review:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Business stakeholders approve</li>
+<li class="task-list-item"><input type="checkbox" disabled> Marketing team approves</li>
+<li class="task-list-item"><input type="checkbox" disabled> Legal/compliance review (if needed)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Content team approves</li>
+</ul><p><strong>Technical Checklist:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> DNS configured (if needed)</li>
+<li class="task-list-item"><input type="checkbox" disabled> SSL certificates valid</li>
+<li class="task-list-item"><input type="checkbox" disabled> CDN configured</li>
+<li class="task-list-item"><input type="checkbox" disabled> Monitoring set up</li>
+<li class="task-list-item"><input type="checkbox" disabled> Error tracking enabled</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ Pre-launch checklist complete</li>
+<li>✅ All approvals obtained</li>
+<li>✅ Ready for launch</li>
+</ul><p><strong>Effort:</strong> 8 hours</p><h4 id="5b-launch--monitor-day-20">5B: Launch &#x26; Monitor (Day 20)</h4><p><strong>Launch Process:</strong></p><ol>
+<li>Publish RuPay page to production</li>
+<li>Publish Mayura page to production</li>
+<li>Verify both pages live</li>
+<li>Test in production environment</li>
+<li>Monitor analytics</li>
+<li>Watch for errors</li>
+</ol><p><strong>Post-Launch Monitoring:</strong></p><ul>
+<li>Monitor performance metrics</li>
+<li>Check error logs</li>
+<li>Review user analytics</li>
+<li>Gather feedback</li>
+<li>Address any issues immediately</li>
+</ul><p><strong>Deliverables:</strong></p><ul>
+<li>✅ Both pages live in production</li>
+<li>✅ Monitoring active</li>
+<li>✅ No critical issues</li>
+<li>✅ Migration complete</li>
+</ul><p><strong>Effort:</strong> 8 hours</p></div>
+<div><h2 id="block-library-summary">Block Library Summary</h2><h3 id="existing-blocks-no-changes">Existing Blocks (No Changes)</h3><ol>
+<li><code>steps</code> - ✅ Perfect for both pages</li>
+<li><code>faq-accordion</code> - ✅ FAQ sections</li>
+<li><code>pl-swipper-blogs</code> - ✅ Blog carousels</li>
+<li><code>sticky-cta</code> - ✅ Apply buttons</li>
+<li><code>columns</code> - ✅ Multi-column layouts</li>
+<li><code>header</code> - ✅ Site header</li>
+<li><code>footer</code> - ✅ Site footer</li>
+<li><code>swipper-card</code> - ✅ Testimonials (RuPay)</li>
+<li><code>tabs</code> - ✅ Reward tiers (Mayura)</li>
+<li><code>form</code> - ✅ Forms (if needed)</li>
+</ol><h3 id="new-variants-to-create">New Variants (To Create)</h3><ol>
+<li><code>hero-rupay</code> - Digital card hero</li>
+<li><code>hero-mayura</code> - Premium metal card hero</li>
+<li><code>cards-rewards-rupay</code> - Purple gradient rewards</li>
+<li><code>cards-rewards-mayura</code> - Premium rewards display</li>
+<li><code>cards-premium</code> - Premium feature cards</li>
+<li><code>mid-banner-upi-apps</code> - UPI apps showcase</li>
+<li><code>banner-heritage</code> - Cultural heritage section</li>
+</ol><h3 id="optional-custom-blocks">Optional Custom Blocks</h3><ol>
+<li><code>calculator</code> - Fees calculator (Mayura) - If standard <code>form</code> block insufficient</li>
+<li><code>product-showcase</code> - Metal card details (Mayura) - If standard <code>banner</code> insufficient</li>
+<li><code>rewards-tier-table</code> - Detailed tier structure (Mayura) - If standard <code>tabs</code> insufficient</li>
+</ol><p><strong>Recommendation:</strong> Start with variants only. Create custom blocks only if truly needed.</p></div>
+<div><h2 id="resource-requirements">Resource Requirements</h2><h3 id="team-composition">Team Composition</h3><p><strong>Developer (Frontend)</strong></p><ul>
+<li>Block variant development</li>
+<li>CSS/JavaScript implementation</li>
+<li>Responsive design</li>
+<li>Performance optimization</li>
+<li>Estimated: 80-90 hours</li>
+</ul><p><strong>Content Author</strong></p><ul>
+<li>Content migration</li>
+<li>Document Authoring</li>
+<li>Universal Editor testing</li>
+<li>Content QA</li>
+<li>Estimated: 20-30 hours</li>
+</ul><p><strong>Designer (Optional)</strong></p><ul>
+<li>Style guide creation</li>
+<li>Visual QA</li>
+<li>Premium styling review</li>
+<li>Brand compliance</li>
+<li>Estimated: 10-15 hours</li>
+</ul><p><strong>QA Tester</strong></p><ul>
+<li>Functional testing</li>
+<li>Cross-browser testing</li>
+<li>Performance testing</li>
+<li>Accessibility testing</li>
+<li>Estimated: 15-20 hours</li>
+</ul><p><strong>Project Manager</strong></p><ul>
+<li>Coordination</li>
+<li>Stakeholder communication</li>
+<li>Timeline management</li>
+<li>Risk management</li>
+<li>Estimated: 10-15 hours</li>
+</ul><p><strong>Total Effort:</strong> 135-170 hours across team</p></div>
+<div><h2 id="risk-assessment--mitigation">Risk Assessment &#x26; Mitigation</h2><h3 id="high-priority-risks">High-Priority Risks</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="risk"><div><div>Complex sections exceed block capabilities</div><div>High</div><div>Medium</div><div>Create custom blocks or use combinations</div></div><div><div>Performance with 182 images</div><div>High</div><div>High</div><div>Aggressive optimization, lazy loading, WebP</div></div><div><div>AEM Crosswalk learning curve</div><div>Medium</div><div>High</div><div>Early training, documentation, support</div></div><div><div>Premium styling difficult to achieve</div><div>Medium</div><div>Medium</div><div>Designer involvement, CSS variables</div></div><div><div>Fees calculator complexity</div><div>Medium</div><div>Low</div><div>Use existing form block or create custom</div></div></div><h3 id="medium-priority-risks">Medium-Priority Risks</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="risk"><div><div>Responsive design issues</div><div>Medium</div><div>Medium</div><div>Mobile-first approach, thorough testing</div></div><div><div>Heritage patterns not rendering well</div><div>Medium</div><div>Low</div><div>Image optimization, fallback patterns</div></div><div><div>Block variant code duplication</div><div>Low</div><div>Medium</div><div>Abstract common code, use mixins</div></div><div><div>Content author training needed</div><div>Medium</div><div>High</div><div>Create comprehensive guides</div></div><div><div>Timeline slippage</div><div>Medium</div><div>Medium</div><div>Buffer time, prioritize ruthlessly</div></div></div></div>
+<div><h2 id="success-criteria">Success Criteria</h2><h3 id="page-level-metrics">Page-Level Metrics</h3><p><strong>RuPay Page:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> All 14 sections migrated and functional</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse Performance > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse Accessibility > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse SEO > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Page load time &#x3C; 3 seconds</li>
+<li class="task-list-item"><input type="checkbox" disabled> Mobile-responsive</li>
+<li class="task-list-item"><input type="checkbox" disabled> UPI features working</li>
+</ul><p><strong>Mayura Page:</strong></p><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> All 16 sections migrated and functional</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse Performance > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse Accessibility > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Lighthouse SEO > 90</li>
+<li class="task-list-item"><input type="checkbox" disabled> Page load time &#x3C; 3 seconds</li>
+<li class="task-list-item"><input type="checkbox" disabled> Mobile-responsive</li>
+<li class="task-list-item"><input type="checkbox" disabled> Premium aesthetic achieved</li>
+</ul><h3 id="project-level-metrics">Project-Level Metrics</h3><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Block reusability > 70%</li>
+<li class="task-list-item"><input type="checkbox" disabled> Both pages launched within 4 weeks</li>
+<li class="task-list-item"><input type="checkbox" disabled> No critical post-launch issues</li>
+<li class="task-list-item"><input type="checkbox" disabled> Content authors trained and productive</li>
+<li class="task-list-item"><input type="checkbox" disabled> Documentation complete</li>
+<li class="task-list-item"><input type="checkbox" disabled> Stakeholder satisfaction high</li>
+</ul><h3 id="technical-metrics">Technical Metrics</h3><ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 7 block variants created</li>
+<li class="task-list-item"><input type="checkbox" disabled> 182 images optimized</li>
+<li class="task-list-item"><input type="checkbox" disabled> All cross-browser tests passing</li>
+<li class="task-list-item"><input type="checkbox" disabled> All accessibility tests passing</li>
+<li class="task-list-item"><input type="checkbox" disabled> Universal Editor fully functional</li>
+<li class="task-list-item"><input type="checkbox" disabled> AEM 6.5 integration working</li>
+</ul></div>
+<div><h2 id="budget-estimate">Budget Estimate</h2><h3 id="development-costs">Development Costs</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="resource"><div><div>Frontend Developer</div><div>85</div><div>$100/hr</div><div>$8,500</div></div><div><div>Content Author</div><div>25</div><div>$75/hr</div><div>$1,875</div></div><div><div>Designer</div><div>12</div><div>$90/hr</div><div>$1,080</div></div><div><div>QA Tester</div><div>18</div><div>$80/hr</div><div>$1,440</div></div><div><div>Project Manager</div><div>12</div><div>$110/hr</div><div>$1,320</div></div><div><div><strong>Total</strong></div><div><strong>152</strong></div><div></div><div><strong>$14,215</strong></div></div></div><h3 id="infrastructure-costs">Infrastructure Costs</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="item"><div><div>AEM EDS Hosting</div><div>Varies</div><div>Contact Adobe</div></div><div><div>CDN (if separate)</div><div>$50-200</div><div>Cloudflare, AWS CloudFront</div></div><div><div>Monitoring Tools</div><div>$0-100</div><div>Datadog, New Relic</div></div><div><div><strong>Subtotal</strong></div><div><strong>$50-300/mo</strong></div><div></div></div></div><p><strong>Note:</strong> Rates are examples. Adjust based on your region and team structure.</p></div>
+<div><h2 id="timeline-detailed">Timeline (Detailed)</h2><h3 id="week-1-rupay-foundation">Week 1: RuPay Foundation</h3><ul>
+<li><strong>Mon-Tue:</strong> Setup &#x26; block variants</li>
+<li><strong>Wed-Thu:</strong> RuPay content migration</li>
+<li><strong>Fri:</strong> RuPay testing begins</li>
+</ul><h3 id="week-2-rupay-completion">Week 2: RuPay Completion</h3><ul>
+<li><strong>Mon-Tue:</strong> RuPay testing &#x26; refinement</li>
+<li><strong>Wed:</strong> RuPay stakeholder review</li>
+<li><strong>Thu-Fri:</strong> Mayura block variants start</li>
+</ul><h3 id="week-3-mayura-migration">Week 3: Mayura Migration</h3><ul>
+<li><strong>Mon-Tue:</strong> Mayura block variants complete</li>
+<li><strong>Wed-Thu:</strong> Mayura content migration</li>
+<li><strong>Fri:</strong> Mayura testing begins</li>
+</ul><h3 id="week-4-completion--launch">Week 4: Completion &#x26; Launch</h3><ul>
+<li><strong>Mon:</strong> Mayura testing &#x26; refinement</li>
+<li><strong>Tue:</strong> Cross-page validation</li>
+<li><strong>Wed:</strong> Performance optimization</li>
+<li><strong>Thu:</strong> Documentation &#x26; training</li>
+<li><strong>Fri:</strong> Final QA &#x26; launch</li>
+</ul><p><strong>Total: 20 business days (4 weeks)</strong></p></div>
+<div><h2 id="communication-plan">Communication Plan</h2><h3 id="daily-standups-optional">Daily Standups (Optional)</h3><ul>
+<li>15 minutes</li>
+<li>Progress updates</li>
+<li>Blockers discussion</li>
+<li>Daily goals</li>
+</ul><h3 id="weekly-status-reports">Weekly Status Reports</h3><ul>
+<li>Progress vs. plan</li>
+<li>Completed deliverables</li>
+<li>Upcoming milestones</li>
+<li>Risks and issues</li>
+</ul><h3 id="key-stakeholder-touchpoints">Key Stakeholder Touchpoints</h3><ul>
+<li>Week 1 End: RuPay demo</li>
+<li>Week 2 Mid: RuPay review</li>
+<li>Week 3 End: Mayura demo</li>
+<li>Week 4 Mid: Final review</li>
+<li>Week 4 End: Launch</li>
+</ul></div>
+<div><h2 id="post-launch-support">Post-Launch Support</h2><h3 id="week-1-post-launch">Week 1 Post-Launch</h3><ul>
+<li>Daily monitoring</li>
+<li>Rapid issue resolution</li>
+<li>User feedback collection</li>
+<li>Analytics review</li>
+</ul><h3 id="week-2-4-post-launch">Week 2-4 Post-Launch</h3><ul>
+<li>Weekly monitoring</li>
+<li>Content author support</li>
+<li>Minor adjustments</li>
+<li>Performance tuning</li>
+</ul><h3 id="ongoing">Ongoing</h3><ul>
+<li>Monthly performance reviews</li>
+<li>Quarterly content updates</li>
+<li>Block library enhancements</li>
+<li>Additional page migrations</li>
+</ul></div>
+<div><h2 id="scaling-to-additional-pages">Scaling to Additional Pages</h2><h3 id="future-credit-card-pages">Future Credit Card Pages</h3><p>This migration establishes patterns for future credit card pages:</p><ol>
+<li>
+<p><strong>Use Existing Variants</strong></p>
+<ul>
+<li><code>hero-rupay</code> for digital cards</li>
+<li><code>hero-mayura</code> for premium cards</li>
+<li>Mix and match other variants</li>
+</ul>
+</li>
+<li>
+<p><strong>Quick Migration Process</strong></p>
+<ul>
+<li>Reuse block library</li>
+<li>Follow authoring templates</li>
+<li>Apply established patterns</li>
+<li>Much faster than these first two</li>
+</ul>
+</li>
+<li>
+<p><strong>Estimated Future Page</strong></p>
+<ul>
+<li>Migration: 1-2 weeks per page</li>
+<li>Less variant creation needed</li>
+<li>Streamlined process</li>
+<li>Lower cost</li>
+</ul>
+</li>
+</ol></div>
+<div><h2 id="conclusion">Conclusion</h2><p>This unified migration plan provides a structured approach to migrating both RuPay and Mayura credit card pages to AEM Edge Delivery Services. By:</p><ol>
+<li>✅ Starting with the simpler RuPay page</li>
+<li>✅ Building a reusable block library</li>
+<li>✅ Creating flexible variants for different styles</li>
+<li>✅ Following a sequential, low-risk approach</li>
+<li>✅ Documenting patterns for future use</li>
+</ol><p>We can successfully migrate both pages within 4 weeks while establishing a scalable architecture for future credit card pages.</p><p><strong>Next Step:</strong> Review and approve this plan to begin Phase 1.</p></div>
+<div><p><strong>Document Version:</strong> 1.0
+<strong>Last Updated:</strong> 2025-12-09
+<strong>Project Duration:</strong> 4 weeks (20 business days)
+<strong>Total Effort:</strong> 135-170 hours
+<strong>Pages Covered:</strong> 2 (RuPay, Mayura)
+<strong>Block Variants:</strong> 7 new variants
+<strong>Success Rate Projection:</strong> High (based on 70%+ block reusability)</p></div>
+</main>
+<footer></footer>
+</body>
+</html>
