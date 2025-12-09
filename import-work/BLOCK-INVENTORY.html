@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="/scripts/aem.js" type="module"></script>
+<script src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div><h1 id="block-inventory--library-analysis">Block Inventory &#x26; Library Analysis</h1><h2 id="project-idfc-first-bank-rupay-credit-card-migration">Project: IDFC First Bank RuPay Credit Card Migration</h2><p><strong>Date:</strong> 2025-12-09</p></div>
+<div><h2 id="available-blocks-in-project">Available Blocks in Project</h2><p>This project contains <strong>31 blocks</strong> already implemented. Below is a detailed inventory with descriptions and use cases.</p><h3 id="core-content-blocks">Core Content Blocks</h3><h4 id="hero">1. <strong>hero</strong></h4><ul>
+<li><strong>Purpose:</strong> Large header section with headline, description, CTA, and image</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/hero/</code></li>
+<li><strong>Features:</strong> Mobile-first responsive design, dark background support</li>
+<li><strong>Use Case for Migration:</strong> ✅ Primary hero section at top of page</li>
+</ul><h4 id="cards">2. <strong>cards</strong></h4><ul>
+<li><strong>Purpose:</strong> Flexible card grid layout for features, products, or content</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/cards/</code></li>
+<li><strong>Features:</strong> Responsive grid, flexible columns, image + text support</li>
+<li><strong>Use Case for Migration:</strong> ✅ Features section, perks section, related products</li>
+</ul><h4 id="columns">3. <strong>columns</strong></h4><ul>
+<li><strong>Purpose:</strong> Multi-column layout for flexible content arrangement</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/columns/</code></li>
+<li><strong>Features:</strong> Responsive columns, flexible width distribution</li>
+<li><strong>Use Case for Migration:</strong> ✅ Icon grids, payment methods section, logo grids</li>
+</ul><h4 id="rte-block">4. <strong>rte-block</strong></h4><ul>
+<li><strong>Purpose:</strong> Rich text editor block for formatted text content</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/rte-block/</code></li>
+<li><strong>Features:</strong> Full text formatting support</li>
+<li><strong>Use Case for Migration:</strong> ✅ Body copy, disclaimers, detailed descriptions</li>
+</ul><h4 id="overview-rte">5. <strong>overview-rte</strong></h4><ul>
+<li><strong>Purpose:</strong> Rich text overview section</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/overview-rte/</code></li>
+<li><strong>Features:</strong> Overview-specific formatting</li>
+<li><strong>Use Case for Migration:</strong> Product overview sections</li>
+</ul></div>
+<div><h3 id="navigation-blocks">Navigation Blocks</h3><h4 id="header">6. <strong>header</strong></h4><ul>
+<li><strong>Purpose:</strong> Site-wide header with navigation</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/header/</code></li>
+<li><strong>Use Case for Migration:</strong> ✅ Top navigation (already implemented in scraped page)</li>
+</ul><h4 id="footer">7. <strong>footer</strong></h4><ul>
+<li><strong>Purpose:</strong> Site-wide footer with links and information</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/footer/</code></li>
+<li><strong>Use Case for Migration:</strong> ✅ Bottom footer section (already implemented)</li>
+</ul><h4 id="anchor-nav">8. <strong>anchor-nav</strong></h4><ul>
+<li><strong>Purpose:</strong> In-page anchor navigation for long pages</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/anchor-nav/</code></li>
+<li><strong>Use Case for Migration:</strong> Could add for easier navigation on this long page</li>
+</ul><h4 id="category-nav">9. <strong>category-nav</strong></h4><ul>
+<li><strong>Purpose:</strong> Category-based navigation</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/category-nav/</code></li>
+<li><strong>Use Case for Migration:</strong> Not needed for this page</li>
+</ul><h4 id="nav-list">10. <strong>nav-list</strong></h4><ul>
+<li><strong>Purpose:</strong> Navigation list component</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/nav-list/</code></li>
+<li><strong>Use Case for Migration:</strong> Not needed for this page</li>
+</ul></div>
+<div><h3 id="interactive-blocks">Interactive Blocks</h3><h4 id="accordion">11. <strong>accordion</strong></h4><ul>
+<li><strong>Purpose:</strong> Collapsible accordion for content</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/accordion/</code></li>
+<li><strong>Features:</strong> Expand/collapse functionality, clean design</li>
+<li><strong>Use Case for Migration:</strong> ✅ Could be used for FAQ section</li>
+</ul><h4 id="faq-accordion">12. <strong>faq-accordion</strong></h4><ul>
+<li><strong>Purpose:</strong> Specialized accordion for FAQs</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/faq-accordion/</code></li>
+<li><strong>Features:</strong> FAQ-specific styling and structure</li>
+<li><strong>Use Case for Migration:</strong> ✅ PERFECT for FAQ section</li>
+</ul><h4 id="tabs">13. <strong>tabs</strong></h4><ul>
+<li><strong>Purpose:</strong> Tabbed content interface</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/tabs/</code></li>
+<li><strong>Features:</strong> Multiple content tabs with switching</li>
+<li><strong>Use Case for Migration:</strong> Not needed, but could organize features by category</li>
+</ul><h4 id="tabs-upi-link">14. <strong>tabs-upi-link</strong></h4><ul>
+<li><strong>Purpose:</strong> UPI-specific tabbed interface</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/tabs-upi-link/</code></li>
+<li><strong>Features:</strong> Specialized for UPI linking workflows</li>
+<li><strong>Use Case for Migration:</strong> ✅ HIGHLY RELEVANT for UPI linking section!</li>
+</ul><h4 id="modal">15. <strong>modal</strong></h4><ul>
+<li><strong>Purpose:</strong> Modal dialog overlay</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/modal/</code></li>
+<li><strong>Features:</strong> Overlay with close functionality</li>
+<li><strong>Use Case for Migration:</strong> ✅ For CTA forms, video overlays, or detailed info</li>
+</ul></div>
+<div><h3 id="carouselslider-blocks">Carousel/Slider Blocks</h3><h4 id="swipper">16. <strong>swipper</strong></h4><ul>
+<li><strong>Purpose:</strong> General carousel/slider component</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/swipper/</code></li>
+<li><strong>Features:</strong> Touch-enabled sliding, navigation controls</li>
+<li><strong>Use Case for Migration:</strong> ✅ General carousels</li>
+</ul><h4 id="swipper-card">17. <strong>swipper-card</strong></h4><ul>
+<li><strong>Purpose:</strong> Card-based carousel</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/swipper-card/</code></li>
+<li><strong>Features:</strong> Cards in slider format</li>
+<li><strong>Use Case for Migration:</strong> ✅ Testimonials carousel</li>
+</ul><h4 id="pl-swipper-blogs">18. <strong>pl-swipper-blogs</strong></h4><ul>
+<li><strong>Purpose:</strong> Blog post carousel (Personal Loan specific)</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/pl-swipper-blogs/</code></li>
+<li><strong>Features:</strong> Blog cards in carousel format</li>
+<li><strong>Use Case for Migration:</strong> ✅ PERFECT for "Latest Blog Posts" section</li>
+</ul></div>
+<div><h3 id="product-specific-blocks">Product-Specific Blocks</h3><h4 id="link-to-upi">19. <strong>link-to-upi</strong></h4><ul>
+<li><strong>Purpose:</strong> UPI linking functionality block</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/link-to-upi/</code></li>
+<li><strong>Features:</strong> UPI-specific functionality</li>
+<li><strong>Use Case for Migration:</strong> ✅ HIGHLY RELEVANT for UPI sections!</li>
+</ul><h4 id="personal-loan-block">20. <strong>personal-loan-block</strong></h4><ul>
+<li><strong>Purpose:</strong> Personal loan product block</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/personal-loan-block/</code></li>
+<li><strong>Features:</strong> Loan-specific layout and CTAs</li>
+<li><strong>Use Case for Migration:</strong> Could be adapted for credit card product block</li>
+</ul><h4 id="pl-blogs">21. <strong>pl-blogs</strong></h4><ul>
+<li><strong>Purpose:</strong> Personal loan blog listing</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/pl-blogs/</code></li>
+<li><strong>Features:</strong> Blog post grid</li>
+<li><strong>Use Case for Migration:</strong> Not needed (use pl-swipper-blogs instead)</li>
+</ul></div>
+<div><h3 id="cta--banner-blocks">CTA &#x26; Banner Blocks</h3><h4 id="banner">22. <strong>banner</strong></h4><ul>
+<li><strong>Purpose:</strong> Promotional banner</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/banner/</code></li>
+<li><strong>Features:</strong> Full-width banner with image and CTA</li>
+<li><strong>Use Case for Migration:</strong> ✅ Could use for UPI apps section</li>
+</ul><h4 id="mid-banner">23. <strong>mid-banner</strong></h4><ul>
+<li><strong>Purpose:</strong> Mid-page promotional banner</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/mid-banner/</code></li>
+<li><strong>Features:</strong> Break-up content with promotional message</li>
+<li><strong>Use Case for Migration:</strong> ✅ UPI apps section, promotional callouts</li>
+</ul><h4 id="sticky-cta">24. <strong>sticky-cta</strong></h4><ul>
+<li><strong>Purpose:</strong> Sticky call-to-action button</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/sticky-cta/</code></li>
+<li><strong>Features:</strong> Fixed position CTA that follows scroll</li>
+<li><strong>Use Case for Migration:</strong> ✅ PERFECT for "Apply Now" sticky button</li>
+</ul></div>
+<div><h3 id="stepprocess-blocks">Step/Process Blocks</h3><h4 id="steps">25. <strong>steps</strong></h4><ul>
+<li><strong>Purpose:</strong> Step-by-step process visualization</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/steps/</code></li>
+<li><strong>Features:</strong> Sequential steps with icons and descriptions</li>
+<li><strong>Use Case for Migration:</strong> ✅ PERFECT for "How to Apply" and "Link to UPI" sections</li>
+</ul></div>
+<div><h3 id="utility-blocks">Utility Blocks</h3><h4 id="embed">26. <strong>embed</strong></h4><ul>
+<li><strong>Purpose:</strong> Embed external content (videos, maps, widgets)</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/embed/</code></li>
+<li><strong>Features:</strong> iframe support, responsive embeds</li>
+<li><strong>Use Case for Migration:</strong> If videos need to be embedded</li>
+</ul><h4 id="form">27. <strong>form</strong></h4><ul>
+<li><strong>Purpose:</strong> Form builder block</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/form/</code></li>
+<li><strong>Features:</strong> Form fields, validation, submission</li>
+<li><strong>Use Case for Migration:</strong> Lead capture forms, application forms</li>
+</ul><h4 id="fragment">28. <strong>fragment</strong></h4><ul>
+<li><strong>Purpose:</strong> Reusable content fragment</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/fragment/</code></li>
+<li><strong>Features:</strong> Include content from other pages</li>
+<li><strong>Use Case for Migration:</strong> Reusable disclaimers, terms</li>
+</ul><h4 id="cf-fragment">29. <strong>cf-fragment</strong></h4><ul>
+<li><strong>Purpose:</strong> Content fragment block</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/cf-fragment/</code></li>
+<li><strong>Features:</strong> AEM content fragment integration</li>
+<li><strong>Use Case for Migration:</strong> For AEM Crosswalk content fragments</li>
+</ul></div>
+<div><h3 id="developersystem-blocks">Developer/System Blocks</h3><h4 id="git-block">30. <strong>git-block</strong></h4><ul>
+<li><strong>Purpose:</strong> Git integration block</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/git-block/</code></li>
+<li><strong>Features:</strong> Git-related functionality</li>
+<li><strong>Use Case for Migration:</strong> Not needed for content migration</li>
+</ul><h4 id="library-metadata">31. <strong>library-metadata</strong></h4><ul>
+<li><strong>Purpose:</strong> Block library metadata</li>
+<li><strong>Location:</strong> <code>/workspace/blocks/library-metadata/</code></li>
+<li><strong>Features:</strong> Metadata for block library</li>
+<li><strong>Use Case for Migration:</strong> Not needed for content migration</li>
+</ul></div>
+<div><h2 id="block-reusability-matrix">Block Reusability Matrix</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="page-section"><div><div>Hero</div><div>hero</div><div>-</div><div>✅ Yes (rupay variant)</div></div><div><div>Features Cards (3-col)</div><div>cards</div><div>-</div><div>⚠️ Optional (styling)</div></div><div><div>Rewards Grid (4-col)</div><div>cards</div><div>-</div><div>✅ Yes (rewards variant)</div></div><div><div>How to Apply Steps</div><div>steps</div><div>-</div><div>❌ No</div></div><div><div>Link to UPI Guide</div><div>steps + tabs-upi-link</div><div>columns</div><div>⚠️ Optional</div></div><div><div>UPI Apps Banner</div><div>mid-banner</div><div>banner</div><div>✅ Yes (upi-apps variant)</div></div><div><div>Joining Perks</div><div>cards</div><div>-</div><div>❌ No (reuse existing)</div></div><div><div>Payment Methods</div><div>columns</div><div>-</div><div>❌ No</div></div><div><div>Testimonials</div><div>swipper-card</div><div>-</div><div>⚠️ Optional (styling)</div></div><div><div>Blog Posts</div><div>pl-swipper-blogs</div><div>-</div><div>❌ No</div></div><div><div>FAQ</div><div>faq-accordion</div><div>accordion</div><div>❌ No</div></div><div><div>Related Products</div><div>cards</div><div>-</div><div>❌ No</div></div><div><div>Logos Grid</div><div>columns</div><div>-</div><div>❌ No</div></div><div><div>Sticky CTA</div><div>sticky-cta</div><div>-</div><div>❌ No</div></div></div><p><strong>Legend:</strong></p><ul>
+<li>✅ Yes: New variant highly recommended</li>
+<li>⚠️ Optional: Variant would help but not required</li>
+<li>❌ No: Existing block works as-is</li>
+</ul></div>
+<div><h2 id="block-coverage-analysis">Block Coverage Analysis</h2><h3 id="-excellent-coverage-90">✅ Excellent Coverage (90%+)</h3><p>The project has excellent block coverage with <strong>27 out of 31 blocks</strong> being potentially useful for this migration.</p><h3 id="-perfect-matches-ready-to-use">🎯 Perfect Matches (Ready to Use)</h3><p>These blocks are perfect matches for the page sections:</p><ol>
+<li><strong>steps</strong> → How to Apply section</li>
+<li><strong>faq-accordion</strong> → FAQ section</li>
+<li><strong>pl-swipper-blogs</strong> → Blog posts carousel</li>
+<li><strong>sticky-cta</strong> → Sticky apply button</li>
+<li><strong>link-to-upi</strong> → UPI linking sections</li>
+<li><strong>tabs-upi-link</strong> → UPI tabs/interface</li>
+<li><strong>hero</strong> → Hero section (with variant)</li>
+<li><strong>cards</strong> → Multiple sections</li>
+<li><strong>swipper-card</strong> → Testimonials</li>
+</ol><h3 id="️-needs-customization">⚠️ Needs Customization</h3><p>These blocks need variants or styling:</p><ol>
+<li><strong>hero</strong> → Needs "rupay" variant with dark gradient</li>
+<li><strong>cards</strong> → Needs "rewards" variant with purple gradient</li>
+<li><strong>mid-banner</strong> → Needs "upi-apps" variant with logos and QR</li>
+</ol><h3 id="-potentially-missing">🆕 Potentially Missing</h3><p>These blocks might need to be created:</p><ol>
+<li><strong>testimonials</strong> (Optional - can use swipper-card)</li>
+<li><strong>icon-grid</strong> (Optional - can use columns)</li>
+</ol></div>
+<div><h2 id="recommended-block-priority">Recommended Block Priority</h2><h3 id="phase-1-use-existing-blocks-weeks-1-2">Phase 1: Use Existing Blocks (Weeks 1-2)</h3><p>Focus on sections that can use existing blocks without modification:</p><ol>
+<li>✅ FAQ section → <code>faq-accordion</code></li>
+<li>✅ Blog posts → <code>pl-swipper-blogs</code></li>
+<li>✅ How to Apply → <code>steps</code></li>
+<li>✅ Sticky CTA → <code>sticky-cta</code></li>
+<li>✅ Payment methods → <code>columns</code></li>
+<li>✅ Related products → <code>cards</code></li>
+</ol><h3 id="phase-2-create-variants-week-2">Phase 2: Create Variants (Week 2)</h3><p>Create block variants for sections needing customization:</p><ol>
+<li>🎨 Hero variant → <code>hero-rupay</code></li>
+<li>🎨 Cards variant → <code>cards-rewards</code></li>
+<li>🎨 Banner variant → <code>mid-banner-upi-apps</code></li>
+</ol><h3 id="phase-3-polish--integration-week-3">Phase 3: Polish &#x26; Integration (Week 3)</h3><p>Fine-tune styling and integrate with AEM Crosswalk:</p><ol>
+<li>Responsive design testing</li>
+<li>Animation and transitions</li>
+<li>Universal Editor integration</li>
+<li>Performance optimization</li>
+</ol></div>
+<div><h2 id="block-naming-conventions">Block Naming Conventions</h2><p>The project follows these naming patterns:</p><ul>
+<li><strong>Generic blocks:</strong> <code>cards</code>, <code>columns</code>, <code>hero</code></li>
+<li><strong>Product-specific:</strong> <code>pl-swipper-blogs</code>, <code>personal-loan-block</code></li>
+<li><strong>Feature-specific:</strong> <code>link-to-upi</code>, <code>tabs-upi-link</code>, <code>faq-accordion</code></li>
+<li><strong>Position-specific:</strong> <code>sticky-cta</code>, <code>mid-banner</code></li>
+</ul><p>For new variants, follow these patterns:</p><ul>
+<li><code>hero-rupay</code> (product-specific variant)</li>
+<li><code>cards-rewards</code> (feature-specific variant)</li>
+<li><code>mid-banner-upi-apps</code> (content-specific variant)</li>
+</ul></div>
+<div><h2 id="block-styling-approach">Block Styling Approach</h2><p>All blocks in this project follow:</p><ul>
+<li><strong>Mobile-first CSS</strong> (base styles for mobile, media queries for larger screens)</li>
+<li><strong>BEM-like class naming</strong> (<code>.block-element</code>, <code>.block__element--modifier</code>)</li>
+<li><strong>CSS Variables</strong> for theming (colors, spacing)</li>
+<li><strong>Minimal JavaScript</strong> (progressive enhancement)</li>
+</ul></div>
+<div><h2 id="upi-specific-blocks-analysis">UPI-Specific Blocks Analysis</h2><p>The project has <strong>2 UPI-specific blocks</strong>, which is excellent for this RuPay Credit Card page:</p><h3 id="link-to-upi-workspaceblockslink-to-upi">1. <strong>link-to-upi</strong> (<code>/workspace/blocks/link-to-upi/</code>)</h3><ul>
+<li>Purpose: Facilitates UPI linking functionality</li>
+<li>Relevance: HIGH - perfect for UPI linking sections</li>
+</ul><h3 id="tabs-upi-link-workspaceblockstabs-upi-link">2. <strong>tabs-upi-link</strong> (<code>/workspace/blocks/tabs-upi-link/</code>)</h3><ul>
+<li>Purpose: Tabbed interface for UPI linking workflows</li>
+<li>Relevance: HIGH - perfect for multi-step UPI processes</li>
+</ul><p>These blocks suggest the project team has already worked on UPI-related features, making this migration smoother.</p></div>
+<div><h2 id="summary--recommendations">Summary &#x26; Recommendations</h2><h3 id="strengths">Strengths</h3><p>✅ Comprehensive block library (31 blocks)
+✅ UPI-specific blocks already exist
+✅ Mobile-first, responsive design
+✅ Good variety of layout blocks (cards, columns, hero)
+✅ Interactive components (accordions, carousels, modals)</p><h3 id="gaps">Gaps</h3><p>⚠️ Need 2-3 block variants for brand-specific styling
+⚠️ May need dedicated testimonials block (or use swipper-card)</p><h3 id="overall-assessment">Overall Assessment</h3><p><strong>Score: 9/10</strong> - Excellent block coverage. Most sections can use existing blocks with minimal customization.</p><h3 id="key-recommendation">Key Recommendation</h3><p>Focus on creating <strong>3 block variants</strong> rather than building new blocks from scratch:</p><ol>
+<li><code>hero-rupay</code></li>
+<li><code>cards-rewards</code></li>
+<li><code>mid-banner-upi-apps</code></li>
+</ol><p>This approach will:</p><ul>
+<li>Save development time (reuse existing block structure)</li>
+<li>Maintain consistency across the site</li>
+<li>Leverage existing mobile-responsive code</li>
+<li>Speed up the migration process</li>
+</ul></div>
+<div><p><strong>Document Version:</strong> 1.0
+<strong>Last Updated:</strong> 2025-12-09</p></div>
+</main>
+<footer></footer>
+</body>
+</html>

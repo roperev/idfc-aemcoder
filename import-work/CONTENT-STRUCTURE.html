@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="/scripts/aem.js" type="module"></script>
+<script src="/scripts/scripts.js" type="module"></script>
+<link rel="stylesheet" href="/styles/styles.css"/>
+</head>
+<body>
+<header></header>
+<main>
+<div><h1 id="content-structure--authoring-guide">Content Structure &#x26; Authoring Guide</h1><h2 id="idfc-first-bank-rupay-credit-card-page">IDFC First Bank RuPay Credit Card Page</h2><p><strong>Document Path:</strong> <code>/credit-card/rupay-credit-card</code></p></div>
+<div><h2 id="page-metadata">Page Metadata</h2><pre><code class="language-yaml">Title: Apply for RuPay Credit Card - Easy UPI Payments &#x26; Rewards | IDFC FIRST Bank
+Description: Get FIRST Digital RuPay Credit Card online instantly. Enjoy secured UPI transactions, rewards on UPI spends &#x26; cashback. Apply for RuPay Credit Card today!
+Keywords: rupay cc, rupay, rupay credit card, rupay card
+Template: default
+Theme-Color: #9D1D27
+Canonical: https://www.idfcfirst.bank.in/credit-card/rupay-credit-card
+</code></pre></div>
+<div><h2 id="section-by-section-content-map">Section-by-Section Content Map</h2><h3 id="hero-section">1. Hero Section</h3><p><strong>Block:</strong> <code>hero</code> (rupay variant)
+<strong>Background:</strong> Dark gradient (#000 to dark gray)
+<strong>Layout:</strong> Text left, Image right</p><p><strong>Content:</strong></p><ul>
+<li><strong>Headline:</strong> Your UPI, FIRST RuPay Credit Card now rewards every scan with instant cashback</li>
+<li><strong>Subheadline:</strong> Get up to 3X reward points on UPI transactions</li>
+<li><strong>CTA Button:</strong> Open Your First UPI Credit Card Account</li>
+<li><strong>Hero Image:</strong> Credit card stack (3D illustration)</li>
+<li><strong>Decorative Elements:</strong> Rectangle and shadow graphics</li>
+</ul><p><strong>Authoring Structure:</strong></p><pre><code>Hero (Rupay)
+---
+Headline: Your UPI, FIRST RuPay Credit Card now rewards every scan with instant cashback
+Subheadline: Get up to 3X reward points on UPI transactions
+CTA Text: Open Your First UPI Credit Card Account
+CTA Link: #apply-form
+Background: dark-gradient
+Image: ./images/b49774528df0486d039cf73eb9aa248e.png
+Decorative 1: ./images/99f18fbf740ca8520f44cd79967669e7.png
+Decorative 2: ./images/631b61eb29cb230d80b86e075a99eeba.png
+</code></pre></div>
+<div><h3 id="features-of-first-digital-rupay-credit-card">2. Features of FIRST Digital RuPay Credit Card</h3><p><strong>Block:</strong> <code>cards</code> (3-column)
+<strong>Background:</strong> White
+<strong>Layout:</strong> 3 cards in a row</p><p><strong>Content:</strong></p><pre><code>Cards (3-col)
+---
+Card 1:
+- Icon: ./images/faffd87a0bf7dc870643ab1433403f51.png
+- Title: Digital-Only Card
+- Description: No physical card required. Instant activation.
+
+Card 2:
+- Icon: ./images/2cda81c8dd2160d650b373e52ebe3aa6.png
+- Title: UPI Rewards
+- Description: Earn reward points on every UPI transaction.
+
+Card 3:
+- Icon: ./images/bfd319a73c251fb7cb153ee50667657d.png
+- Title: Secure Payments
+- Description: Two-factor authentication and real-time alerts.
+</code></pre></div>
+<div><h3 id="earn-rewards-on-upi-transactions">3. Earn Rewards on UPI Transactions</h3><p><strong>Block:</strong> <code>cards</code> (rewards variant - 4-column)
+<strong>Background:</strong> Purple gradient
+<strong>Layout:</strong> 4 cards in grid</p><p><strong>Content:</strong></p><pre><code>Cards (Rewards)
+---
+Card 1:
+- Icon: ./images/5065bfac834b7b8b6a6278d6ffa70719.png (3D coin icon)
+- Title: Up to 3X Rewards
+- Description: Earn triple reward points on UPI spends
+
+Card 2:
+- Icon: ./images/324995a348ea12499018b72f5b3cbbcb.png
+- Title: 100% Cashback
+- Description: On first 4 UPI transactions within 15 days
+
+Card 3:
+- Icon: ./images/452668471abc7dfe8c4445fefd27500a.png
+- Title: EMI Conversion
+- Description: Convert large UPI transactions to easy EMIs
+
+Card 4:
+- Icon: ./images/c071e2b463fcc49f0fbcaf19ca79fb98.png
+- Title: AutoPay Feature
+- Description: Automate recurring UPI payments
+</code></pre><p><strong>Design Notes:</strong></p><ul>
+<li>Purple gradient background (#6B46C1 to #8B5CF6)</li>
+<li>3D illustrated icons</li>
+<li>Card shadow effects</li>
+<li>White text on colored background</li>
+</ul></div>
+<div><h3 id="how-to-apply-for-first-digital-rupay-credit-card">4. How to Apply for FIRST Digital RuPay Credit Card</h3><p><strong>Block:</strong> <code>steps</code>
+<strong>Background:</strong> White
+<strong>Layout:</strong> Horizontal step flow</p><p><strong>Content:</strong></p><pre><code>Steps
+---
+Step 1:
+- Icon: ./images/dcab8830c0c8c48c0cfeae64944fe7f1.png
+- Title: Download IDFC FIRST Bank App
+- Description: Get the app from Play Store or App Store
+
+Step 2:
+- Icon: ./images/053852fe2ea413c28e28cd0e95accdcc.png
+- Title: Complete KYC
+- Description: Verify your identity with video KYC
+
+Step 3:
+- Icon: ./images/635eba8da3ba9f803382737672e8c829.png
+- Title: Apply for Credit Card
+- Description: Fill simple application form
+
+Step 4:
+- Icon: ./images/34f6a645095fe27875bdfdd49d66d35d.png
+- Title: Get Instant Approval
+- Description: Receive digital card instantly
+
+Step 5:
+- Icon: ./images/f8f6fdefa8dbfb227646886d664d30a2.png
+- Title: Link to UPI
+- Description: Start using with your favorite UPI app
+</code></pre></div>
+<div><h3 id="step-by-step-guide-to-link-rupay-card-to-upi">5. Step-by-Step Guide to Link RuPay Card to UPI</h3><p><strong>Block:</strong> <code>steps</code> + <code>columns</code> (complex layout)
+<strong>Background:</strong> Light gray
+<strong>Layout:</strong> Multi-step with phone mockups</p><p><strong>Content Structure:</strong></p><pre><code>Section Title: Link Your RuPay Credit Card to Top UPI Apps Just Like This
+
+Step 1: Grant UPI Access
+- Image: ./images/c67dd3dda921fc124c71dd2e70ddf55d.png (IDFC app)
+- Title: Grant UPI access on IDFC FIRST Bank app
+- Instructions: Open app → Settings → Enable UPI
+
+Step 2: Select UPI App
+- Images: Multiple app logos
+  - Google Pay: ./images/2d5b19fbd25517bdf64222a3bc248655.png
+  - PhonePe: ./images/8b5785ddb69cc3b8fa3e5d4f2618c5a1.png
+  - Paytm: ./images/24d30baa3078a4490cbafe92c0008793.png
+- Title: Select your preferred UPI app
+- Instructions: Choose from popular UPI apps
+
+Step 3: Scan QR Code
+- Image: ./images/623b621f8985d5003e9fc6448a65fc28.png (QR code)
+- Title: Scan QR code to link
+- Instructions: Use UPI app to scan and link
+</code></pre></div>
+<div><h3 id="link-to-top-upi-apps-banner-section">6. Link to Top UPI Apps (Banner Section)</h3><p><strong>Block:</strong> <code>mid-banner</code> (upi-apps variant)
+<strong>Background:</strong> Red/Maroon (#9D1D27)
+<strong>Layout:</strong> Content + App logos + QR code</p><p><strong>Content:</strong></p><pre><code>Mid-Banner (UPI Apps)
+---
+Headline: Link Your RuPay Credit Card to Top UPI Apps Just Like This
+Subheadline: Use with any UPI app you love
+
+App Logos:
+- Google Pay
+- PhonePe
+- Paytm
+- Amazon Pay
+
+QR Code: [Download app QR]
+Text: Great Looking? Done for You.
+CTA: Download Now
+</code></pre></div>
+<div><h3 id="joining-perks">7. Joining Perks</h3><p><strong>Block:</strong> <code>cards</code> (3-column)
+<strong>Background:</strong> Black
+<strong>Layout:</strong> 3 cards in a row</p><p><strong>Content:</strong></p><pre><code>Cards (3-col)
+---
+Section Title: Joining Perks of FIRST Digital RuPay Credit Card
+
+Card 1:
+- Icon: [icon image]
+- Title: Lifetime Free Membership
+- Description: No annual fees, no joining fees
+
+Card 2:
+- Icon: [icon image]
+- Title: Instant Digital Issuance
+- Description: Get card details within minutes
+
+Card 3:
+- Icon: [icon image]
+- Title: Shared Credit Limit
+- Description: Uses your existing IDFC credit card limit
+</code></pre></div>
+<div><h3 id="pay-using-upi">8. Pay Using UPI</h3><p><strong>Block:</strong> <code>columns</code> (3-column icon grid)
+<strong>Background:</strong> White
+<strong>Layout:</strong> Simple icon + label grid</p><p><strong>Content:</strong></p><pre><code>Columns (Icons)
+---
+Title: Pay Using UPI
+
+Column 1:
+- Icon: ./images/daf0a4ca5152bea2283a083ea3b6587d.png
+- Label: Scan &#x26; Pay
+
+Column 2:
+- Icon: ./images/c89b05564635dc280fb6178641c12f75.png
+- Label: Enter UPI ID
+
+Column 3:
+- Icon: ./images/f188c7871d81e908bccfd5d70b3948f2.png
+- Label: Select &#x26; Pay
+</code></pre></div>
+<div><h3 id="testimonials">9. Testimonials</h3><p><strong>Block:</strong> <code>swipper-card</code>
+<strong>Background:</strong> Dark purple
+<strong>Layout:</strong> 2-column carousel</p><p><strong>Content:</strong></p><pre><code>Swipper-Card (Testimonials)
+---
+Section Title: Testimonials
+
+Testimonial 1:
+- Quote: "The RuPay credit card on UPI is a game-changer. No more carrying physical cards!"
+- Author: Rajesh Kumar
+- Location: Mumbai
+- Avatar: [optional]
+
+Testimonial 2:
+- Quote: "Earning rewards on UPI payments is fantastic. I use it for all my daily transactions."
+- Author: Priya Sharma
+- Location: Delhi
+- Avatar: [optional]
+
+[Additional testimonials as needed]
+</code></pre><p><strong>Design:</strong></p><ul>
+<li>Purple gradient background</li>
+<li>Quote marks icon: ./images/6fbd6f7d616b446436edfdd95cf384a6.png</li>
+<li>White text</li>
+<li>Navigation dots at bottom</li>
+</ul></div>
+<div><h3 id="latest-blog-posts">10. Latest Blog Posts</h3><p><strong>Block:</strong> <code>pl-swipper-blogs</code>
+<strong>Background:</strong> Red/Maroon gradient
+<strong>Layout:</strong> 3-card carousel</p><p><strong>Content:</strong></p><pre><code>PL-Swipper-Blogs
+---
+Section Title: Latest Blog Posts
+
+Blog 1:
+- Image: ./images/31354747532d7d6c4641b4bc9d07e72f.png
+- Title: Benefits of Using a RuPay Credit Card
+- Excerpt: Discover the advantages of RuPay cards for everyday spending...
+- CTA: Read More
+- Link: /blog/benefits-of-rupay-credit-card
+
+Blog 2:
+- Image: ./images/37f4dc4a2d53fee465e899c67f8479de.png
+- Title: Features and Benefits of RuPay Credit Card on UPI
+- Excerpt: Learn how to maximize your rewards with RuPay on UPI...
+- CTA: Read More
+- Link: /blog/rupay-credit-card-upi-features
+
+Blog 3:
+- Image: ./images/1f56d8f625ea6fb93f5d9146f2ab6ecd.png
+- Title: Best RuPay Credit Card for UPI
+- Excerpt: Compare RuPay credit cards and find the best one...
+- CTA: Read More
+- Link: /blog/best-rupay-credit-card-upi
+</code></pre></div>
+<div><h3 id="frequently-asked-questions">11. Frequently Asked Questions</h3><p><strong>Block:</strong> <code>faq-accordion</code>
+<strong>Background:</strong> White
+<strong>Layout:</strong> Collapsible accordion</p><p><strong>Content:</strong></p><pre><code>FAQ-Accordion
+---
+Section Title: Frequently Asked Questions
+
+Q1: What is a RuPay Credit Card?
+A: RuPay Credit Card is a domestic payment card that allows you to make UPI transactions using your credit limit instead of your bank account balance.
+
+Q2: How do I apply for FIRST Digital RuPay Credit Card?
+A: Download the IDFC FIRST Bank mobile app, complete your KYC, and apply for the card. You'll receive instant digital card details.
+
+Q3: Can I use RuPay Credit Card with any UPI app?
+A: Yes, you can link your RuPay Credit Card to popular UPI apps like Google Pay, PhonePe, Paytm, and more.
+
+Q4: Are there any joining or annual fees?
+A: Joining Fee is ₹199 + GST. Annual Fee from 2nd year onwards is ₹199 + GST.
+
+Q5: What is the credit limit for RuPay Credit Card?
+A: The RuPay Credit Card shares the credit limit with your primary IDFC FIRST Bank credit card.
+
+Q6: How do I earn rewards on UPI transactions?
+A: Every eligible UPI transaction earns you reward points, with up to 3X rewards on select categories.
+
+Q7: What is the daily UPI transaction limit?
+A: Daily UPI transaction limit is up to ₹1,00,000 as per NPCI guidelines.
+
+Q8: Is the RuPay Credit Card secure?
+A: Yes, it features two-factor authentication, tokenization, OTP verification, and real-time SMS alerts for security.
+
+[Additional FAQs as needed]
+</code></pre></div>
+<div><h3 id="related-credit-card-products">12. Related Credit Card Products</h3><p><strong>Block:</strong> <code>cards</code> (4-column)
+<strong>Background:</strong> White
+<strong>Layout:</strong> Product card grid</p><p><strong>Content:</strong></p><pre><code>Cards (Related Products)
+---
+Section Title: Explore Other Credit Cards
+
+Card 1:
+- Icon: ./images/1e1067106fa3f6b4e319df41872d9e89.png
+- Title: FIRST Power Credit Card
+- Link: /credit-card/first-power
+
+Card 2:
+- Icon: ./images/5c9d261ea8b25429779451bd22353f26.png
+- Title: Mayura Credit Card
+- Link: /credit-card/mayura
+
+Card 3:
+- Icon: ./images/d6eb74e2508a0c84e25671557994c50f.png
+- Title: Apply Credit Card
+- Link: /credit-card/apply
+
+Card 4:
+- Icon: ./images/7aa19e880c59be8a6934786b02301797.png
+- Title: FIRST Digital Credit Card
+- Link: /credit-card/first-digital
+
+Card 5:
+- Icon: ./images/188b584f3176d9773a4d79d9d4ffea22.png
+- Title: FIRST Swyp Credit Card
+- Link: /credit-card/first-swyp
+
+Card 6:
+- Icon: ./images/2321164ec320635d44e079fe6a74951b.png
+- Title: Ashva Credit Card
+- Link: /credit-card/ashva
+</code></pre></div>
+<div><h3 id="upi-acceptance-partner-logos">13. UPI Acceptance Partner Logos</h3><p><strong>Block:</strong> <code>columns</code> (multi-column logo grid)
+<strong>Background:</strong> Light gray
+<strong>Layout:</strong> Responsive logo grid</p><p><strong>Content:</strong></p><pre><code>Columns (Partner Logos)
+---
+Section Title: Accepted Everywhere RuPay UPI is Accepted
+
+[Multiple UPI partner logos in grid format]
+- Google Pay
+- PhonePe
+- Paytm
+- Amazon Pay
+- Slice
+- CRED
+- MobiKwik
+- Freecharge
+[Additional logos as available in scraped images]
+</code></pre></div>
+<div><h3 id="sticky-cta">14. Sticky CTA</h3><p><strong>Block:</strong> <code>sticky-cta</code>
+<strong>Position:</strong> Fixed bottom (mobile), Fixed right (desktop)
+<strong>Visibility:</strong> Show after scrolling past hero</p><p><strong>Content:</strong></p><pre><code>Sticky-CTA
+---
+Text: Apply Now
+Link: #apply-form
+Background: #9D1D27 (brand red)
+</code></pre></div>
+<div><h2 id="content-authoring-guidelines">Content Authoring Guidelines</h2><h3 id="for-aem-crosswalk-universal-editor">For AEM Crosswalk (Universal Editor)</h3><ol>
+<li>
+<p><strong>Create content in Google Docs or Microsoft Word</strong></p>
+</li>
+<li>
+<p><strong>Use table format for blocks:</strong></p>
+<pre><code>| Block Name | Variant |
+| Hero | Rupay |
+
+| Heading | Image |
+| Your headline text | image-url |
+</code></pre>
+</li>
+<li>
+<p><strong>Section breaks:</strong> Use horizontal rules (---) between sections</p>
+</li>
+<li>
+<p><strong>Image references:</strong> Use relative paths <code>./images/filename.png</code></p>
+</li>
+<li>
+<p><strong>Links:</strong> Use proper internal linking structure</p>
+</li>
+</ol><h3 id="content-tone--voice">Content Tone &#x26; Voice</h3><ul>
+<li><strong>Professional yet friendly</strong></li>
+<li><strong>Benefit-focused</strong> (what customer gets)</li>
+<li><strong>Clear and concise</strong></li>
+<li><strong>Action-oriented CTAs</strong></li>
+<li><strong>Trust-building</strong> (security, reliability mentions)</li>
+</ul><h3 id="seo-considerations">SEO Considerations</h3><ul>
+<li><strong>H1:</strong> One per page (in hero section)</li>
+<li><strong>H2:</strong> Section titles</li>
+<li><strong>H3:</strong> Card titles, subsections</li>
+<li><strong>Alt text:</strong> Descriptive for all images</li>
+<li><strong>Internal links:</strong> To related products and resources</li>
+<li><strong>Structured data:</strong> Already included in page metadata</li>
+</ul></div>
+<div><h2 id="image-assets-summary">Image Assets Summary</h2><p><strong>Total Images:</strong> 86 images downloaded and converted</p><p><strong>Image Categories:</strong></p><ul>
+<li>Hero images: 3 files</li>
+<li>Icons (3D): 8 files</li>
+<li>Step indicators: 5 files</li>
+<li>UPI app logos: 10+ files</li>
+<li>Blog thumbnails: 3 files</li>
+<li>Product icons: 6 files</li>
+<li>UI elements: 20+ files</li>
+<li>Decorative graphics: 10+ files</li>
+<li>Partner logos: 20+ files</li>
+</ul><p><strong>All images available in:</strong> <code>/workspace/import-work/images/</code></p></div>
+<div><h2 id="responsive-design-notes">Responsive Design Notes</h2><h3 id="mobile--768px">Mobile (&#x3C; 768px)</h3><ul>
+<li>Hero: Stack text above image</li>
+<li>Cards: Single column</li>
+<li>Steps: Vertical list</li>
+<li>Carousels: Single item view with swipe</li>
+</ul><h3 id="tablet-768px---1024px">Tablet (768px - 1024px)</h3><ul>
+<li>Hero: Side-by-side with smaller image</li>
+<li>Cards: 2 columns</li>
+<li>Steps: 2-3 columns or horizontal scroll</li>
+<li>Carousels: 2 items visible</li>
+</ul><h3 id="desktop--1024px">Desktop (> 1024px)</h3><ul>
+<li>Hero: Full side-by-side layout</li>
+<li>Cards: 3-4 columns as designed</li>
+<li>Steps: Full horizontal flow</li>
+<li>Carousels: 3 items visible</li>
+</ul></div>
+<div><h2 id="brand-guidelines">Brand Guidelines</h2><h3 id="colors">Colors</h3><ul>
+<li><strong>Primary Red:</strong> #9D1D27</li>
+<li><strong>Dark:</strong> #000000</li>
+<li><strong>Purple Gradient:</strong> #6B46C1 to #8B5CF6</li>
+<li><strong>White:</strong> #FFFFFF</li>
+<li><strong>Gray (backgrounds):</strong> #F5F5F5</li>
+</ul><h3 id="typography">Typography</h3><ul>
+<li><strong>Headings:</strong> Bold, sans-serif</li>
+<li><strong>Body:</strong> Regular, sans-serif</li>
+<li><strong>CTA Buttons:</strong> Bold, uppercase or title case</li>
+</ul><h3 id="spacing">Spacing</h3><ul>
+<li><strong>Section padding:</strong> 60px (desktop), 40px (mobile)</li>
+<li><strong>Card gaps:</strong> 2rem (32px)</li>
+<li><strong>Element spacing:</strong> 16px, 24px, 32px (system)</li>
+</ul></div>
+<div><p><strong>Document Version:</strong> 1.0
+<strong>Last Updated:</strong> 2025-12-09</p></div>
+</main>
+<footer></footer>
+</body>
+</html>
